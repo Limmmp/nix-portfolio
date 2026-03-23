@@ -1,0 +1,122 @@
+// src/styles/global.scss
+
+// 1. ИМПОРТ ПЕРЕМЕННЫХ (новый синтаксис)
+@use './variables' as *;
+
+// 2. ШРИФТЫ
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Space+Grotesk:wght@700&display=swap');
+
+// 3. СБРОС СТИЛЕЙ
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: $color-black;
+  color: $color-white;
+  font-family: $font-primary;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a, button {
+  text-decoration: none;
+  color: inherit;
+  cursor: none;
+  border: none;
+  background: none;
+  
+  &:hover {
+    color: $color-white;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+// 4. УТИЛИТЫ
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+  
+  @media (max-width: $breakpoint-mobile) {
+    padding: 0 $spacing-sm;
+  }
+}
+
+.text-display {
+  font-family: $font-display;
+  font-size: $font-size-xl;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  
+  @media (max-width: $breakpoint-tablet) {
+    font-size: 64px;
+  }
+  
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 48px;
+  }
+}
+
+.text-large {
+  font-family: $font-display;
+  font-size: $font-size-lg;
+  font-weight: 700;
+}
+
+.text-medium {
+  font-size: $font-size-md;
+}
+
+.text-small {
+  font-size: $font-size-xs;
+  color: $color-light-gray;
+}
+
+// 5. РАЗДЕЛИТЕЛЬ
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #1A1A1A 50%,
+    transparent 100%
+  );
+  margin: $spacing-xl 0;
+}
+
+// 6. ОСНОВНОЙ КОНТЕНТ
+.main-content {
+  opacity: 0;
+  transition: opacity 1s ease;
+  
+  &.visible {
+    opacity: 1;
+  }
+}
+
+.interactive {
+  cursor: none;
+}
+
+// 7. МОБИЛЬНАЯ АДАПТАЦИЯ
+@media (max-width: $breakpoint-mobile) {
+  body, a, button {
+    cursor: auto;
+  }
+}

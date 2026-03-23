@@ -1,0 +1,131 @@
+@import '../../styles/variables';
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: $color-black;
+
+  // Фоновое изображение
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  &__bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    // Ч/Б фильтр для монохромного стиля
+    filter: grayscale(100%) contrast(1.1);
+    transition: filter $transition-slow;
+  }
+
+  // Затемнение поверх фото
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+    z-index: 2;
+  }
+
+  // Контент
+  &__content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__title {
+    color: $color-white;
+    text-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.1em;
+    
+    @media (max-width: $breakpoint-mobile) {
+      letter-spacing: 0.05em;
+    }
+  }
+
+  &__subtitle {
+    color: $color-light-gray;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    max-width: 600px;
+    
+    @media (max-width: $breakpoint-mobile) {
+      letter-spacing: 0.15em;
+      font-size: $font-size-sm;
+    }
+  }
+
+  // Кнопки
+  &__cta {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+    
+    @media (max-width: $breakpoint-mobile) {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  &__btn {
+    padding: $spacing-md $spacing-lg;
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all $transition-medium;
+    border: 1px solid $color-white;
+    
+    &--primary {
+      background: $color-white;
+      color: $color-black;
+      
+      &:hover {
+        background: transparent;
+        color: $color-white;
+        transform: translateY(-3px);
+      }
+    }
+    
+    &--secondary {
+      background: transparent;
+      color: $color-white;
+      
+      &:hover {
+        background: $color-white;
+        color: $color-black;
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  // Ховер эффект на фото (опционально)
+  &:hover &__bg-image {
+    filter: grayscale(80%) contrast(1.15);
+  }
+}

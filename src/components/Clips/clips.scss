@@ -1,0 +1,70 @@
+@import '../../styles/variables';
+
+.clips {
+  padding: $spacing-xl 0;
+  background-color: $color-black;
+
+  &__title {
+    color: $color-white;
+    margin-bottom: $spacing-lg;
+    letter-spacing: 0.1em;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-md;
+
+    @media (max-width: $breakpoint-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.clip-card {
+  background-color: $color-dark-gray;
+  border: 1px solid $color-medium-gray;
+  overflow: hidden;
+  transition: all $transition-medium;
+
+  &:hover {
+    border-color: $color-white;
+    transform: translateY(-5px);
+  }
+
+  &__thumbnail {
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, $color-medium-gray, $color-dark-gray);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__duration {
+    background-color: $color-black;
+    color: $color-white;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+
+  &__info {
+    padding: $spacing-md;
+  }
+
+  &__title {
+    color: $color-white;
+    font-size: $font-size-md;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__views {
+    color: $color-light-gray;
+    font-size: $font-size-xs;
+  }
+}

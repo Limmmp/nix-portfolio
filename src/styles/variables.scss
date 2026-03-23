@@ -1,0 +1,33 @@
+// 🎨 COLOR PALETTE (MONOCHROME)
+$color-black: #000000;
+$color-dark-gray: #0A0A0A;
+$color-medium-gray: #1A1A1A;
+$color-light-gray: #888888;
+$color-white: #FFFFFF;
+
+// 📐 SPACING
+$spacing-xs: 8px;
+$spacing-sm: 16px;
+$spacing-md: 32px;
+$spacing-lg: 64px;
+$spacing-xl: 128px;
+
+// 🔤 TYPOGRAPHY
+$font-primary: 'Inter', sans-serif;
+$font-display: 'Space Grotesk', sans-serif;
+
+$font-size-xs: 14px;
+$font-size-sm: 18px;
+$font-size-md: 24px;
+$font-size-lg: 48px;
+$font-size-xl: 96px;
+
+// ⚡ ANIMATION
+$transition-fast: 0.15s ease;
+$transition-medium: 0.3s ease;
+$transition-slow: 0.6s ease;
+
+// 📱 BREAKPOINTS
+$breakpoint-mobile: 767px;
+$breakpoint-tablet: 1023px;
+$breakpoint-laptop: 1439px;
