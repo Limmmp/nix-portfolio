@@ -8,9 +8,8 @@ import Hero from './components/Hero/Hero';
 import Stats from './components/Stats/Stats';
 import LinksGrid from './components/LinksGrid/LinksGrid';
 import About from './components/About/About';
-import Gear from './components/Gear/Gear';
-import Clips from './components/Clips/Clips';
-import MediaGallery from './components/MediaGallery/MediaGallery';
+import Partners from './components/Partners/Partners';
+import ContactModal from './components/ContactModal/ContactModal';
 import Footer from './components/Footer/Footer';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { siteConfig } from './data/content';
@@ -23,6 +22,7 @@ function App() {
   
   const [introComplete, setIntroComplete] = useState(false);
   const [introSkipped, setIntroSkipped] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const appRef = useRef(null);
 
   const handleIntroComplete = () => {
@@ -31,7 +31,7 @@ function App() {
     setIntroSkipped(true);
   };
 
-  // Scroll-triggered skip с ГЭПОМ
+  // Scroll-triggered skip
   useEffect(() => {
     if (introSkipped) return;
 
@@ -39,14 +39,12 @@ function App() {
       ScrollTrigger.create({
         trigger: appRef.current,
         start: 'top top',
-        // 📏 Увеличили end с 0.3 до 0.5 высоты экрана = ~300-400px гэп
-        end: '+=' + window.innerHeight * 2.5,
+        end: '+=' + window.innerHeight * 0.5,
         onEnter: () => {
           if (!introSkipped) {
-            // 🕐 Добавляем небольшую задержку перед скипом (200мс)
             setTimeout(() => {
               handleIntroComplete();
-            }, 400);
+            }, 200);
           }
         },
         once: true
@@ -65,15 +63,19 @@ function App() {
       )}
       
       <main className={`main-content ${introComplete ? 'visible' : ''}`}>
-        <Hero />
+        <Hero onOpenContact={() => setIsContactOpen(true)} />
         <Stats />
+        <Partners />
         <LinksGrid />
         <About />
-        {siteConfig.showGear && <Gear />}
-        {siteConfig.showClips && <Clips />}
         {siteConfig.showMediaGallery && <MediaGallery />}
-        <Footer />
+        <Footer onOpenContact={() => setIsContactOpen(true)} />
       </main>
+
+      <ContactModal 
+        isOpen={isContactOpen} 
+        onClose={() => setIsContactOpen(false)} 
+      />
     </div>
   );
 }
