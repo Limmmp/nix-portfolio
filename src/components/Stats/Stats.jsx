@@ -8,8 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 const Stats = () => {
   const containerRef = useRef(null);
   const stats = [
-    { value: '500K+', label: 'Subscribers', icon: '👥' },
-    { value: '10M+', label: 'Total Views', icon: '👁️' },
+    { value: '1M+', label: 'Subscribers', icon: '👥' },
+    { value: '30M+', label: 'Total Views', icon: '👁️' },
     { value: '5+', label: 'Years Active', icon: '📅' },
     { value: '24/7', label: 'Content', icon: '⚡' }
   ];
