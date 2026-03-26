@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@use '../../styles/variables' as *;
 
 .hero {
   position: relative;
@@ -24,13 +24,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
-    // Ч/Б фильтр для монохромного стиля
+    object-position: center top;
     filter: grayscale(100%) contrast(1.1);
     transition: filter $transition-slow;
   }
 
-  // Затемнение поверх фото
+  // Затемнение
   &__overlay {
     position: absolute;
     top: 0;
@@ -39,92 +38,266 @@
     height: 100%;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
-      rgba(0, 0, 0, 0.8) 100%
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.2) 40%,
+      rgba(0, 0, 0, 0.6) 100%
     );
     z-index: 2;
   }
 
-  // Контент
+  // Контент по центру
   &__content {
     position: relative;
-    z-index: 3;
-    text-align: center;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-top: 0px;
+  }
+
+  &__content-group {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: $spacing-md;
+    // Опускаем весь контент ниже чтобы NIX не закрывал голову
+    margin-bottom: $spacing-md;
+    transform: translateY(25px);
+
+    @media (max-width: $breakpoint-tablet) {
+      margin-top: 60px;
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      margin-top: 40px;
+    }
   }
 
   &__title {
     color: $color-white;
     text-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
-    letter-spacing: 0.1em;
-    
+    letter-spacing: 0.15em;
+    margin-bottom: $spacing-xs;
+    // Уменьшили размер заголовка
+    font-size: 72px;
+
+    @media (max-width: $breakpoint-tablet) {
+      font-size: 56px;
+    }
+
     @media (max-width: $breakpoint-mobile) {
-      letter-spacing: 0.05em;
+      font-size: 42px;
     }
   }
 
   &__subtitle {
     color: $color-light-gray;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     max-width: 600px;
-    
-    @media (max-width: $breakpoint-mobile) {
+    // Уменьшили размер текста
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.6;
+
+    @media (max-width: $breakpoint-tablet) {
+      font-size: 12px;
       letter-spacing: 0.15em;
-      font-size: $font-size-sm;
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: 11px;
+      letter-spacing: 0.1em;
     }
   }
 
   // Кнопки
   &__cta {
     display: flex;
-    gap: $spacing-md;
-    margin-top: $spacing-lg;
-    
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+    align-items: center;
+    justify-content: center;
+
     @media (max-width: $breakpoint-mobile) {
       flex-direction: column;
       width: 100%;
+      gap: $spacing-xs;
     }
   }
 
-  &__btn {
-    padding: $spacing-md $spacing-lg;
-    font-family: $font-primary;
-    font-size: $font-size-sm;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: all $transition-medium;
-    border: 1px solid $color-white;
-    
+&__btn {
+  // 🔧 ФИКСИРОВАННЫЙ РАЗМЕР ДЛЯ ВСЕХ КНОПОК
+  padding: 48px 150px;
+  font-family: $font-primary;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all $transition-medium;
+  border: 1px solid $color-white;
+  white-space: nowrap;
+  cursor: pointer;
+  min-width: 240px;                    // ← Одинаковая ширина для всех
+  width: 240px;                        // ← Фиксируем ширину
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+    // PARTNERSHIP - белая кнопка (primary)
     &--primary {
       background: $color-white;
       color: $color-black;
-      
+      border-color: $color-white;
+
       &:hover {
         background: transparent;
         color: $color-white;
         transform: translateY(-3px);
       }
     }
-    
+
+    // Прозрачные кнопки (secondary)
     &--secondary {
-      background: transparent;
+      background: rgba(0, 0, 0, 0.5);//transparent;
       color: $color-white;
-      
+      border-color: rgba(255, 255, 255, 0.5);
+
       &:hover {
-        background: $color-white;
-        color: $color-black;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: $color-white;
+        color: $color-white;
         transform: translateY(-3px);
       }
     }
   }
 
-  // Ховер эффект на фото (опционально)
+  // Статистика в ряд внизу
+&__stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 52px;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: auto;
+  padding-top: $spacing-lg;
+  padding-bottom: 0px;                  // ← Отступ от нижнего края
+  justify-content: center;
+  justify-items: center;
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-sm;
+    max-width: 600px;
+    padding-bottom: 60px;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-xs;
+    max-width: 400px;
+    padding-bottom: 40px;
+  }
+}
+  // Карточка статистики
+&-stat {
+  position: relative;
+  padding: $spacing-md $spacing-lg;
+  width: 100%;
+  min-width: 300px;
+  min-height: 80px;                      // ← Уменьшил высоту
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-shrink: 0;
+
+  @media (max-width: $breakpoint-tablet) {
+    padding: $spacing-sm $spacing-md;
+    min-height: 80px;
+    max-width: 240px;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $spacing-sm;
+    min-height: 70px;
+    max-width: 100%;
+  }
+
+  &__border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: transparent;
+    backdrop-filter: blur(10px);
+    transition: all $transition-medium;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+  }
+
+  &__value {
+    font-family: $font-display;
+    font-size: 44px;                     // ← Уменьшил размер цифр
+    font-weight: 700;
+    color: $color-white;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+
+    @media (max-width: $breakpoint-tablet) {
+      font-size: 38px;
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: 28px;
+    }
+  }
+
+  &__label {
+    font-size: 10px;
+    font-weight: 600;
+    color: $color-white;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: 9px;
+    }
+  }
+
+  &__sublabel {
+    font-size: 9px;
+    color: $color-white;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: 8px;
+    }
+  }
+
+  &:hover &__border {
+    border-color: $color-white;
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+
+  // Ховер эффект на фото
   &:hover &__bg-image {
     filter: grayscale(80%) contrast(1.15);
   }

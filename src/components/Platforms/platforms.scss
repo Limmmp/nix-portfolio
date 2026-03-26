@@ -1,0 +1,198 @@
+@import '../../styles/variables';
+
+.platforms {
+  padding: $spacing-xl 0;
+  background-color: $color-black;
+  border-top: 1px solid $color-medium-gray;
+  border-bottom: 1px solid $color-medium-gray;
+
+  &__header {
+    margin-bottom: $spacing-xl;
+    text-align: center;
+  }
+
+  &__title {
+    color: $color-white;
+    margin-bottom: $spacing-sm;
+    letter-spacing: 0.15em;
+  }
+
+  &__subtitle {
+    color: $color-light-gray;
+    font-size: $font-size-md;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+}
+
+.platform-card {
+  position: relative;
+  display: block;
+  padding: $spacing-lg $spacing-xl;
+  background-color: $color-dark-gray;
+  border: 1px solid $color-medium-gray;
+  text-decoration: none;
+  transition: all $transition-medium;
+  overflow: hidden;
+
+  &:hover {
+    border-color: var(--platform-color);
+    background-color: rgba(255, 255, 255, 0.02);
+    transform: translateX(-10px);
+
+    .platform-card__arrow {
+      transform: translateX(5px);
+      opacity: 1;
+    }
+
+    .platform-card__border {
+      opacity: 0.1;
+      background: var(--platform-color);
+    }
+  }
+
+  &__border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--platform-color);
+    opacity: 0;
+    transition: all $transition-medium;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr auto;
+    gap: $spacing-lg;
+    align-items: center;
+
+    @media (max-width: $breakpoint-tablet) {
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+    }
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-black;
+    border: 1px solid $color-medium-gray;
+    font-size: 28px;
+    flex-shrink: 0;
+
+    @media (max-width: $breakpoint-mobile) {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+    }
+  }
+
+  &__info {
+    flex: 1;
+  }
+
+  &__name {
+    color: $color-white;
+    font-family: $font-display;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-xs;
+    letter-spacing: 0.05em;
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: $font-size-md;
+    }
+  }
+
+  &__description {
+    color: $color-light-gray;
+    font-size: $font-size-sm;
+    line-height: 1.5;
+    max-width: 400px;
+
+    @media (max-width: $breakpoint-tablet) {
+      max-width: 100%;
+    }
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-md;
+
+    @media (max-width: $breakpoint-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-sm;
+    }
+  }
+
+  &__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--platform-color);
+    opacity: 0.5;
+    transition: all $transition-medium;
+    flex-shrink: 0;
+
+    @media (max-width: $breakpoint-tablet) {
+      display: none;
+    }
+  }
+}
+
+.platform-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: $spacing-sm;
+  background-color: $color-black;
+  border: 1px solid $color-medium-gray;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: var(--platform-color);
+  }
+
+  &__value {
+    font-family: $font-display;
+    font-size: 24px;
+    font-weight: 700;
+    color: $color-white;
+    line-height: 1;
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: 20px;
+    }
+  }
+
+  &__label {
+    font-size: 10px;
+    color: $color-light-gray;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+}

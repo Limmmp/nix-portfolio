@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Cursor from './components/Cursor/Cursor';
 import VideoIntro from './components/VideoIntro/VideoIntro';
-import Hero from './components/Hero/Hero';
+import Hero from './components/Hero/Hero';  // ← Hero теперь получает isActive
 import Stats from './components/Stats/Stats';
 import LinksGrid from './components/LinksGrid/LinksGrid';
 import About from './components/About/About';
@@ -14,6 +14,7 @@ import Footer from './components/Footer/Footer';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { siteConfig } from './data/content';
 import './styles/global.scss';
+import Platforms from './components/Platforms/Platforms';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -63,7 +64,9 @@ function App() {
       )}
       
       <main className={`main-content ${introComplete ? 'visible' : ''}`}>
-        <Hero onOpenContact={() => setIsContactOpen(true)} />
+        {/* ← Hero получает isActive = introComplete */}
+        <Hero onOpenContact={() => setIsContactOpen(true)} isActive={introComplete} />
+        <Platforms />
         <Stats />
         <Partners />
         <LinksGrid />
