@@ -4,17 +4,17 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Cursor from './components/Cursor/Cursor';
 import VideoIntro from './components/VideoIntro/VideoIntro';
-import Hero from './components/Hero/Hero';  // ← Hero теперь получает isActive
+import Hero from './components/Hero/Hero';
+import Platforms from './components/Platforms/Platforms';
 import Stats from './components/Stats/Stats';
+import Partners from './components/Partners/Partners';
 import LinksGrid from './components/LinksGrid/LinksGrid';
 import About from './components/About/About';
-import Partners from './components/Partners/Partners';
 import ContactModal from './components/ContactModal/ContactModal';
 import Footer from './components/Footer/Footer';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { siteConfig } from './data/content';
 import './styles/global.scss';
-import Platforms from './components/Platforms/Platforms';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,6 +55,28 @@ function App() {
     return () => ctx.revert();
   }, [introSkipped]);
 
+  // Анимация прогресс-бара Platforms
+  useEffect(() => {
+    if (!introComplete) return;
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: '#platforms',
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate: (self) => {
+          const progress = self.progress * 100;
+          gsap.to('.scroll-progress', {
+            width: `${progress}%`,
+            duration: 0.1
+          });
+        }
+      });
+    });
+
+    return () => ctx.revert();
+  }, [introComplete]);
+
   return (
     <div ref={appRef} className="app">
       <Cursor />
@@ -64,7 +86,6 @@ function App() {
       )}
       
       <main className={`main-content ${introComplete ? 'visible' : ''}`}>
-        {/* ← Hero получает isActive = introComplete */}
         <Hero onOpenContact={() => setIsContactOpen(true)} isActive={introComplete} />
         <Platforms />
         <Stats />

@@ -45,111 +45,79 @@
     z-index: 2;
   }
 
-  // Контент по центру
+  // 🔧 Контент - только проценты
   &__content {
     position: relative;
     z-index: 5;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100%;
+    justify-content: space-between;
+    height: 100vh;
     width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding-top: 0px;
+    padding: 0 5vw;
   }
 
   &__content-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: $spacing-md;
-    // Опускаем весь контент ниже чтобы NIX не закрывал голову
-    margin-bottom: $spacing-md;
-    transform: translateY(25px);
-
-    @media (max-width: $breakpoint-tablet) {
-      margin-top: 60px;
-    }
-
-    @media (max-width: $breakpoint-mobile) {
-      margin-top: 40px;
-    }
+    // 🔧 Чистые проценты - одинаково на всех экранах
+    margin-top: 13vh;
+    margin-bottom: 10vh;
+    transform: translateY(0);
   }
 
   &__title {
     color: $color-white;
     text-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
     letter-spacing: 0.15em;
-    margin-bottom: $spacing-xs;
-    // Уменьшили размер заголовка
-    font-size: 72px;
-
-    @media (max-width: $breakpoint-tablet) {
-      font-size: 56px;
-    }
-
-    @media (max-width: $breakpoint-mobile) {
-      font-size: 42px;
-    }
+    margin-bottom: 1.5vh;
+    // 🔧 Только vw - масштабируется пропорционально
+    font-size: 5.5vw;
+    max-width: 50vw;
+    text-align: center;
+    line-height: 1;
   }
 
   &__subtitle {
     color: $color-light-gray;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    max-width: 600px;
-    // Уменьшили размер текста
-    font-size: 13px;
+    max-width: 45vw;
+    // 🔧 Только vw - масштабируется пропорционально
+    font-size: 1.1vw;
     text-align: center;
     line-height: 1.6;
-
-    @media (max-width: $breakpoint-tablet) {
-      font-size: 12px;
-      letter-spacing: 0.15em;
-    }
-
-    @media (max-width: $breakpoint-mobile) {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-    }
   }
 
   // Кнопки
   &__cta {
     display: flex;
-    gap: $spacing-sm;
-    margin-top: $spacing-md;
+    gap: 2vw;
+    margin-top: 3vh;
     align-items: center;
     justify-content: center;
-
-    @media (max-width: $breakpoint-mobile) {
-      flex-direction: column;
-      width: 100%;
-      gap: $spacing-xs;
-    }
+    flex-wrap: wrap;
   }
 
-&__btn {
-  // 🔧 ФИКСИРОВАННЫЙ РАЗМЕР ДЛЯ ВСЕХ КНОПОК
-  padding: 48px 150px;
-  font-family: $font-primary;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  transition: all $transition-medium;
-  border: 1px solid $color-white;
-  white-space: nowrap;
-  cursor: pointer;
-  min-width: 240px;                    // ← Одинаковая ширина для всех
-  width: 240px;                        // ← Фиксируем ширину
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-    // PARTNERSHIP - белая кнопка (primary)
+  &__btn {
+    // 🔧 Только проценты - одинаковый размер относительно экрана
+    padding: 6vh 11vw;
+    font-family: $font-primary;
+    font-size: 1.1vw;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all $transition-medium;
+    border: 1px solid $color-white;
+    white-space: nowrap;
+    cursor: pointer;
+    width: 18vw;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10vh;
     &--primary {
       background: $color-white;
       color: $color-black;
@@ -162,9 +130,8 @@
       }
     }
 
-    // Прозрачные кнопки (secondary)
     &--secondary {
-      background: rgba(0, 0, 0, 0.5);//transparent;
+      background: rgba(0, 0, 0, 0.5);
       color: $color-white;
       border-color: rgba(255, 255, 255, 0.5);
 
@@ -177,125 +144,83 @@
     }
   }
 
-  // Статистика в ряд внизу
-&__stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 52px;
-  width: 100%;
-  max-width: 1000px;
-  margin-top: auto;
-  padding-top: $spacing-lg;
-  padding-bottom: 0px;                  // ← Отступ от нижнего края
-  justify-content: center;
-  justify-items: center;
-
-  @media (max-width: $breakpoint-tablet) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-sm;
-    max-width: 600px;
-    padding-bottom: 60px;
+  // Статистика
+  &__stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3vw;
+    width: 50vw;
+    margin-bottom: 3vh;
+    padding-bottom: 0;
+    justify-content: center;
+    justify-items: center;
   }
 
-  @media (max-width: $breakpoint-mobile) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-xs;
-    max-width: 400px;
-    padding-bottom: 40px;
-  }
-}
   // Карточка статистики
-&-stat {
-  position: relative;
-  padding: $spacing-md $spacing-lg;
-  width: 100%;
-  min-width: 300px;
-  min-height: 80px;                      // ← Уменьшил высоту
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-shrink: 0;
-
-  @media (max-width: $breakpoint-tablet) {
-    padding: $spacing-sm $spacing-md;
-    min-height: 80px;
-    max-width: 240px;
-  }
-
-  @media (max-width: $breakpoint-mobile) {
-    padding: $spacing-sm;
-    min-height: 70px;
-    max-width: 100%;
-  }
-
-  &__border {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: transparent;
-    backdrop-filter: blur(10px);
-    transition: all $transition-medium;
-  }
-
-  &__content {
+  &-stat {
     position: relative;
-    z-index: 1;
+    padding: 0;
+    width: 100%;
+    max-width: 20vw;              // ← ДОБАВЬ ЭТУ СТРОКУ (было только width: 100%)
+    aspect-ratio: 4/1;  
     display: flex;
-    flex-direction: column;
-    gap: 4px;
     align-items: center;
-  }
-
-  &__value {
-    font-family: $font-display;
-    font-size: 44px;                     // ← Уменьшил размер цифр
-    font-weight: 700;
-    color: $color-white;
-    line-height: 1;
-    letter-spacing: -0.02em;
+    justify-content: center;
+    text-align: center;
     flex-shrink: 0;
 
-    @media (max-width: $breakpoint-tablet) {
-      font-size: 38px;
+    &__border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: transparent;
+      backdrop-filter: blur(10px);
+      transition: all $transition-medium;
     }
 
-    @media (max-width: $breakpoint-mobile) {
-      font-size: 28px;
+    &__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5vh;
+      align-items: center;
+      padding: 2vh 2vw;
+    }
+
+    &__value {
+      font-family: $font-display;
+      font-size: 3.5vw;
+      font-weight: 700;
+      color: $color-white;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    &__label {
+      font-size: 0.9vw;
+      font-weight: 600;
+      color: $color-white;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    &__sublabel {
+      font-size: 0.8vw;
+      color: $color-white;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    &:hover &__border {
+      border-color: $color-white;
+      background: rgba(0, 0, 0, 0.7);
     }
   }
-
-  &__label {
-    font-size: 10px;
-    font-weight: 600;
-    color: $color-white;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-
-    @media (max-width: $breakpoint-mobile) {
-      font-size: 9px;
-    }
-  }
-
-  &__sublabel {
-    font-size: 9px;
-    color: $color-white;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-
-    @media (max-width: $breakpoint-mobile) {
-      font-size: 8px;
-    }
-  }
-
-  &:hover &__border {
-    border-color: $color-white;
-    background: rgba(0, 0, 0, 0.7);
-  }
-}
 
   // Ховер эффект на фото
   &:hover &__bg-image {

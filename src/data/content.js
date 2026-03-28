@@ -49,11 +49,11 @@ export const aboutData = {
 
 export const siteConfig = {
   showMediaGallery: false,  
-  showAboutStats: true,
+  showAboutStats: false,
   showGear: false,         
   showClips: false,        
   showStats: true,
-  showPartners: true,      
+  showPartners: false,      
   videoAutoPlay: true,
   showSkipButton: true
 };
