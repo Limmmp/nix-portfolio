@@ -244,7 +244,7 @@ useEffect(() => {
         <div className="platforms__header">
           <h3 className="platforms__title">PLATFORMS</h3>
           <p className="platforms__subtitle">
-            Детальная статистика по всем каналам присутствия
+            Детальная статистика по всем каналам
           </p>
         </div>
 
