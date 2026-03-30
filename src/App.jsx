@@ -69,7 +69,6 @@ function App() {
         <Hero onOpenContact={() => setIsContactOpen(true)} isActive={introComplete} />
         <Platforms />
         <Partners />
-        <LinksGrid />
         <About />
         {siteConfig.showMediaGallery && <MediaGallery />}
         <Footer onOpenContact={() => setIsContactOpen(true)} />
