@@ -55,70 +55,88 @@ const Platforms = () => {
     setSelectedPlatform(null);
   };
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Создаём timeline для pin-scroll анимации
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: '+=4000', // Длина скролла (4000px)
-          scrub: 1, // Плавность привязки к скроллу
-          pin: true, // "Приклеиваем" секцию
-          anticipatePin: 1,
-          markers: false // Поставь true для отладки
-        }
-      });
+useEffect(() => {
+  const ctx = gsap.context(() => {
+    const progressBar = document.querySelector('.scroll-progress');
+    
+    // Создаём timeline для pin-scroll анимации
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: '+=3000',
+        scrub: true,
+        pin: true,
+        anticipatePin: 1,
+        markers: false
+      }
+    });
 
-      // Этап 1: Появление заголовка (0-500px скролла)
-      tl.fromTo('.platforms__header',
-        { opacity: 0, y: 100 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+    // === ЭТАП 1: Заголовок (0-10% прогресса) ===
+    tl.fromTo('.platforms__header',
+      { opacity: 0, y: 100 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
+      0 // Начало в 0
+    );
+
+    // === ЭТАП 2: Карточки (10-60% прогресса) ===
+    cardsRef.current.forEach((card, index) => {
+      if (!card) return;
+
+      tl.fromTo(card,
+        { opacity: 0, y: 150, scale: 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          ease: 'power3.out'
+        },
+        0.3 + (index * 0.2) // Позиция на таймлайне
       );
 
-      // Этап 2: Появление карточек по очереди (500-2000px скролла)
-      cardsRef.current.forEach((card, index) => {
-        if (!card) return;
+      // Count Up для цифр
+      tl.call(() => {
+        const numberEls = card.querySelectorAll('.platform-stat__value');
+        const values = platformsData[index]?.stats || [];
+        numberEls.forEach((el, i) => {
+          if (values[i]) {
+            animateCountUp(el, values[i]);
+          }
+        });
+      }, null, 0.5 + (index * 0.2));
+    });
 
-        tl.fromTo(card,
-          { opacity: 0, y: 150, scale: 0.9 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.8,
-            ease: 'power3.out'
-          },
-          index * 0.15 // Stagger эффект
-        );
+    // === ЭТАП 3: Финальные эффекты (60-80% прогресса) ===
+    tl.to('.platform-card', {
+      boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)',
+      duration: 0.5
+    }, 1.5);
 
-        // Count Up для цифр в этой карточке
-        tl.call(() => {
-          setTimeout(() => {
-            const numberEls = card.querySelectorAll('.platform-stat__value');
-            const values = platformsData[index]?.stats || [];
-            numberEls.forEach((el, i) => {
-              if (values[i]) {
-                animateCountUp(el, values[i]);
-              }
-            });
-          }, 200);
-        }, null, index * 0.15 + 0.5);
-      });
+    // === ЭТАП 4: ПУСТАЯ ПАУЗА (80-100% прогресса) ===
+    // Это занимает оставшееся время скролла чтобы прогресс не сбрасывался
+    tl.to({}, { 
+      duration: 1,
+      onStart: () => {
+        // Фиксируем прогресс на 100%
+        if (progressBar) {
+          progressBar.style.width = '100%';
+        }
+      }
+    }, 1.8);
 
-      // Этап 3: Финальное появление всех элементов (2000-2500px)
-      tl.to('.platform-card', {
-        boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)',
-        duration: 1
-      }, '+=0.5');
+    // Обновляем прогресс-бар на КАЖДОМ кадре
+    tl.eventCallback('onUpdate', () => {
+      if (progressBar && tl.progress() < 0.98) {
+        const progress = tl.progress() * 100;
+        progressBar.style.width = `${progress}%`;
+      }
+    });
 
-      // Этап 4: Пауза перед отпусканием (2500-3000px)
-      tl.to({}, { duration: 1 });
+  }, containerRef);
 
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  return () => ctx.revert();
+}, []);
 
   const platformsData = [
     {
@@ -205,9 +223,9 @@ const Platforms = () => {
 
   return (
     <section ref={containerRef} className="platforms" id="platforms">
-      {/* Фоновый паттерн NIX под углом - на весь экран */}
+      {/* Фоновый паттерн NIX */}
       <div className="platforms__bg-pattern">
-        {Array.from({ length: 100 }).map((_, i) => (
+        {Array.from({ length: 120 }).map((_, i) => (
           <span key={i} className="pattern-nix">NIX</span>
         ))}
       </div>
@@ -250,15 +268,16 @@ const Platforms = () => {
               
               <div className="platform-card__content">
                 {/* Верх: Лого + Название */}
-                <div className="platform-card__header">
-                  <div className="platform-card__logo">
-                    {platform.logo}
-                  </div>
-                  <h4 className="platform-card__name">{platform.name}</h4>
-                </div>
+{/* Верх: Лого + Название (с анимацией) */}
+<div className="platform-card__header">
+  <div className="platform-card__logo">
+    {platform.logo}
+  </div>
+  <h4 className="platform-card__name">{platform.name}</h4>
+</div>
 
-                {/* Середина: Статистика */}
-                <div className="platform-card__stats">
+                {/* Середина: Статистика - ВАРИАНТ 1 (Сетка 2x2) */}
+                <div className="platform-card__stats platform-card__stats--grid">
                   {platform.metrics.map((metric, i) => (
                     <div key={i} className="platform-stat">
                       {metric.value ? (

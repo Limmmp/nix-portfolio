@@ -55,27 +55,7 @@ function App() {
     return () => ctx.revert();
   }, [introSkipped]);
 
-  // Анимация прогресс-бара Platforms
-  useEffect(() => {
-    if (!introComplete) return;
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: '#platforms',
-        start: 'top top',
-        end: 'bottom bottom',
-        onUpdate: (self) => {
-          const progress = self.progress * 100;
-          gsap.to('.scroll-progress', {
-            width: `${progress}%`,
-            duration: 0.1
-          });
-        }
-      });
-    });
-
-    return () => ctx.revert();
-  }, [introComplete]);
 
   return (
     <div ref={appRef} className="app">
@@ -88,7 +68,6 @@ function App() {
       <main className={`main-content ${introComplete ? 'visible' : ''}`}>
         <Hero onOpenContact={() => setIsContactOpen(true)} isActive={introComplete} />
         <Platforms />
-        <Stats />
         <Partners />
         <LinksGrid />
         <About />
