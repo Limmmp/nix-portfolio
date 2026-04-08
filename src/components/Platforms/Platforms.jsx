@@ -57,81 +57,94 @@ const Platforms = () => {
 
 useEffect(() => {
   const ctx = gsap.context(() => {
-    const progressBar = document.querySelector('.scroll-progress');
-    
-    // Создаём timeline для pin-scroll анимации
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
         end: '+=3000',
-        scrub: true,
+        scrub: 1,
         pin: true,
         anticipatePin: 1,
-        markers: false
+        markers: false,
+        onUpdate: (self) => {
+          const progress = self.progress * 100;
+          const progressBar = document.querySelector('.scroll-progress');
+          if (progressBar && progress < 98) {
+            progressBar.style.width = `${progress}%`;
+          }
+        }
       }
     });
 
-    // === ЭТАП 1: Заголовок (0-10% прогресса) ===
+    // === СУЩЕСТВУЮЩИЕ АНИМАЦИИ (не меняем) ===
+    
+    // Этап 1: Заголовок
     tl.fromTo('.platforms__header',
       { opacity: 0, y: 100 },
       { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
-      0 // Начало в 0
+      0
     );
 
-    // === ЭТАП 2: Карточки (10-60% прогресса) ===
+    // Этап 2: Карточки
     cardsRef.current.forEach((card, index) => {
       if (!card) return;
-
       tl.fromTo(card,
         { opacity: 0, y: 150, scale: 0.9 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.7,
-          ease: 'power3.out'
-        },
-        0.3 + (index * 0.2) // Позиция на таймлайне
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' },
+        index * 0.15
       );
-
-      // Count Up для цифр
       tl.call(() => {
-        const numberEls = card.querySelectorAll('.platform-stat__value');
-        const values = platformsData[index]?.stats || [];
-        numberEls.forEach((el, i) => {
-          if (values[i]) {
-            animateCountUp(el, values[i]);
-          }
-        });
-      }, null, 0.5 + (index * 0.2));
+        setTimeout(() => {
+          const numberEls = card.querySelectorAll('.platform-stat__value');
+          const values = platformsData[index]?.stats || [];
+          numberEls.forEach((el, i) => {
+            if (values[i]) animateCountUp(el, values[i]);
+          });
+        }, 200);
+      }, null, index * 0.15 + 0.5);
     });
 
-    // === ЭТАП 3: Финальные эффекты (60-80% прогресса) ===
+    // Этап 3: Финальная тень
     tl.to('.platform-card', {
       boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)',
       duration: 0.5
-    }, 1.5);
+    }, '+=0.3');
 
-    // === ЭТАП 4: ПУСТАЯ ПАУЗА (80-100% прогресса) ===
-    // Это занимает оставшееся время скролла чтобы прогресс не сбрасывался
-    tl.to({}, { 
+    // === НОВЫЙ ЭТАП: ПЕРЕХОД К PARTNERS ===
+    // Исчезновение контента Platforms
+    tl.to('.platform-card', {
+      opacity: 0,
+      scale: 0.95,
       duration: 1,
-      onStart: () => {
-        // Фиксируем прогресс на 100%
-        if (progressBar) {
-          progressBar.style.width = '100%';
-        }
-      }
-    }, 1.8);
+      ease: 'power2.inOut'
+    }, '+=0.8');
 
-    // Обновляем прогресс-бар на КАЖДОМ кадре
-    tl.eventCallback('onUpdate', () => {
-      if (progressBar && tl.progress() < 0.98) {
-        const progress = tl.progress() * 100;
-        progressBar.style.width = `${progress}%`;
-      }
-    });
+    tl.to('.platforms__header', {
+      opacity: 0,
+      y: -30,
+      duration: 1,
+      ease: 'power2.inOut'
+    }, '<');
+
+    tl.to('.platforms__live-indicator', {
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power2.inOut'
+    }, '<');
+
+    // Исчезновение NIX паттерна
+    tl.to('.pattern-nix', {
+      opacity: 0,
+      duration: 1.5,
+      ease: 'power2.inOut'
+    }, '<');
+
+    // Высветление фона (плавный переход цвета)
+    tl.to('.platforms__bg-overlay', {
+      opacity: 0,
+      duration: 1.5,
+      ease: 'power2.inOut'
+    }, '<');
 
   }, containerRef);
 

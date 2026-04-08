@@ -8,6 +8,7 @@
   justify-content: center;
   overflow: hidden;
   background-color: $color-black;
+  perspective: 1000px;  // ← ДЛЯ 3D ЭФФЕКТА
 
   // Фоновое изображение
   &__bg {
@@ -18,6 +19,7 @@
     height: 100%;
     z-index: 1;
     overflow: hidden;
+    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
   }
 
   &__bg-image {
@@ -27,6 +29,8 @@
     object-position: center top;
     filter: grayscale(100%) contrast(1.1);
     transition: filter $transition-slow;
+    transform: translateZ(0);  // ← ДЛЯ 3D ЭФФЕКТА
+    will-change: transform, opacity;
   }
 
   // Затемнение
@@ -56,16 +60,19 @@
     height: 100vh;
     width: 100%;
     padding: 0 5vw;
+    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
   }
 
-  &__content-group {
+  // ← НОВЫЙ КЛАСС ДЛЯ 3D АНИМАЦИИ
+  &__content-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    // 🔧 Чистые проценты - одинаково на всех экранах
     margin-top: 13vh;
     margin-bottom: 10vh;
     transform: translateY(0);
+    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
+    will-change: transform, opacity, filter;
   }
 
   &__title {
@@ -73,11 +80,11 @@
     text-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
     letter-spacing: 0.15em;
     margin-bottom: 1.5vh;
-    // 🔧 Только vw - масштабируется пропорционально
     font-size: 5.5vw;
     max-width: 50vw;
     text-align: center;
     line-height: 1;
+    transform: translateZ(0);  // ← ДЛЯ 3D ЭФФЕКТА
   }
 
   &__subtitle {
@@ -85,7 +92,6 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     max-width: 45vw;
-    // 🔧 Только vw - масштабируется пропорционально
     font-size: 1.1vw;
     text-align: center;
     line-height: 1.6;
@@ -102,7 +108,6 @@
   }
 
   &__btn {
-    // 🔧 Только проценты - одинаковый размер относительно экрана
     padding: 6vh 11vw;
     font-family: $font-primary;
     font-size: 1.1vw;
@@ -118,6 +123,7 @@
     align-items: center;
     justify-content: center;
     margin-top: 10vh;
+    
     &--primary {
       background: $color-white;
       color: $color-black;
@@ -154,6 +160,8 @@
     padding-bottom: 0;
     justify-content: center;
     justify-items: center;
+    transform: translateZ(0);  // ← ДЛЯ 3D ЭФФЕКТА
+    will-change: transform, opacity, filter;
   }
 
   // Карточка статистики
@@ -161,7 +169,7 @@
     position: relative;
     padding: 0;
     width: 100%;
-    max-width: 20vw;              // ← ДОБАВЬ ЭТУ СТРОКУ (было только width: 100%)
+    max-width: 20vw;
     aspect-ratio: 4/1;  
     display: flex;
     align-items: center;
@@ -225,5 +233,101 @@
   // Ховер эффект на фото
   &:hover &__bg-image {
     filter: grayscale(80%) contrast(1.15);
+  }
+}
+
+// Адаптивность
+@media (max-width: $breakpoint-tablet) {
+  .hero {
+    &__content-inner {
+      margin-top: 15vh;
+      margin-bottom: 8vh;
+    }
+
+    &__title {
+      font-size: 8vw;
+    }
+
+    &__subtitle {
+      font-size: 1.4vw;
+    }
+
+    &__btn {
+      padding: 7vh 13vw;
+      font-size: 1.3vw;
+      width: 22vw;
+    }
+
+    &__stats-row {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4vw;
+      width: 80vw;
+    }
+
+    &-stat {
+      max-width: 35vw;
+      
+      &__value {
+        font-size: 4.5vw;
+      }
+      
+      &__label {
+        font-size: 1.1vw;
+      }
+      
+      &__sublabel {
+        font-size: 1vw;
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .hero {
+    &__content-inner {
+      margin-top: 18vh;
+      margin-bottom: 6vh;
+    }
+
+    &__title {
+      font-size: 12vw;
+    }
+
+    &__subtitle {
+      font-size: 2vw;
+    }
+
+    &__cta {
+      flex-direction: column;
+      gap: 3vw;
+    }
+
+    &__btn {
+      padding: 8vh 15vw;
+      font-size: 1.5vw;
+      width: 45vw;
+    }
+
+    &__stats-row {
+      grid-template-columns: 1fr;
+      gap: 5vw;
+      width: 90vw;
+    }
+
+    &-stat {
+      max-width: 70vw;
+      
+      &__value {
+        font-size: 6vw;
+      }
+      
+      &__label {
+        font-size: 1.4vw;
+      }
+      
+      &__sublabel {
+        font-size: 1.2vw;
+      }
+    }
   }
 }

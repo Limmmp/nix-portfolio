@@ -5,17 +5,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Cursor from './components/Cursor/Cursor';
 import VideoIntro from './components/VideoIntro/VideoIntro';
 import Hero from './components/Hero/Hero';
-import Platforms from './components/Platforms/Platforms';
-import Stats from './components/Stats/Stats';
-import Partners from './components/Partners/Partners';
-import LinksGrid from './components/LinksGrid/LinksGrid';
 import About from './components/About/About';
+import Platforms from './components/Platforms/Platforms';
+import Partners from './components/Partners/Partners';
+import Highlights from './components/Highlights/Highlights';
 import ContactModal from './components/ContactModal/ContactModal';
 import Footer from './components/Footer/Footer';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
-import { siteConfig } from './data/content';
 import './styles/global.scss';
-
+import PlatformsPartners from './components/PlatformsPartners/PlatformsPartners';
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
@@ -27,7 +25,6 @@ function App() {
   const appRef = useRef(null);
 
   const handleIntroComplete = () => {
-    console.log('Intro complete!');
     setIntroComplete(true);
     setIntroSkipped(true);
   };
@@ -55,8 +52,6 @@ function App() {
     return () => ctx.revert();
   }, [introSkipped]);
 
-
-
   return (
     <div ref={appRef} className="app">
       <Cursor />
@@ -67,10 +62,11 @@ function App() {
       
       <main className={`main-content ${introComplete ? 'visible' : ''}`}>
         <Hero onOpenContact={() => setIsContactOpen(true)} isActive={introComplete} />
+        <About />
+        <PlatformsPartners />
         <Platforms />
         <Partners />
-        <About />
-        {siteConfig.showMediaGallery && <MediaGallery />}
+        <Highlights />
         <Footer onOpenContact={() => setIsContactOpen(true)} />
       </main>
 

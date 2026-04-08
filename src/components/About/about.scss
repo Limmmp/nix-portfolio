@@ -1,153 +1,315 @@
 @use '../../styles/variables' as *;
 
 .about {
-  padding: $spacing-xl 0;
-  background-color: $color-black;
+  position: relative;
+  width: 100%;
+  background-color: #0a0a0a;
+  overflow: hidden;
+  perspective: 1000px;  // ← ДЛЯ 3D ЭФФЕКТА
 
-  &__title {
-    color: $color-white;
-    margin-bottom: $spacing-lg;
-    letter-spacing: 0.15em;
-    font-size: $font-size-lg;
-    font-weight: 700;
-  }
-
-  &__content-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $spacing-xl;
-    align-items: center;
-
-    @media (max-width: $breakpoint-tablet) {
-      grid-template-columns: 1fr;
-      gap: $spacing-lg;
-    }
-  }
-
-  &__text {
-    max-width: 550px;
-    // ✅ Центрируем контент по вертикали
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    padding-right: $spacing-lg;
-
-    @media (max-width: $breakpoint-tablet) {
-      max-width: 100%;
-      padding-right: 0;
-    }
-  }
-
-  &__description {
-    color: $color-light-gray;
-    margin-bottom: $spacing-lg;
-    line-height: 1.8;
-    // ✅ Увеличили размер текста
-    font-size: $font-size-md;
-    font-weight: 300;
-
-    @media (max-width: $breakpoint-mobile) {
-      font-size: $font-size-sm;
-    }
-  }
-
-  &__stats {
-    display: flex;
-    gap: $spacing-md;
-    margin-top: $spacing-lg;
-
-    @media (max-width: $breakpoint-mobile) {
-      flex-direction: column;
-      gap: $spacing-sm;
-    }
-  }
-
-  // Фото
-  &__image {
-    position: relative;
-    // ✅ Изменили aspect ratio для лучшего баланса
-    aspect-ratio: 3/4;
-    overflow: hidden;
-    border: 1px solid $color-medium-gray;
-    // ✅ Увеличили максимальную высоту
-    max-height: 500px;
-    // ✅ Центрируем фото в своей ячейке
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 400px;
-
-    @media (max-width: $breakpoint-tablet) {
-      aspect-ratio: 16/9;
-      max-height: 350px;
-      max-width: 100%;
-    }
-  }
-
-  &__image-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    // Ч/Б фильтр
-    filter: grayscale(100%) contrast(1.1);
-    transition: filter $transition-slow, transform $transition-slow;
-  }
-
-  &__image-overlay {
-    position: absolute;
+  // Прогресс бар сверху
+  &__progress-container {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.3) 100%
-    );
-    pointer-events: none;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 100;
   }
 
-  // Ховер эффект
-  &:hover &__image-photo {
-    filter: grayscale(70%) contrast(1.15);
-    transform: scale(1.02);
+  &__progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #9146FF, #00f2ea);
+    transition: width 0.1s ease;
+  }
+
+  &__slide-indicator {
+    position: fixed;
+    top: 12px;
+    right: 30px;
+    font-family: $font-display;
+    font-size: 12px;
+    color: #ffffff;
+    letter-spacing: 0.15em;
+    z-index: 100;
+  }
+
+  // Обёртка слайдов (горизонтальная, двигается)
+  &__wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100vh;
+    will-change: transform;
+    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
+  }
+
+  // Слайд
+  &__slide {
+    position: relative;
+    min-width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    // Фото занимает 60-70% экрана
+    &-image {
+      position: absolute;
+      width: 65vw;
+      height: 75vh;
+      object-fit: cover;
+      border-radius: 4px;
+      overflow: hidden;
+      z-index: 1;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+
+      &-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(10, 10, 10, 0.8) 0%,
+          rgba(10, 10, 10, 0.4) 50%,
+          transparent 100%
+        );
+        z-index: 2;
+      }
+
+      // Позиционирование фото в зависимости от align
+      .about__slide--left & {
+        left: 8%;
+      }
+      .about__slide--right & {
+        right: 8%;
+      }
+      .about__slide--center & {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    // Контент
+    &-content {
+      position: relative;
+      z-index: 3;
+      padding: 0 10vw;
+      max-width: 500px;
+
+      &-inner {
+        // Анимация через GSAP
+      }
+    }
+
+    &-number {
+      display: inline-block;
+      font-family: $font-display;
+      font-size: 12px;
+      color: #666666;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    &-title {
+      font-family: $font-display;
+      font-size: clamp(48px, 6vw, 72px);
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    &-subtitle {
+      font-family: $font-display;
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    &-description {
+      font-size: clamp(14px, 1.5vw, 17px);
+      color: #999999;
+      line-height: 1.8;
+      margin-bottom: 40px;
+
+      span {
+        display: block;
+      }
+    }
+
+    &-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 42px;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ffffff;
+      font-family: $font-primary;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: transparent;
+        color: #ffffff;
+        transform: translateX(5px);
+      }
+
+      svg {
+        transition: transform 0.3s ease;
+      }
+
+      &:hover svg {
+        transform: translateX(3px);
+      }
+    }
+
+    // Позиционирование контента
+    &--left &-content {
+      margin-left: auto;
+      text-align: right;
+
+      .about__slide-content-inner {
+        margin-left: auto;
+      }
+    }
+
+    &--right &-content {
+      margin-right: auto;
+      text-align: left;
+    }
+
+    &--center &-content {
+      text-align: center;
+      margin: 0 auto;
+
+      .about__slide-content-inner {
+        margin: 0 auto;
+      }
+    }
+  }
+
+  // Навигационные точки
+  &__dots {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 100;
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+
+    &:hover,
+    &.active {
+      background-color: #ffffff;
+      transform: scale(1.2);
+    }
   }
 }
 
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  // ✅ Добавили фон и отступы для карточек
-  padding: $spacing-md;
-  background-color: $color-dark-gray;
-  border: 1px solid $color-medium-gray;
-  min-width: 120px;
-  transition: all $transition-medium;
+// Адаптивность
+@media (max-width: $breakpoint-tablet) {
+  .about {
+    &__slide {
+      &-image {
+        width: 80vw;
+        height: 60vh;
 
-  &:hover {
-    border-color: $color-white;
-    transform: translateY(-5px);
+        .about__slide--left &,
+        .about__slide--right &,
+        .about__slide--center & {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+
+      &-content {
+        padding: 0 5vw;
+        max-width: 100%;
+        text-align: center !important;
+
+        &-inner {
+          margin: 0 auto !important;
+        }
+      }
+
+      &-title {
+        font-size: clamp(36px, 8vw, 56px);
+      }
+
+      &-subtitle {
+        font-size: clamp(18px, 4vw, 24px);
+      }
+    }
+
+    &__dots {
+      bottom: 30px;
+    }
   }
+}
 
-  &__value {
-    font-family: $font-display;
-    // ✅ Увеличили размер цифр
-    font-size: $font-size-lg;
-    color: $color-white;
-    font-weight: 700;
-    line-height: 1;
-  }
+@media (max-width: $breakpoint-mobile) {
+  .about {
+    &__slide {
+      &-image {
+        width: 90vw;
+        height: 50vh;
+      }
 
-  &__label {
-    color: $color-light-gray;
-    font-size: $font-size-xs;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-top: $spacing-xs;
-    font-weight: 400;
+      &-content {
+        padding: 0 4vw;
+      }
+
+      &-description {
+        font-size: clamp(13px, 3.5vw, 15px);
+      }
+
+      &-cta {
+        padding: 16px 32px;
+        font-size: 12px;
+      }
+    }
+
+    &__progress-container {
+      height: 3px;
+    }
+
+    &__slide-indicator {
+      font-size: 11px;
+      right: 20px;
+    }
   }
 }

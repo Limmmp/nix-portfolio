@@ -7,7 +7,7 @@
   border-top: 1px solid #222222;
   border-bottom: 1px solid #222222;
   overflow: hidden;
-
+  transition: background-color 1.5s ease;
   // Фоновый паттерн NIX
   &__bg-pattern {
     position: absolute;
@@ -46,6 +46,7 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: shimmer 10s ease-in-out infinite;
+    transition: opacity 1.5s ease;
   }
 
   // Затемнение поверх паттерна
@@ -63,6 +64,7 @@
     );
     z-index: 0;
     pointer-events: none;
+    transition: opacity 1.5s ease;
   }
 
   // LIVE индикатор

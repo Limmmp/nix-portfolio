@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ContactModal from '../ContactModal/ContactModal';
 import './hero.scss';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -27,9 +28,6 @@ const animateCountUp = (element, endValue, duration = 1.5) => {
   if (isMillion) numericValue *= 1000000;
   if (isThousand) numericValue *= 1000;
 
-  // ← Убрали установку 0 (уже стоит в JSX)
-  // Просто запускаем анимацию
-
   gsap.to(obj, {
     value: numericValue,
     duration: duration,
@@ -52,7 +50,6 @@ const runHeroAnimations = () => {
     return;
   }
 
-  // Проверяем что все refs готовы
   if (!contentGroupRef.current || !statsRef.current.length || statsRef.current.some(el => !el)) {
     console.log('Hero refs not ready, retrying...');
     setTimeout(runHeroAnimations, 100);
@@ -62,14 +59,13 @@ const runHeroAnimations = () => {
   console.log('🎬 Hero animations starting!');
   setHasAnimated(true);
 
-  // ← GSAP управляет начальной прозрачностью
   const tl = gsap.timeline({ delay: 1 });
 
   // Контент группы (заголовок + подзаголовок + кнопки)
   tl.fromTo(contentGroupRef.current?.children,
-    { opacity: 0, y: 40 },      // ← Начальное состояние (скрыто)
+    { opacity: 0, y: 40 },
     {
-      opacity: 1,               // ← Конечное состояние (видно)
+      opacity: 1,
       y: 0,
       duration: 0.8,
       stagger: 0.15,
@@ -79,15 +75,14 @@ const runHeroAnimations = () => {
 
   // Статистика (появляется после контента)
   tl.fromTo(statsRef.current,
-    { opacity: 0, y: 30 },      // ← Начальное состояние (скрыто)
+    { opacity: 0, y: 30 },
     {
-      opacity: 1,               // ← Конечное состояние (видно)
+      opacity: 1,
       y: 0,
       duration: 0.6,
       stagger: 0.1,
       ease: 'power3.out',
       onComplete: () => {
-        // Запускаем Count Up после появления карточек
         statsRef.current.forEach((stat, index) => {
           const valueEl = stat?.querySelector('.hero-stat__value');
           const values = ['1.5M+', '100M+', '30K+', '7+'];
@@ -121,6 +116,53 @@ useEffect(() => {
   }
 }, [isActive, hasAnimated]);
 
+  // Анимация перехода Hero → About (контент уходит "вглубь")
+// Анимация перехода Hero → About (тонкий эффект как на icomat)
+useEffect(() => {
+  if (!isActive) return;
+
+  const ctx = gsap.context(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+        markers: false
+      }
+    });
+
+    // Тонкий эффект "отъезжания" для контента (без сильного blur)
+    tl.to('.hero__content-inner', {
+      scale: 0.92,           // ← Меньше масштабирование
+      y: -50,                // ← Сдвиг вниз
+      opacity: 0.4,          // ← Просто прозрачность (без blur)
+      duration: 1,
+      ease: 'power2.inOut'
+    }, 0);
+
+    // Фон немного увеличивается (параллакс)
+    tl.to('.hero__bg-image', {
+      scale: 1.05,           // ← Меньше масштабирование
+      opacity: 0.6,
+      duration: 1,
+      ease: 'power2.inOut'
+    }, 0);
+
+    // Статистика тоже немного отъезжает
+    tl.to('.hero__stats-row', {
+      scale: 0.95,
+      opacity: 0.3,
+      y: -30,
+      duration: 1,
+      ease: 'power2.inOut'
+    }, 0);
+
+  }, containerRef);
+
+  return () => ctx.revert();
+}, [isActive]);
+
   // Плавный скролл к якорям
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
@@ -151,7 +193,8 @@ useEffect(() => {
 
       {/* Контент по центру */}
       <div className="container hero__content">
-        <div ref={contentGroupRef} className="hero__content-group">
+        {/* ← ОБЁРТКА ДЛЯ 3D ЭФФЕКТА */}
+        <div ref={contentGroupRef} className="hero__content-inner">
           <h2 ref={titleRef} className="hero__title text-display">
             NIX
           </h2>
