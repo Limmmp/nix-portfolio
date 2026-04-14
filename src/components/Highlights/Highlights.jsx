@@ -129,7 +129,7 @@ const Highlights = () => {
   const awards = [
     {
       id: 1,
-      icon: '🏆',
+      icon: '/images/icons/streamers.jpg',
       title: 'Streamers Awards 2025',
       subtitle: 'Best MOBA Streamer',
       description: 'Nominee in international category',
@@ -137,7 +137,7 @@ const Highlights = () => {
     },
     {
       id: 2,
-      icon: '📰',
+      icon: '/images/icons/forbes.png',
       title: 'Forbes 30 under 30',
       subtitle: 'Winner',
       description: 'Media & Entertainment category',
@@ -145,7 +145,7 @@ const Highlights = () => {
     },
     {
       id: 3,
-      icon: '🎮',
+      icon: '/images/icons/aegis.png',
       title: 'The International',
       subtitle: 'Participant',
       description: 'Dota 2 World Championship',
@@ -153,7 +153,7 @@ const Highlights = () => {
     },
     {
       id: 4,
-      icon: '🌟',
+      icon: '/images/icons/twitch.png',
       title: '1M+ Subscribers',
       subtitle: 'Twitch Partner',
       description: 'Biggest Dota 2 streamer in CIS',
@@ -248,20 +248,26 @@ const Highlights = () => {
               Награды и достижения
             </p>
           </div>
-
-          <div className="highlights__awards-grid">
-            {awards.map((award) => (
-              <div key={award.id} className="highlights__award-card">
-                <div className="highlights__award-icon">{award.icon}</div>
-                <div className="highlights__award-content">
-                  <span className="highlights__award-year">{award.year}</span>
-                  <h4 className="highlights__award-title">{award.title}</h4>
-                  <span className="highlights__award-subtitle">{award.subtitle}</span>
-                  <p className="highlights__award-description">{award.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+<div className="highlights__awards-grid">
+  {awards.map((award) => (
+    <div key={award.id} className="highlights__award-card">
+      {/* ← ЗАМЕНИЛИ НА <img> */}
+      <div className="highlights__award-icon">
+        <img 
+          src={award.icon} 
+          alt={award.title}
+          loading="lazy"
+        />
+      </div>
+      <div className="highlights__award-content">
+        <span className="highlights__award-year">{award.year}</span>
+        <h4 className="highlights__award-title">{award.title}</h4>
+        <span className="highlights__award-subtitle">{award.subtitle}</span>
+        <p className="highlights__award-description">{award.description}</p>
+      </div>
+    </div>
+  ))}
+</div>
         </div>
       </div>
     </section>

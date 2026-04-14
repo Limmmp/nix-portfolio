@@ -6,122 +6,137 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.92);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  animation: fadeIn 0.3s ease;
+  // ← НЕТ cursor (работает кастомный курсор)
 }
 
 .contact-modal {
   position: relative;
-  width: 100%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background-color: $color-black;
-  border: 1px solid $color-medium-gray;
-  padding: $spacing-xl;
-  margin: $spacing-md;
+  width: 90%;
+  max-width: 42vw;
+  max-height: 80vh;
+  overflow: hidden;
+  background-color: #0a0a0a;
+  border: 0.1vh solid #333333;
+  padding: 3vh 3.5vw;
+  margin: 0;
+  // ← НЕТ cursor (работает кастомный курсор)
+  animation: slideUp 0.4s ease;
 
   &__close {
     position: absolute;
-    top: $spacing-md;
-    right: $spacing-md;
+    top: 1.5vh;
+    right: 1.5vw;
+    width: 3vh;
+    height: 3vh;
     background: transparent;
     border: none;
-    color: $color-light-gray;
-    cursor: pointer;
-    transition: color $transition-fast;
+    color: #888888;
+    // ← НЕТ cursor: pointer (работает через .interactive)
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
-      color: $color-white;
+      color: #ffffff;
+      transform: rotate(90deg);
     }
   }
 
   &__header {
-    margin-bottom: $spacing-lg;
+    margin-bottom: 2.8vh;
+    padding-bottom: 1.8vh;
+    border-bottom: 0.1vh solid #333333;
   }
 
   &__title {
-    color: $color-white;
+    color: #ffffff;
     font-family: $font-display;
-    font-size: $font-size-lg;
-    margin-bottom: $spacing-sm;
+    font-size: 1.7vw;
+    margin-bottom: 0.7vh;
     letter-spacing: 0.1em;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 
   &__subtitle {
-    color: $color-light-gray;
-    font-size: $font-size-sm;
+    color: #888888;
+    font-size: 0.9vw;
   }
 
   &__form {
     display: flex;
     flex-direction: column;
-    gap: $spacing-md;
+    gap: 1.8vh;
   }
 
   &__submit {
-    padding: $spacing-md $spacing-lg;
-    background: $color-white;
-    color: $color-black;
-    border: none;
+    padding: 1.7vh 3.5vw;
+    background: #ffffff;
+    color: #000000;
+    border: 0.1vh solid #ffffff;
     font-family: $font-primary;
-    font-size: $font-size-sm;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-size: 0.9vw;
+    font-weight: 700;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: all $transition-medium;
-    margin-top: $spacing-sm;
+    // ← НЕТ cursor: pointer (работает через .interactive)
+    transition: all 0.3s ease;
+    margin-top: 0.9vh;
 
     &:hover {
-      background: $color-light-gray;
-      transform: translateY(-2px);
+      background: transparent;
+      color: #ffffff;
+      transform: translateY(-0.3vh);
     }
 
     &:disabled {
       opacity: 0.5;
-      cursor: not-allowed;
     }
   }
 
   &__note {
-    color: $color-light-gray;
-    font-size: $font-size-xs;
+    color: #888888;
+    font-size: 0.7vw;
     text-align: center;
-    margin-top: $spacing-sm;
+    margin-top: 1.2vh;
   }
 
   &__success {
     text-align: center;
-    padding: $spacing-xl 0;
+    padding: 2.8vh 0;
 
     .success-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto $spacing-md;
-      background: $color-white;
-      color: $color-black;
+      width: 7vh;
+      height: 7vh;
+      margin: 0 auto 1.8vh;
+      background: #ffffff;
+      color: #000000;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
+      font-size: 3.5vh;
       font-weight: 700;
     }
 
     h3 {
-      color: $color-white;
+      color: #ffffff;
       font-family: $font-display;
-      font-size: $font-size-lg;
-      margin-bottom: $spacing-sm;
+      font-size: 1.7vw;
+      margin-bottom: 0.7vh;
     }
 
     p {
-      color: $color-light-gray;
+      color: #888888;
+      font-size: 0.9vw;
     }
   }
 }
@@ -129,7 +144,7 @@
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: $spacing-md;
+  gap: 1.5vw;
 
   @media (max-width: $breakpoint-mobile) {
     grid-template-columns: 1fr;
@@ -139,11 +154,11 @@
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: $spacing-xs;
+  gap: 0.6vh;
 
   label {
-    color: $color-white;
-    font-size: $font-size-xs;
+    color: #ffffff;
+    font-size: 0.7vw;
     font-weight: 500;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -152,26 +167,79 @@
   input,
   select,
   textarea {
-    padding: $spacing-sm;
-    background-color: $color-dark-gray;
-    border: 1px solid $color-medium-gray;
-    color: $color-white;
+    padding: 1.3vh 1.2vw;
+    background-color: #1a1a1a;
+    border: 0.1vh solid #333333;
+    color: #ffffff;
     font-family: $font-primary;
-    font-size: $font-size-sm;
-    transition: border-color $transition-fast;
+    font-size: 0.9vw;
+    transition: border-color 0.3s ease;
+    // ← НЕТ cursor (работает через .interactive)
 
     &:focus {
       outline: none;
-      border-color: $color-white;
+      border-color: #ffffff;
     }
 
     &::placeholder {
-      color: $color-light-gray;
+      color: #888888;
     }
   }
 
   textarea {
     resize: vertical;
-    min-height: 120px;
+    min-height: 10vh;
+  }
+}
+
+// === АНИМАЦИИ ===
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(3.5vh);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// === АДАПТИВНОСТЬ ===
+@media (max-width: $breakpoint-tablet) {
+  .contact-modal {
+    max-width: 85vw;
+    padding: 3vh 5vw;
+    max-height: 85vh;
+
+    &__title {
+      font-size: 2.5vw;
+    }
+
+    &__submit {
+      font-size: 1.1vw;
+      padding: 1.7vh 4vw;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .contact-modal {
+    max-width: 95vw;
+    padding: 2.8vh 4vw;
+    max-height: 90vh;
+
+    &__title {
+      font-size: 3.5vw;
+    }
+
+    &__submit {
+      font-size: 1.4vw;
+      padding: 1.7vh 4vw;
+    }
   }
 }

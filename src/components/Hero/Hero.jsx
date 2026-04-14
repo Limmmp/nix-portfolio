@@ -163,18 +163,23 @@ useEffect(() => {
   return () => ctx.revert();
 }, [isActive]);
 
-  // Плавный скролл к якорям
-  const handleSmoothScroll = (e, targetId) => {
-    e.preventDefault();
-    const target = document.querySelector(targetId);
-    if (target) {
-      const offsetTop = target.offsetTop;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-    }
-  };
+// Плавный скролл к якорям
+const handleSmoothScroll = (e, targetId) => {
+  e.preventDefault();
+  
+  const target = document.querySelector(targetId);
+  if (target) {
+    // ← Учёт фиксированной шапки (если есть)
+    const headerOffset = 80;
+    const elementPosition = target.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+};
 
   const stats = [
     { value: '1.5M+', label: 'FOLLOWERS', sublabel: 'ALL PLATFORMS' },
@@ -202,28 +207,33 @@ useEffect(() => {
             АЛЕКСАНДР ЛЕВИН • DOTA 2 STREAMER • CONTENT CREATOR
           </p>
           
-          <div ref={buttonsRef} className="hero__cta">
-            <a 
-              href="#stats" 
-              className="hero__btn hero__btn--secondary interactive"
-              onClick={(e) => handleSmoothScroll(e, '#stats')}
-            >
-              CHANNELS & STATS
-            </a>
-            <button 
-              className="hero__btn hero__btn--primary interactive"
-              onClick={() => onOpenContact()}
-            >
-              PARTNERSHIP
-            </button>
-            <a 
-              href="#about" 
-              className="hero__btn hero__btn--secondary interactive"
-              onClick={(e) => handleSmoothScroll(e, '#about')}
-            >
-              LEARN MORE
-            </a>
-          </div>
+<div ref={buttonsRef} className="hero__cta">
+  {/* ← CHANNELS & STATS → PLATFORMS (не #stats!) */}
+  <a 
+    href="#platforms" 
+    className="hero__btn hero__btn--secondary interactive"
+    onClick={(e) => handleSmoothScroll(e, '#platforms')}
+  >
+    CHANNELS & STATS
+  </a>
+  
+  {/* ← PARTNERSHIP → МОДАЛКА */}
+  <button 
+    className="hero__btn hero__btn--primary interactive"
+    onClick={() => onOpenContact()}
+  >
+    PARTNERSHIP
+  </button>
+  
+  {/* ← LEARN MORE → ABOUT */}
+  <a 
+    href="#about" 
+    className="hero__btn hero__btn--secondary interactive"
+    onClick={(e) => handleSmoothScroll(e, '#about')}
+  >
+    LEARN MORE
+  </a>
+</div>
         </div>
 
         {/* Статистика внизу в ряд */}

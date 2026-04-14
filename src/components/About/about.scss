@@ -5,15 +5,15 @@
   width: 100%;
   background-color: #0a0a0a;
   overflow: hidden;
-  perspective: 1000px;  // ← ДЛЯ 3D ЭФФЕКТА
+  perspective: 1000px;
 
-  // Прогресс бар сверху
+  // ← ПРОГРЕСС БАР СВЕРХУ
   &__progress-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 4px;
+    height: 0.4vh; // ← БЫЛО 4px
     background-color: rgba(255, 255, 255, 0.1);
     z-index: 100;
   }
@@ -27,26 +27,26 @@
 
   &__slide-indicator {
     position: fixed;
-    top: 12px;
-    right: 30px;
+    top: 1.2vh; // ← БЫЛО 12px
+    right: 3vw; // ← БЫЛО 30px
     font-family: $font-display;
-    font-size: 12px;
+    font-size: 0.7vw; // ← БЫЛО 12px
     color: #ffffff;
     letter-spacing: 0.15em;
     z-index: 100;
   }
 
-  // Обёртка слайдов (горизонтальная, двигается)
+  // ← ОБЁРТКА СЛАЙДОВ
   &__wrapper {
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
     height: 100vh;
     will-change: transform;
-    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
+    transform-style: preserve-3d;
   }
 
-  // Слайд
+  // ← СЛАЙД
   &__slide {
     position: relative;
     min-width: 100vw;
@@ -57,13 +57,13 @@
     overflow: hidden;
     flex-shrink: 0;
 
-    // Фото занимает 60-70% экрана
+    // ← ФОТО
     &-image {
       position: absolute;
       width: 65vw;
       height: 75vh;
       object-fit: cover;
-      border-radius: 4px;
+      border-radius: 0.4vh; // ← БЫЛО 4px
       overflow: hidden;
       z-index: 1;
 
@@ -89,12 +89,12 @@
         z-index: 2;
       }
 
-      // Позиционирование фото в зависимости от align
+      // ← ПОЗИЦИОНИРОВАНИЕ ФОТО
       .about__slide--left & {
-        left: 8%;
+        left: 6vw;
       }
       .about__slide--right & {
-        right: 8%;
+        right: 8vw;
       }
       .about__slide--center & {
         left: 50%;
@@ -102,53 +102,49 @@
       }
     }
 
-    // Контент
+    // ← КОНТЕНТ
     &-content {
       position: relative;
       z-index: 3;
-      padding: 0 10vw;
-      max-width: 500px;
-
-      &-inner {
-        // Анимация через GSAP
-      }
+      padding: 0 5vw;
+      max-width: 31vw; // ← БЫЛО 500px
     }
 
     &-number {
       display: inline-block;
       font-family: $font-display;
-      font-size: 12px;
+      font-size: 0.7vw; // ← БЫЛО 12px
       color: #666666;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin-bottom: 2vh; // ← БЫЛО 20px
     }
 
     &-title {
       font-family: $font-display;
-      font-size: clamp(48px, 6vw, 72px);
+      font-size: 5vw; // ← БЫЛО clamp(48px, 6vw, 72px)
       font-weight: 900;
       color: #ffffff;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 0.8vh; // ← БЫЛО 8px
       line-height: 1;
     }
 
     &-subtitle {
       font-family: $font-display;
-      font-size: clamp(20px, 2.5vw, 28px);
+      font-size: 2.2vw; // ← БЫЛО clamp(20px, 2.5vw, 28px)
       font-weight: 700;
       color: #ffffff;
       letter-spacing: 0.1em;
-      margin-bottom: 24px;
+      margin-bottom: 2.2vh; // ← БЫЛО 24px
     }
 
     &-description {
-      font-size: clamp(14px, 1.5vw, 17px);
+      font-size: 1.5vw; // ← БЫЛО clamp(14px, 1.5vw, 17px)
       color: #999999;
       line-height: 1.8;
-      margin-bottom: 40px;
+      margin-bottom: 3.7vh; // ← БЫЛО 40px
 
       span {
         display: block;
@@ -158,13 +154,13 @@
     &-cta {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      padding: 18px 42px;
+      gap: 0.6vw; // ← БЫЛО 12px
+      padding: 1.7vh 2.2vw; // ← БЫЛО 18px 42px
       background: #ffffff;
       color: #000000;
-      border: 1px solid #ffffff;
+      border: 0.1vh solid #ffffff; // ← БЫЛО 1px
       font-family: $font-primary;
-      font-size: 13px;
+      font-size: 0.8vw; // ← БЫЛО 13px
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -174,19 +170,21 @@
       &:hover {
         background: transparent;
         color: #ffffff;
-        transform: translateX(5px);
+        transform: translateX(0.3vw); // ← БЫЛО 5px
       }
 
       svg {
+        width: 1vw; // ← БЫЛО 20
+        height: 1vw;
         transition: transform 0.3s ease;
       }
 
       &:hover svg {
-        transform: translateX(3px);
+        transform: translateX(0.2vw); // ← БЫЛО 3px
       }
     }
 
-    // Позиционирование контента
+    // ← ПОЗИЦИОНИРОВАНИЕ КОНТЕНТА
     &--left &-content {
       margin-left: auto;
       text-align: right;
@@ -211,20 +209,20 @@
     }
   }
 
-  // Навигационные точки
+  // ← НАВИГАЦИОННЫЕ ТОЧКИ
   &__dots {
     position: fixed;
-    bottom: 40px;
+    bottom: 3.7vh; // ← БЫЛО 40px
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 12px;
+    gap: 0.6vw; // ← БЫЛО 12px
     z-index: 100;
   }
 
   &__dot {
-    width: 10px;
-    height: 10px;
+    width: 0.9vh; // ← БЫЛО 10px
+    height: 0.9vh;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
@@ -240,7 +238,7 @@
   }
 }
 
-// Адаптивность
+// === АДАПТИВНОСТЬ ===
 @media (max-width: $breakpoint-tablet) {
   .about {
     &__slide {
@@ -267,16 +265,16 @@
       }
 
       &-title {
-        font-size: clamp(36px, 8vw, 56px);
+        font-size: 5vw; // ← БЫЛО clamp(36px, 8vw, 56px)
       }
 
       &-subtitle {
-        font-size: clamp(18px, 4vw, 24px);
+        font-size: 2vw; // ← БЫЛО clamp(18px, 4vw, 24px)
       }
     }
 
     &__dots {
-      bottom: 30px;
+      bottom: 2.8vh; // ← БЫЛО 30px
     }
   }
 }
@@ -294,22 +292,22 @@
       }
 
       &-description {
-        font-size: clamp(13px, 3.5vw, 15px);
+        font-size: 1.2vw; // ← БЫЛО clamp(13px, 3.5vw, 15px)
       }
 
       &-cta {
-        padding: 16px 32px;
-        font-size: 12px;
+        padding: 1.5vh 2vw; // ← БЫЛО 16px 32px
+        font-size: 0.9vw; // ← БЫЛО 12px
       }
     }
 
     &__progress-container {
-      height: 3px;
+      height: 0.3vh; // ← БЫЛО 3px
     }
 
     &__slide-indicator {
-      font-size: 11px;
-      right: 20px;
+      font-size: 0.6vw; // ← БЫЛО 11px
+      right: 2vw; // ← БЫЛО 20px
     }
   }
 }

@@ -16,8 +16,7 @@ const PlatformsPartners = () => {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [isContactOpen, setIsContactOpen] = useState(false);
 
-  // Анимация Count Up для цифр
-  const animateCountUp = (element, endValue, duration = 1.5) => {
+  const animateCountUp = (element, endValue, duration = 1.2) => {
     const obj = { value: 0 };
     const isMillion = endValue.includes('M');
     const isThousand = endValue.includes('K');
@@ -37,20 +36,18 @@ const PlatformsPartners = () => {
         if (isMillion) displayValue = (displayValue / 1000000).toFixed(1) + 'M+';
         else if (isThousand) displayValue = Math.round(displayValue / 1000) + 'K+';
         else displayValue = Math.round(displayValue) + '+';
-        
         element.textContent = displayValue;
       }
     });
   };
 
-  // Обработка клика по карточке платформы
   const handleCardClick = (e, platform) => {
     e.preventDefault();
     setSelectedPlatform(platform);
+    setSelectedBrand(null);
     setModalOpen(true);
   };
 
-  // Подтверждение перехода на платформу
   const handlePlatformConfirm = () => {
     if (selectedPlatform) {
       window.open(selectedPlatform.url, '_blank', 'noopener,noreferrer');
@@ -59,20 +56,19 @@ const PlatformsPartners = () => {
     setSelectedPlatform(null);
   };
 
-  // Обработка клика по бренду
   const handleBrandClick = (brand) => {
     setSelectedBrand(brand);
+    setSelectedPlatform(null);
     setModalOpen(true);
   };
 
-  // Единая pin-scroll анимация с последовательным переходом
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=7000', // Увеличил для плавного перехода
+          end: '+=5500vh',
           scrub: 1,
           pin: true,
           anticipatePin: 1,
@@ -87,22 +83,19 @@ const PlatformsPartners = () => {
         }
       });
 
-      // === ЧАСТЬ 1: PLATFORMS (0-3500px) ===
-      
-      // Появление заголовка
+      // PLATFORMS - Появление
       tl.fromTo('.platforms__header',
         { opacity: 0, y: 100 },
         { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
         0
       );
 
-      // Появление карточек
       cardsRef.current.forEach((card, index) => {
         if (!card) return;
         tl.fromTo(card,
           { opacity: 0, y: 150, scale: 0.9 },
           { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' },
-          index * 0.15
+          index * 0.1
         );
         tl.call(() => {
           setTimeout(() => {
@@ -112,27 +105,28 @@ const PlatformsPartners = () => {
               if (values[i]) animateCountUp(el, values[i]);
             });
           }, 200);
-        }, null, index * 0.15 + 0.5);
+        }, null, index * 0.1 + 0.5);
       });
 
-      // Финальная тень
       tl.to('.platform-card', {
-        boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)',
+        boxShadow: '0 2.5vh 6vh rgba(0, 0, 0, 0.5)',
         duration: 0.5
       }, '+=0.3');
 
-      // Пауза чтобы показать Platforms
-      tl.to({}, { duration: 1.5 }, '+=1');
+      tl.to({}, { duration: 1 }, '+=1');
 
-      // === ПЕРЕХОД: ПОСЛЕДОВАТЕЛЬНЫЙ (3500-5000px) ===
-      
-      // ШАГ 1: Исчезновение контента Platforms
+      // ПЕРЕХОД - Исчезновение Platforms + ОТКЛЮЧЕНИЕ КЛИКОВ
       tl.to('.platform-card', {
         opacity: 0,
         scale: 0.92,
         duration: 1.4,
         ease: 'power2.inOut'
       });
+
+      // ← ОТКЛЮЧАЕМ КЛИКИ НА PLATFORMS
+      tl.set('.platforms-section', {
+        pointerEvents: 'none'
+      }, '<');
 
       tl.to('.platforms__header', {
         opacity: 0,
@@ -147,12 +141,11 @@ const PlatformsPartners = () => {
         ease: 'power2.inOut'
       }, '<');
 
-      // ШАГ 2: Исчезновение паттерна и затемнения
       tl.to('.pattern-nix', {
         opacity: 0,
         duration: 1.8,
         ease: 'power2.inOut'
-      });
+      }, '<0.2');
 
       tl.to('.platforms-partners__bg-overlay', {
         opacity: 0,
@@ -160,21 +153,19 @@ const PlatformsPartners = () => {
         ease: 'power2.inOut'
       }, '<');
 
-      // ШАГ 3: Смена цвета фона (тёмный → светлый)
       tl.to('.platforms-partners__bg', {
         backgroundColor: '#b7b7b7',
         duration: 1.8,
         ease: 'power2.inOut'
       }, '<');
 
-      // ШАГ 4: Появление градиента Partners
       tl.to('.platforms-partners__gradient', {
         opacity: 1,
         duration: 1.8,
         ease: 'power2.inOut'
       }, '<');
 
-      // ШАГ 5: ТОЛЬКО ПОТОМ показываем секцию Partners
+      // ПОКАЗЫВАЕМ PARTNERS + ВКЛЮЧАЕМ КЛИКИ
       tl.to('.partners-section', {
         opacity: 1,
         visibility: 'visible',
@@ -182,15 +173,17 @@ const PlatformsPartners = () => {
         ease: 'power2.inOut'
       });
 
-      // === ЧАСТЬ 2: PARTNERS (5000-7000px) ===
-      
-      // Появление заголовка Partners
+      // ← ВКЛЮЧАЕМ КЛИКИ НА PARTNERS
+      tl.set('.partners-section', {
+        pointerEvents: 'auto'
+      }, '<');
+
+      // PARTNERS - Появление
       tl.fromTo('.partners__title',
         { opacity: 0, x: -100 },
         { opacity: 1, x: 0, duration: 1, ease: 'power3.out' }
       );
 
-      // Появление брендов
       brandsRef.current.forEach((brand, index) => {
         if (!brand) return;
         tl.fromTo(brand,
@@ -200,19 +193,18 @@ const PlatformsPartners = () => {
         );
       }, '-=0.5');
 
-      // Появление инфо блоков
       tl.fromTo('.partners__info-block',
         { opacity: 0, x: 80 },
         { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' },
         '-=0.3'
       );
+      tl.to({}, { duration: 1.5 }, '+=1'); // ← ГЭП В КОНЦЕ
 
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
-  // === PLATFORMS DATA ===
   const platformsData = [
     {
       id: 'twitch',
@@ -244,7 +236,7 @@ const PlatformsPartners = () => {
       metrics: [
         { label: 'Total Views', value: '61.8M' },
         { label: 'Watch Hours', value: '8.5M' },
-        { label: 'New Subscribers', value: '+17K' },
+        { label: 'New Subs', value: '+17K' },
         { label: '', value: '' }
       ],
       description: 'Highlights, клипы и эксклюзивный контент. Быстрорастущий канал.',
@@ -267,7 +259,7 @@ const PlatformsPartners = () => {
         { label: 'Shares / Post', value: '178' },
         { label: 'Reactions / Post', value: '840' }
       ],
-      description: '@nixtalk — новости, анонсы стримов и личное общение с комьюнити.',
+      description: '@nixtalk — новости, анонсы стримов и общение с комьюнити.',
       logo: (
         <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
           <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
@@ -284,10 +276,10 @@ const PlatformsPartners = () => {
       metrics: [
         { label: 'Pub Views', value: '1.8M' },
         { label: 'Profile Views', value: '23K' },
-        { label: 'Likes', value: '103K' },
+        { label: 'Likes on post', value: '103K' },
         { label: 'Reposts', value: '25K' }
       ],
-      description: 'Вирусные клипы и моменты со стримов. Быстрорастущая аудитория.',
+      description: 'Клипы и моменты со стримов. Быстрорастущая аудитория.',
       logo: (
         <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
           <path d="M12.53 2.05c0-1.04.85-1.89 1.89-1.89h2.83v3.78c-.57 0-1.12-.07-1.65-.2v8.26c0 3.89-3.16 7.05-7.05 7.05S1.5 15.99 1.5 12.1c0-3.89 3.16-7.05 7.05-7.05.39 0 .77.03 1.14.1v3.75c-.36-.12-.74-.19-1.14-.19-1.89 0-3.42 1.53-3.42 3.42s1.53 3.42 3.42 3.42 3.42-1.53 3.42-3.42V2.05h.56z"/>
@@ -296,7 +288,6 @@ const PlatformsPartners = () => {
     }
   ];
 
-  // === PARTNERS DATA ===
   const brandsData = [
     { id: 1, name: 'HAVAL', year: '2024', description: 'Нативная интеграция автомобиля во время стрима. Тест-драйв, обзор функций, промокод для зрителей.' },
     { id: 2, name: 'Yandex', year: '2024', description: 'Брендирование канала в стиле Yandex Plus. Интеграция в оверлеи и чат-бот.' },
@@ -332,26 +323,17 @@ const PlatformsPartners = () => {
 
   return (
     <section ref={containerRef} className="platforms-partners" id="platforms-partners">
-      {/* Единый фон-переключатель */}
       <div className="platforms-partners__bg"></div>
-      
-      {/* Паттерн NIX */}
       <div className="platforms-partners__bg-pattern">
-        {Array.from({ length: 126 }).map((_, i) => (
+        {Array.from({ length: 120 }).map((_, i) => (
           <span key={i} className="pattern-nix">NIX</span>
         ))}
       </div>
-      
-      {/* Затемнение для Platforms */}
       <div className="platforms-partners__bg-overlay"></div>
-      
-      {/* Плавающий градиент для Partners */}
       <div className="platforms-partners__gradient"></div>
       
       <div className="container">
-        {/* === ЧАСТЬ 1: PLATFORMS === */}
-        <div className="platforms-section">
-          {/* LIVE индикатор */}
+        <div className="platforms-section" id="platforms">
           <div className="platforms__live-indicator">
             <span className="live-dot"></span>
             <span className="live-text">LIVE</span>
@@ -360,9 +342,7 @@ const PlatformsPartners = () => {
 
           <div className="platforms__header">
             <h3 className="platforms__title">PLATFORMS</h3>
-            <p className="platforms__subtitle">
-              Детальная статистика по всем каналам
-            </p>
+            <p className="platforms__subtitle">Детальная статистика по всем каналам</p>
           </div>
 
           <div className="platforms__grid">
@@ -385,9 +365,7 @@ const PlatformsPartners = () => {
                 
                 <div className="platform-card__content">
                   <div className="platform-card__header">
-                    <div className="platform-card__logo">
-                      {platform.logo}
-                    </div>
+                    <div className="platform-card__logo">{platform.logo}</div>
                     <h4 className="platform-card__name">{platform.name}</h4>
                   </div>
 
@@ -421,21 +399,19 @@ const PlatformsPartners = () => {
           </div>
         </div>
 
-        {/* === ЧАСТЬ 2: PARTNERS === */}
-        <div className="partners-section">
+        <div className="partners-section" id="partners">
           <div className="partners__title-wrapper">
             <h3 className="partners__title">PARTNERS</h3>
           </div>
 
           <div className="partners__content">
-            {/* Левая часть: 3 вертикальные строки брендов */}
             <div className="partners__brands">
               <div className="partners__brands-column partners__brands-column--up">
                 {column1.map((brand, i) => (
                   <span
-                    key={i}
+                    key={`c1-${i}`}
                     ref={(el) => (brandsRef.current[i] = el)}
-                    className="partners__brand-item"
+                    className="partners__brand-item interactive"
                     onClick={() => handleBrandClick(brand)}
                   >
                     {brand.name}
@@ -445,9 +421,9 @@ const PlatformsPartners = () => {
               <div className="partners__brands-column partners__brands-column--down">
                 {column2.map((brand, i) => (
                   <span
-                    key={i}
+                    key={`c2-${i}`}
                     ref={(el) => (brandsRef.current[i + 5] = el)}
-                    className="partners__brand-item"
+                    className="partners__brand-item interactive"
                     onClick={() => handleBrandClick(brand)}
                   >
                     {brand.name}
@@ -457,18 +433,21 @@ const PlatformsPartners = () => {
               <div className="partners__brands-column partners__brands-column--up">
                 {column3.map((brand, i) => (
                   <span
-                    key={i}
+                    key={`c3-${i}`}
                     ref={(el) => (brandsRef.current[i + 10] = el)}
-                    className="partners__brand-item"
+                    className="partners__brand-item interactive"
                     onClick={() => handleBrandClick(brand)}
                   >
                     {brand.name}
                   </span>
                 ))}
               </div>
+                {/* ← ДОБАВЬ СТРЕЛКУ "CLICK TO EXPLORE" */}
+  <div className="partners__explore-arrow">
+    <span>CLICK TO EXPLORE</span>
+  </div>
             </div>
 
-            {/* Правая часть: Инфо + Кнопка */}
             <div className="partners__info">
               <div className="partners__info-block">
                 <h4 className="partners__info-title">Целевая аудитория</h4>
@@ -493,10 +472,7 @@ const PlatformsPartners = () => {
                 </div>
               </div>
 
-              <button 
-                className="partners__cta-btn"
-                onClick={() => setIsContactOpen(true)}
-              >
+              <button className="partners__cta-btn" onClick={() => setIsContactOpen(true)}>
                 PARTNERSHIP
               </button>
             </div>
@@ -504,71 +480,45 @@ const PlatformsPartners = () => {
         </div>
       </div>
 
-      {/* Модальное окно платформ */}
       {modalOpen && selectedPlatform && (
         <div className="platforms-modal-overlay" onClick={() => setModalOpen(false)}>
           <div className="platforms-modal" onClick={(e) => e.stopPropagation()}>
-            <h3 className="platforms-modal__title">
-              Перейти на {selectedPlatform?.name} Nix?
-            </h3>
+            <h3 className="platforms-modal__title">Перейти на {selectedPlatform?.name} Nix?</h3>
             <div className="platforms-modal__buttons">
-              <button 
-                className="platforms-modal__btn platforms-modal__btn--secondary"
-                onClick={() => setModalOpen(false)}
-              >
-                ОТМЕНА
-              </button>
-              <button 
-                className="platforms-modal__btn platforms-modal__btn--primary"
-                onClick={handlePlatformConfirm}
-              >
-                ПЕРЕЙТИ
-              </button>
+              <button className="platforms-modal__btn platforms-modal__btn--secondary" onClick={() => setModalOpen(false)}>ОТМЕНА</button>
+              <button className="platforms-modal__btn platforms-modal__btn--primary" onClick={handlePlatformConfirm}>ПЕРЕЙТИ</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Модальное окно брендов */}
       {modalOpen && selectedBrand && !selectedPlatform && (
         <div className="partners-modal-overlay" onClick={() => setModalOpen(false)}>
           <div className="partners-modal" onClick={(e) => e.stopPropagation()}>
             <div className="partners-modal__header">
               <h3 className="partners-modal__title">{selectedBrand.name}</h3>
             </div>
-            
             <div className="partners-modal__content">
               <div className="partners-modal__year">
                 <span className="partners-modal__label">Год сотрудничества:</span>
                 <span className="partners-modal__value">{selectedBrand.year}</span>
               </div>
-
               <div className="partners-modal__description">
                 <p>{selectedBrand.description}</p>
               </div>
             </div>
-
             <div className="partners-modal__footer">
-              <button 
-                className="partners-modal__btn"
-                onClick={() => setModalOpen(false)}
-              >
-                Закрыть
-              </button>
+              <button className="partners-modal__btn" onClick={() => setModalOpen(false)}>Закрыть</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Индикатор прогресса скролла */}
       <div className="platforms__scroll-indicator">
         <div className="scroll-progress"></div>
       </div>
 
-      <ContactModal 
-        isOpen={isContactOpen} 
-        onClose={() => setIsContactOpen(false)} 
-      />
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </section>
   );
 };

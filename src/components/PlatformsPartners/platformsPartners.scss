@@ -5,7 +5,6 @@
   min-height: 100vh;
   overflow: hidden;
 
-  // === ЕДИНЫЙ ФОН-ПЕРЕКЛЮЧАТЕЛЬ ===
   &__bg {
     position: absolute;
     top: 0;
@@ -17,7 +16,6 @@
     transition: background-color 1.8s ease;
   }
 
-  // === ПАТТЕРН NIX ===
   &__bg-pattern {
     position: absolute;
     top: -10%;
@@ -36,7 +34,7 @@
 
   .pattern-nix {
     font-family: $font-display;
-    font-size: clamp(56px, 4.5vw, 72px);
+    font-size: 4.5vw;
     font-weight: 900;
     color: #555555;
     white-space: nowrap;
@@ -59,7 +57,6 @@
     transition: opacity 1.8s ease;
   }
 
-  // === ЗАТЕМНЕНИЕ ДЛЯ PLATFORMS ===
   &__bg-overlay {
     position: absolute;
     top: 0;
@@ -77,67 +74,48 @@
     transition: opacity 1.8s ease;
   }
 
-  // === ПЛАВАЮЩИЙ ГРАДИЕНТ ДЛЯ PARTNERS ===
-  &__gradient {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(255, 255, 255, 0.12) 0%,
-      transparent 50%,
-      rgba(0, 0, 0, 0.08) 100%
-    );
-    animation: floatGradient 25s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 1.8s ease;
-  }
-
-  // Контейнер контента
   .container {
     position: relative;
     z-index: 3;
   }
 
-  // === ЧАСТЬ 1: PLATFORMS ===
+  // === PLATFORMS SECTION ===
   .platforms-section {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     min-height: 100vh;
-    padding: clamp(80px, 8vh, 100px) 0;
+    padding: 4vh 0;
+    pointer-events: auto;
+    transition: opacity 1.4s ease;
   }
 
-  // LIVE индикатор
   .platforms__live-indicator {
-    position: absolute;
-    top: clamp(24px, 2vh, 30px);
-    right: clamp(24px, 2vw, 30px);
+    position: fixed;
+    top: 2.5vh;
+    right: 2.5vw;
     display: flex;
     align-items: center;
-    gap: clamp(8px, 0.7vw, 10px);
-    padding: clamp(8px, 0.7vh, 10px) clamp(14px, 1.3vw, 18px);
+    gap: 1vw;
+    padding: 0.8vh 1.5vw;
     background-color: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 0, 0, 0.6);
+    border: 0.15vh solid rgba(255, 0, 0, 0.6);
     border-radius: 0;
-    z-index: 10;
+    z-index: 100;
     backdrop-filter: blur(10px);
+    transition: opacity 0.8s ease;
 
     @media (max-width: $breakpoint-mobile) {
       top: auto;
-      bottom: clamp(16px, 2vh, 20px);
-      right: clamp(16px, 2vw, 20px);
+      bottom: 2vh;
+      right: 2vw;
     }
   }
 
   .live-dot {
-    width: clamp(6px, 0.6vh, 8px);
-    height: clamp(6px, 0.6vh, 8px);
+    width: 0.8vh;
+    height: 0.8vh;
     background-color: #FF0000;
     border-radius: 50%;
     animation: pulse 2s infinite;
@@ -145,32 +123,31 @@
 
   .live-text {
     font-family: $font-display;
-    font-size: clamp(9px, 0.8vw, 11px);
+    font-size: 1vw;
     font-weight: 800;
     color: #FF0000;
     letter-spacing: 0.15em;
   }
 
   .live-viewers {
-    font-size: clamp(10px, 0.9vw, 12px);
+    font-size: 1.1vw;
     color: #cccccc;
     font-weight: 500;
   }
 
-  // Заголовок PLATFORMS
   .platforms__header {
     position: relative;
     z-index: 1;
-    margin-bottom: clamp(40px, 4vh, 50px);
+    margin-bottom: 3vh;
     text-align: center;
-    padding-top: clamp(48px, 5vh, 60px);
+    padding-top: 4vh;
   }
 
   .platforms__title {
     color: #ffffff;
-    margin-bottom: clamp(11px, 1vh, 14px);
+    margin-bottom: 1vh;
     letter-spacing: 0.25em;
-    font-size: clamp(40px, 4vw, 64px);
+    font-size: 4.5vw;
     font-family: $font-display;
     font-weight: 800;
     text-transform: uppercase;
@@ -178,47 +155,46 @@
 
   .platforms__subtitle {
     color: #999999;
-    font-size: clamp(14px, 1.2vw, 16px);
-    max-width: clamp(400px, 40vw, 500px);
+    font-size: 1.3vw;
+    max-width: 40vw;
     margin: 0 auto;
     line-height: 1.5;
   }
 
-  // Сетка карточек
   .platforms__grid {
     position: relative;
     z-index: 1;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: clamp(16px, 1.5vw, 20px);
+    gap: 2.2vw;
     width: 100%;
-    max-width: clamp(1100px, 85vw, 1360px);
+    max-width: 92vw;
     margin: 0 auto;
-    padding: 0 clamp(16px, 1.5vw, 20px);
+    padding: 0 2vw;
+    justify-content: center;
 
     @media (max-width: $breakpoint-tablet) {
       grid-template-columns: repeat(2, 1fr);
-      gap: clamp(14px, 1.3vw, 16px);
+      gap: 1.5vw;
     }
 
     @media (max-width: $breakpoint-mobile) {
       grid-template-columns: 1fr;
-      gap: clamp(14px, 1.3vw, 16px);
+      gap: 1.5vw;
     }
   }
 
-  // Прогресс бар
   .platforms__scroll-indicator {
     position: fixed;
-    bottom: clamp(24px, 2.5vh, 30px);
+    bottom: 2.5vh;
     left: 50%;
     transform: translateX(-50%);
-    width: clamp(160px, 15vw, 200px);
-    height: clamp(2.5px, 0.3vh, 3px);
+    width: 15vw;
+    height: 0.3vh;
     background-color: rgba(255, 255, 255, 0.2);
     z-index: 1000;
     overflow: hidden;
-    border-radius: 2px;
+    border-radius: 0.2vh;
     pointer-events: none;
 
     .scroll-progress {
@@ -228,32 +204,33 @@
     }
   }
 
-  // Карточка платформы
   .platform-card {
     position: relative;
     display: block;
-    height: clamp(420px, 45vh, 560px); // ← УВЕЛИЧИЛ ВЫСОТУ
+    height: 60vh;
+    width: 20vw;
+    margin: 0 auto;
     background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
-    border: 1px solid #333333;
+    border: 0.1vh solid #333333;
     border-radius: 0;
     text-decoration: none;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 clamp(6px, 0.7vh, 8px) clamp(26px, 2.8vh, 32px) rgba(0, 0, 0, 0.5);
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 0.7vh 2.8vh rgba(0, 0, 0, 0.5);
 
     @media (max-width: $breakpoint-tablet) {
-      height: clamp(380px, 42vh, 520px);
+      height: 48vh;
     }
 
     @media (max-width: $breakpoint-mobile) {
-      height: clamp(360px, 40vh, 500px);
+      height: 45vh;
     }
 
     &:hover {
       border-color: var(--platform-color);
-      transform: translateY(clamp(-8px, -1vh, -10px)) scale(1.01);
-      box-shadow: 0 clamp(16px, 1.8vh, 20px) clamp(40px, 4.5vh, 50px) rgba(0, 0, 0, 0.6),
-                  0 0 clamp(28px, 3vw, 35px) rgba(var(--platform-color), 0.35);
+      transform: translateY(-1vh) scale(1.01);
+      box-shadow: 0 1.8vh 4.5vh rgba(0, 0, 0, 0.6),
+                  0 0 3vw rgba(var(--platform-color), 0.35);
 
       .platform-card__gradient {
         opacity: 1;
@@ -270,7 +247,7 @@
 
       .platform-card__logo {
         transform: scale(1.1);
-        filter: drop-shadow(0 0 clamp(16px, 1.8vh, 20px) var(--platform-color));
+        filter: drop-shadow(0 0 1.8vh var(--platform-color));
       }
     }
 
@@ -280,10 +257,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border: 2px solid var(--platform-color);
+      border: 0.2vh solid var(--platform-color);
       border-radius: 0;
       opacity: 0;
-      transition: all 0.4s ease;
+      transition: all 0.35s ease;
       pointer-events: none;
     }
 
@@ -295,7 +272,7 @@
       height: 100%;
       background: var(--platform-gradient);
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.35s ease;
       pointer-events: none;
     }
 
@@ -304,8 +281,10 @@
       z-index: 1;
       display: flex;
       flex-direction: column;
+      align-items: center;
       height: 100%;
-      padding: clamp(20px, 2.2vh, 24px) clamp(16px, 1.6vw, 20px);
+      padding: 2vh 1.8vw;
+      text-align: center;
     }
 
     &__header {
@@ -313,18 +292,18 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: clamp(13px, 1.2vh, 16px);
-      padding-bottom: clamp(15px, 1.6vh, 18px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: clamp(18px, 2vh, 22px);
-      min-height: clamp(140px, 15vh, 170px); // ← УВЕЛИЧИЛ
+      gap: 1.2vh;
+      padding-bottom: 1.8vh;
+      border-bottom: 0.1vh solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2vh;
+      min-height: 18vh;
       position: relative;
+      width: 100%;
     }
 
-    // ← УВЕЛИЧЕННЫЕ ЛОГОТИПЫ (100px → 140px)
     &__logo {
-      width: clamp(110px, 10vh, 140px);
-      height: clamp(110px, 10vh, 140px);
+      width: 18vh;
+      height: 18vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -332,13 +311,13 @@
       border: none;
       border-radius: 0;
       color: #ffffff;
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
       svg {
-        width: 70%; // ← Логотип крупнее в контейнере
-        height: 70%;
-        filter: drop-shadow(0 0 clamp(8px, 0.8vh, 10px) rgba(255, 255, 255, 0.3));
-        transition: all 0.4s ease;
+        width: 75%;
+        height: 75%;
+        filter: drop-shadow(0 0 0.8vh rgba(255, 255, 255, 0.3));
+        transition: all 0.35s ease;
       }
 
       .platform-card:hover & {
@@ -350,14 +329,14 @@
     &__name {
       color: #ffffff;
       font-family: $font-display;
-      font-size: clamp(16px, 1.8vw, 26px);
+      font-size: 1.5vw;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       font-weight: 800;
       text-align: center;
       opacity: 0;
-      transform: translateY(-50%) translateY(clamp(16px, 1.6vh, 20px));
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transform: translateY(-50%) translateY(1.6vh);
+      transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       position: absolute;
       width: 100%;
       left: 0;
@@ -373,53 +352,57 @@
       flex: 1;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: clamp(11px, 1.1vw, 14px);
-      padding: clamp(6px, 0.7vh, 8px) 0;
+      gap: 1.1vw;
+      padding: 0.7vh 0;
       align-content: start;
-      min-height: clamp(160px, 16vh, 200px);
+      min-height: 20vh;
+      width: 100%;
 
       @media (max-width: $breakpoint-mobile) {
-        gap: clamp(10px, 1vw, 12px);
-        min-height: clamp(145px, 15vh, 180px);
+        gap: 1vw;
+        min-height: 18vh;
       }
     }
 
     &__footer {
-      padding-top: clamp(13px, 1.4vh, 16px);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.4vh;
+      border-top: 0.1vh solid rgba(255, 255, 255, 0.1);
       margin-top: auto;
+      text-align: center; // ← ДОБАВЬ ЭТО
+      width: 100%;
     }
 
     &__description {
       color: #999999;
-      font-size: clamp(10px, 1vw, 13px);
+      font-size: 0.85vw;
       line-height: 1.6;
       text-align: center;
       font-weight: 400;
+      max-width: 90%;
+      margin: 0 auto;
     }
 
     &__arrow {
       position: absolute;
-      bottom: clamp(13px, 1.4vh, 16px);
+      bottom: 1.4vh;
       left: 50%;
-      transform: translateX(-50%) translateY(clamp(20px, 2.2vh, 25px));
+      transform: translateX(-50%) translateY(2.2vh);
       color: var(--platform-color);
       opacity: 0;
-      transition: all 0.4s ease;
+      transition: all 0.35s ease;
     }
   }
 
-  // Статистика
   .platform-stat {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(5px, 0.5vh, 6px);
-    padding: clamp(10px, 1vh, 12px) clamp(8px, 0.8vw, 10px);
+    gap: 0.5vh;
+    padding: 1vh 0.8vw;
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 0.1vh solid rgba(255, 255, 255, 0.08);
     transition: all 0.3s ease;
 
     .platform-card:hover & {
@@ -432,7 +415,7 @@
 
     &__value {
       font-family: $font-display;
-      font-size: clamp(18px, 2vw, 26px);
+      font-size: 1.9vw;
       font-weight: 800;
       color: #ffffff;
       line-height: 1;
@@ -440,7 +423,7 @@
     }
 
     &__label {
-      font-size: clamp(8px, 0.8vw, 11px);
+      font-size: 0.75vw;
       color: #888888;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -449,29 +432,29 @@
     }
 
     &__empty {
-      min-height: clamp(36px, 4vh, 45px);
+      min-height: 4vh;
     }
   }
 
-  // === ЧАСТЬ 2: PARTNERS ===
+  // === PARTNERS SECTION (конвертировано из partners.scss) ===
   .partners-section {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     min-height: 100vh;
-    padding: clamp(80px, 8vh, 100px) 0;
+    padding: 8vh 0;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: opacity 1.4s ease, visibility 1.4s ease;
   }
 
-  // ← ЦЕНТРОВКА ЗАГОЛОВКА PARTNERS
+  // ← ЗАГОЛОВОК БЛИЖЕ К ЛЕВОМУ КРАЮ (конвертировано: 40px → 2.5vw)
   .partners__title-wrapper {
     position: absolute;
-    left: 40px;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 41.8%;
+    transform: translateY(-50%);
     z-index: 10;
 
     @media (max-width: $breakpoint-tablet) {
@@ -479,173 +462,256 @@
       left: 0;
       top: 0;
       transform: none;
-      padding: clamp(32px, 3.5vh, 40px) 0 clamp(16px, 1.8vh, 20px) 0;
-      text-align: center;
+      padding: 4.5vh 0 2.3vh 2.5vw;
     }
   }
 
-  // ← КРУПНЕЕ ЗАГОЛОВОК PARTNERS
-  .partners__title {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
-    
-    color: #000000;
-    font-family: $font-display;
-    font-size: clamp(56px, 7vw, 120px); // ← УВЕЛИЧИЛ
-    font-weight: 900;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    white-space: nowrap;
+  // ← ЗАГОЛОВОК (конвертировано: clamp(48px, 6vw, 96px) → 5vw)
+.partners__title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg); // ← БЫЛО 180deg (снизу-вверх), СТАЛО 0deg (сверху-вниз)
+  
+  color: #000000;
+  font-family: $font-display;
+  font-size: 6.2vw; // ← БЫЛО 5vw, СТАЛО 6vw (+20%)
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  white-space: nowrap;  
 
-    @media (max-width: $breakpoint-tablet) {
-      writing-mode: horizontal-tb;
-      transform: none;
-      font-size: clamp(42px, 6vw, 72px);
-    }
+  @media (max-width: $breakpoint-tablet) {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 3.5vw;
   }
+}
 
-  // ← ЦЕНТРОВКА И АДАПТИВ КОНТЕНТА
+  // ← КОНТЕНТ (конвертировано: 80px → 5vw gap, 1400px → 90vw max-width)
   .partners__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(64px, 5vw, 80px);
-    max-width: clamp(1150px, 85vw, 1400px);
+    gap: clamp(40px, 4vw, 100px);
+    max-width: 100vw;
     margin: 0 auto;
-    padding: clamp(64px, 6.5vh, 80px) clamp(32px, 3vw, 40px);
+    padding: 9vh 4vw;
     min-height: 100vh;
-    align-items: center; // ← Центровка по вертикали
+    align-items: center;
 
     @media (max-width: $breakpoint-tablet) {
       grid-template-columns: 1fr;
-      gap: clamp(32px, 3.5vw, 40px);
-      padding: clamp(32px, 3.5vh, 40px) clamp(16px, 1.8vw, 20px);
+      gap: 2.5vw;
+      padding: 4.5vh 2vw;
       min-height: auto;
     }
   }
 
-  // ← ЦЕНТРОВКА БРЕНДОВ
-  .partners__brands {
-    display: flex;
-    justify-content: center; // ← Центровка
-    gap: clamp(32px, 3vw, 40px);
-    height: clamp(500px, 55vh, 650px); // ← Чуть выше
-    overflow: hidden;
-    position: relative;
+  // ← БРЕНДЫ (конвертировано: 600px → 65vh, 100px → 6.5vw)
+.partners__brands {
+  display: flex;
+  justify-content: center;
+  gap: 4vw;
+  height: 85vh;
+  bottom: 10%;
+  overflow: hidden;
+  position: relative;
+  margin-left: 6.5vw;
+  
 
-    @media (max-width: $breakpoint-tablet) {
-      height: clamp(350px, 42vh, 450px);
-      gap: clamp(24px, 2.5vw, 30px);
+
+  // ← ДОБАВЛЯЕМ ГРАДИЕНТ К ВЕРХНЕМУ И НИЖНЕМУ КРАЮ КОНТЕЙНЕРА
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 8vh; // ← Размер градиента
+    pointer-events: none;
+    z-index: 5; // ← Поверх брендов, но под контентом
+  }
+  
+  &::before {
+    top: 0;
+    background: linear-gradient(to bottom, #b7b7b7 0%, transparent 100%);
+  }
+  
+  &::after {
+    bottom: 0;
+    background: linear-gradient(to top, #b7b7b7 0%, transparent 100%);
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    height: 45vh;
+    gap: 2vw;
+    margin-left: 0;
+    
+    &::before,
+    &::after {
+      height: 6vh; // ← Меньше на мобильных
     }
   }
+}
 
   .partners__brands-column {
     display: flex;
     flex-direction: column;
-    gap: clamp(19px, 2vh, 24px);
+    gap: 2.8vh;
     position: relative;
+    background: transparent;
+      &:nth-child(1) {
+    z-index: 3;
+  }
+  
+  &:nth-child(2) {
+    z-index: 2;
+  }
+  
+  &:nth-child(3) {
+    z-index: 1;
+  }
+  }
+  
 
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: clamp(80px, 8.5vh, 100px);
-      pointer-events: none;
-      z-index: 2;
-    }
+.partners__brand-item {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  
+  font-family: $font-display;
+  font-size: 3vw;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: transparent;
+  padding: 1.4vh 0;
+  transition: all 0.3s ease;
 
-    &::before {
-      top: 0;
-      background: linear-gradient(to bottom, #b7b7b7 0%, transparent 100%);
-    }
-
-    &::after {
-      bottom: 0;
-      background: linear-gradient(to top, #b7b7b7 0%, transparent 100%);
-    }
+  
+  // ← ЛИНИЯ СВЕРХУ (была)
+  border-right: 0.1vh solid rgba(0, 0, 0, 0.2);
+  border-left: 0.1vh solid rgba(0, 0, 0, 0.2);
+  
+  // ← РЕАКЦИЯ НА КУРСОР (ховер)
+  &:hover {
+    color: #333333; // ← Темнеет при наведении
+    transform: rotate(180deg) scale(1.08); // ← Увеличение при наведении
+    text-shadow: 0 0 1vh rgba(0, 0, 0, 0.2); // ← Лёгкая тень
   }
 
-  .partners__brand-item {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
-    
-    font-family: $font-display;
-    font-size: clamp(22px, 2.5vw, 32px); // ← Чуть крупнее
-    font-weight: 700;
-    color: #000000;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    padding: clamp(10px, 1vh, 12px) 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
+  &:last-child {
+    border-right: none;
+  }
 
-    &:last-child {
-      border-right: none;
-    }
+  @media (max-width: $breakpoint-tablet) {
+    writing-mode: horizontal-tb;
+    transform: none;
+    border-top: 0.1vh solid rgba(0, 0, 0, 0.2);
+    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.2);
+    border-right: none;
+    padding: 0.9vh 0;
 
     &:hover {
-      color: #666666;
-      transform: rotate(180deg) scale(1.05);
-    }
-
-    @media (max-width: $breakpoint-tablet) {
-      writing-mode: horizontal-tb;
-      transform: none;
-      border-right: none;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      padding: clamp(6px, 0.7vh, 8px) 0;
-
-      &:hover {
-        transform: scale(1.02);
-      }
+      transform: scale(1.05);
     }
   }
+}
 
-  // ← ЦЕНТРОВКА ИНФО-БЛОКОВ
-  .partners__info {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(19px, 2vh, 24px);
-    justify-content: center; // ← Центровка по вертикали
+  .partners__brands-column--up {
+    animation: scrollUp 25s linear infinite;
   }
 
-  .partners__info-block {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    padding: clamp(22px, 2.4vh, 28px);
-    width: 100%;
+  .partners__brands-column--down {
+    animation: scrollDown 25s linear infinite;
   }
+.partners__explore-arrow {
+  position: absolute;
+  bottom: 2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8vh;
+  color: #000000;
+  font-family: $font-primary;
+  font-size: 0.7vw;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 3;
 
-  .partners__info-title {
-    font-family: $font-display;
-    font-size: clamp(11px, 1.1vw, 13px);
-    font-weight: 700;
-    color: #000000;
-    margin-bottom: clamp(15px, 1.6vh, 18px);
-    padding-bottom: clamp(10px, 1vh, 12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+  
+  &:hover {
+    opacity: 1;
   }
+  
+  @media (max-width: $breakpoint-tablet) {
+    font-size: 0.9vw;
+    bottom: 1.5vh;
+    
+    svg {
+      width: 2vh;
+      height: 2vh;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.5vh);
+  }
+}
+  // ← ИНФО-БЛОКИ (конвертировано: 24px → 2.8vh gap)
+.partners__info {
+  display: flex;
+  flex-direction: column;
+  gap: 6vh;
+  justify-content: center; // ← БЫЛО center, СТАЛО flex-start (поднимаем вверх)
+  padding-top: 0vh; // ← Убрал лишний отступ
+  margin-top: -17vh; // ← Поднимаем весь блок на 2vh вверх
+}
+
+.partners__info-block {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 0.1vh solid rgba(0, 0, 0, 0.15);
+  padding: 3.7vh; // ← БЫЛО 3.2vh, СТАЛО 3.7vh (+15%)
+  width: 100%;
+}
+
+.partners__info-title {
+  font-family: $font-display;
+  font-size: 0.85vw;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 2.1vh;
+  padding-bottom: 1.4vh;
+  border-bottom: 0.1vh solid rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
 
   .partners__info-list {
     display: flex;
     flex-direction: column;
-    gap: clamp(11px, 1.2vh, 14px);
+    gap: 1.6vh;
   }
 
   .partners__info-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: clamp(10px, 1vh, 12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 1.4vh;
+    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.1);
 
     &:last-child {
       border-bottom: none;
@@ -654,7 +720,7 @@
   }
 
   .partners__info-label {
-    font-size: clamp(9px, 0.9vw, 11px);
+    font-size: 0.7vw;
     color: #333333;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -662,7 +728,7 @@
   }
 
   .partners__info-value {
-    font-size: clamp(12px, 1.3vw, 14px);
+    font-size: 0.9vw;
     color: #000000;
     font-weight: 700;
     text-align: right;
@@ -671,7 +737,7 @@
   .partners__formats-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: clamp(10px, 1vw, 12px);
+    gap: 0.8vw;
 
     @media (max-width: $breakpoint-mobile) {
       grid-template-columns: 1fr;
@@ -679,8 +745,8 @@
   }
 
   .partners__format-item {
-    padding: clamp(8px, 0.9vh, 10px) 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1.2vh 0;
+    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.1);
 
     &:last-child {
       border-bottom: none;
@@ -688,37 +754,37 @@
   }
 
   .partners__format-title {
-    font-size: clamp(10px, 1vw, 12px);
+    font-size: 0.8vw;
     color: #000000;
     font-weight: 600;
     letter-spacing: 0.05em;
   }
 
+  // ← КНОПКА (конвертировано: 20px 42px → 2.3vh 2.7vw)
   .partners__cta-btn {
     width: 100%;
-    padding: clamp(16px, 1.8vh, 20px) clamp(34px, 3.5vw, 42px);
+    padding: 2.3vh 2.7vw;
     background: #000000;
     color: #ffffff;
-    border: 1px solid #000000;
+    border: 0.1vh solid #000000;
     font-family: $font-primary;
-    font-size: clamp(11px, 1.2vw, 13px);
+    font-size: 0.85vw;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: clamp(8px, 0.9vh, 10px);
+    margin-top: 1.2vh;
 
     &:hover {
       background: transparent;
       color: #ffffff;
-      transform: translateY(clamp(-2px, -0.3vh, -3px));
+      transform: translateY(-0.3vh);
     }
   }
 }
 
-// === МОДАЛЬНЫЕ ОКНА ===
 
+// === МОДАЛЬНЫЕ ОКНА (конвертировано) ===
 .platforms-modal-overlay {
   position: fixed;
   top: 0;
@@ -737,9 +803,9 @@
 .platforms-modal {
   position: relative;
   background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-  border: 1px solid #333333;
-  padding: clamp(32px, 3.5vh, 40px) clamp(26px, 3vw, 32px);
-  max-width: clamp(384px, 42vw, 480px);
+  border: 0.1vh solid #333333;
+  padding: 4vh 3.5vw;
+  max-width: 42vw;
   width: 90%;
   text-align: center;
   border-radius: 0;
@@ -748,8 +814,8 @@
   &__title {
     color: #ffffff;
     font-family: $font-display;
-    font-size: clamp(16px, 1.7vw, 22px);
-    margin-bottom: clamp(26px, 3vh, 32px);
+    font-size: 1.7vw;
+    margin-bottom: 3.7vh;
     letter-spacing: 0.05em;
     font-weight: 700;
     line-height: 1.4;
@@ -757,21 +823,20 @@
 
   &__buttons {
     display: flex;
-    gap: clamp(13px, 1.3vw, 16px);
+    gap: 1.3vw;
     justify-content: center;
   }
 
   &__btn {
-    padding: clamp(13px, 1.4vh, 16px) clamp(29px, 3vw, 36px);
+    padding: 1.9vh 3.5vw;
     font-family: $font-primary;
-    font-size: clamp(11px, 1.1vw, 13px);
+    font-size: 1.1vw;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    border: 1px solid #ffffff;
-    cursor: pointer;
+    border: 0.1vh solid #ffffff;
     transition: all 0.3s ease;
-    min-width: clamp(128px, 14vw, 160px);
+    min-width: 14vw;
     border-radius: 0;
 
     &--primary {
@@ -782,8 +847,8 @@
       &:hover {
         background: transparent;
         color: #ffffff;
-        transform: translateY(clamp(-2px, -0.3vh, -3px));
-        box-shadow: 0 clamp(6px, 0.7vh, 8px) clamp(19px, 2.2vh, 24px) rgba(255, 255, 255, 0.2);
+        transform: translateY(-0.3vh);
+        box-shadow: 0 0.7vh 2.2vh rgba(255, 255, 255, 0.2);
       }
     }
 
@@ -796,7 +861,7 @@
         background: rgba(255, 255, 255, 0.1);
         border-color: #ffffff;
         color: #ffffff;
-        transform: translateY(clamp(-2px, -0.3vh, -3px));
+        transform: translateY(-0.3vh);
       }
     }
   }
@@ -820,55 +885,55 @@
 .partners-modal {
   position: relative;
   background: #ffffff;
-  padding: clamp(32px, 3.5vh, 40px) clamp(26px, 3vw, 32px);
-  max-width: clamp(400px, 42vw, 500px);
+  padding: 4vh 3.5vw;
+  max-width: 42vw;
   width: 90%;
   animation: slideUp 0.4s ease;
 
   &__header {
-    margin-bottom: clamp(24px, 2.8vh, 30px);
-    padding-bottom: clamp(16px, 1.8vh, 20px);
-    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 3.5vh;
+    padding-bottom: 2.3vh;
+    border-bottom: 0.1vh solid #e0e0e0;
   }
 
   &__title {
     font-family: $font-display;
-    font-size: clamp(21px, 2.2vw, 26px);
+    font-size: 2.2vw;
     font-weight: 800;
     color: #000000;
     letter-spacing: 0.05em;
   }
 
   &__content {
-    margin-bottom: clamp(24px, 2.8vh, 30px);
+    margin-bottom: 3.5vh;
   }
 
   &__year {
-    margin-bottom: clamp(19px, 2.2vh, 24px);
-    padding: clamp(13px, 1.4vh, 16px);
+    margin-bottom: 2.8vh;
+    padding: 1.9vh;
     background: #f5f5f5;
-    border-radius: 4px;
+    border-radius: 0.5vh;
   }
 
   &__label {
     display: block;
-    font-size: clamp(9px, 0.9vw, 11px);
+    font-size: 0.7vw;
     color: #666666;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    margin-bottom: clamp(6px, 0.7vh, 8px);
+    margin-bottom: 0.9vh;
     font-weight: 600;
   }
 
   &__value {
-    font-size: clamp(13px, 1.5vw, 16px);
+    font-size: 1.9vh;
     color: #000000;
     font-weight: 700;
   }
 
   &__description {
     p {
-      font-size: clamp(11px, 1.2vw, 14px);
+      font-size: 1.6vh;
       color: #333333;
       line-height: 1.7;
     }
@@ -880,16 +945,15 @@
   }
 
   &__btn {
-    padding: clamp(13px, 1.4vh, 16px) clamp(26px, 3vw, 32px);
+    padding: 1.9vh 3.5vw;
     font-family: $font-primary;
-    font-size: clamp(10px, 1vw, 12px);
+    font-size: 0.8vw;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    border: 1px solid #000000;
+    border: 0.1vh solid #000000;
     background: #000000;
     color: #ffffff;
-    cursor: pointer;
     transition: all 0.3s ease;
 
     &:hover {
@@ -900,40 +964,21 @@
 }
 
 // === АНИМАЦИИ ===
-
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(1.3);
-  }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
 }
 
 @keyframes shimmer {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 @keyframes floatGradient {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(3%, 3%) rotate(2deg);
-  }
-  50% {
-    transform: translate(0, 5%) rotate(0deg);
-  }
-  75% {
-    transform: translate(-3%, 3%) rotate(-2deg);
-  }
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(3%, 3%) rotate(2deg); }
+  50% { transform: translate(0, 5%) rotate(0deg); }
+  75% { transform: translate(-3%, 3%) rotate(-2deg); }
 }
 
 @keyframes fadeIn {
@@ -942,30 +987,16 @@
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(clamp(24px, 2.8vh, 30px));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(3.5vh); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scrollUp {
-  0% {
-    transform: translateY(20%);
-  }
-  100% {
-    transform: translateY(-20%);
-  }
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
 }
 
 @keyframes scrollDown {
-  0% {
-    transform: translateY(-20%);
-  }
-  100% {
-    transform: translateY(20%);
-  }
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
 }

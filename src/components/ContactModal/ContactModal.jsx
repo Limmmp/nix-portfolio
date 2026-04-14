@@ -15,20 +15,45 @@ const ContactModal = ({ isOpen, onClose }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const modalRef = useRef(null);
 
+  // ← БЛОКИРОВКА СКРОЛЛА ФОНА
   useEffect(() => {
     if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
+  // ← ЗАКРЫТИЕ ПО ESC
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    
+    if (isOpen) {
+      window.addEventListener('keydown', handleEsc);
+    }
+    
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [isOpen, onClose]);
+
+  // ← АНИМАЦИЯ ОТКРЫТИЯ
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
       gsap.fromTo(modalRef.current,
         { opacity: 0, scale: 0.95, y: 20 },
         { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: 'power3.out' }
       );
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
     }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
   }, [isOpen]);
 
   const handleChange = (e) => {
@@ -41,8 +66,7 @@ const ContactModal = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Формируем mailto ссылку
+    
     const subject = encodeURIComponent(`Partnership Inquiry: ${formData.company}`);
     const body = encodeURIComponent(
       `Name: ${formData.name}\n` +
@@ -52,10 +76,8 @@ const ContactModal = ({ isOpen, onClose }) => {
       `Message:\n${formData.message}`
     );
 
-    // Симуляция отправки (в реальности можно подключить Formspree или EmailJS)
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // Открываем почтовый клиент
     window.location.href = `mailto:nixoffers@gmail.com?subject=${subject}&body=${body}`;
 
     setIsSubmitting(false);
@@ -70,15 +92,20 @@ const ContactModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
+    // ← УБРАЛ interactive С OVERLAY (только клик для закрытия)
     <div className="contact-modal-overlay" onClick={onClose}>
-      <div ref={modalRef} className="contact-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="contact-modal__close" onClick={onClose}>
+      <div 
+        ref={modalRef} 
+        className="contact-modal" // ← УБРАЛ interactive С МОДАЛКИ
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* ← КНОПКА ЗАКРЫТИЯ С interactive */}
+        <button className="contact-modal__close interactive" onClick={onClose}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
+            <path d="M18 6L6 18M6 6l12 12" />
           </svg>
         </button>
-
+        
         <div className="contact-modal__header">
           <h2 className="contact-modal__title">PARTNERSHIP INQUIRY</h2>
           <p className="contact-modal__subtitle">
@@ -99,6 +126,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                   onChange={handleChange}
                   required
                   placeholder="Ваше имя"
+                  className="interactive" // ← interactive НА INPUT
                 />
               </div>
               <div className="form-group">
@@ -111,6 +139,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                   onChange={handleChange}
                   required
                   placeholder="Название компании"
+                  className="interactive" // ← interactive НА INPUT
                 />
               </div>
             </div>
@@ -125,6 +154,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 required
                 placeholder="work@company.com"
+                className="interactive" // ← interactive НА INPUT
               />
             </div>
 
@@ -135,6 +165,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 name="type"
                 value={formData.type}
                 onChange={handleChange}
+                className="interactive" // ← interactive НА SELECT
               >
                 <option value="partnership">Партнёрство</option>
                 <option value="sponsorship">Спонсорство</option>
@@ -154,6 +185,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 required
                 rows="5"
                 placeholder="Опишите ваш проект или предложение..."
+                className="interactive" // ← interactive НА TEXTAREA
               />
             </div>
 

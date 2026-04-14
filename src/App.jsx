@@ -6,8 +6,6 @@ import Cursor from './components/Cursor/Cursor';
 import VideoIntro from './components/VideoIntro/VideoIntro';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
-import Platforms from './components/Platforms/Platforms';
-import Partners from './components/Partners/Partners';
 import Highlights from './components/Highlights/Highlights';
 import ContactModal from './components/ContactModal/ContactModal';
 import Footer from './components/Footer/Footer';
@@ -64,8 +62,6 @@ function App() {
         <Hero onOpenContact={() => setIsContactOpen(true)} isActive={introComplete} />
         <About />
         <PlatformsPartners />
-        <Platforms />
-        <Partners />
         <Highlights />
         <Footer onOpenContact={() => setIsContactOpen(true)} />
       </main>
