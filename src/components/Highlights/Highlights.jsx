@@ -256,7 +256,6 @@ const Highlights = () => {
         <img 
           src={award.icon} 
           alt={award.title}
-          loading="lazy"
         />
       </div>
       <div className="highlights__award-content">
