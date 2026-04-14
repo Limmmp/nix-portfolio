@@ -79,7 +79,7 @@ const Highlights = () => {
       title: 'The International 2024 Moment',
       views: '2.5M',
       platform: 'Twitch',
-      thumbnail: '/images/highlight-1.jpg',
+      thumbnail: '/images/highlights/highlight-1.jpg',
       videoUrl: 'https://www.twitch.tv/videos/...',
       featured: true
     },
@@ -88,7 +88,7 @@ const Highlights = () => {
       title: 'Epic Comeback Game',
       views: '1.8M',
       platform: 'YouTube',
-      thumbnail: '/images/highlight-2.jpg',
+      thumbnail: '/images/highlights/highlight-2.jpg',
       videoUrl: 'https://www.youtube.com/watch?v=...'
     },
     {
@@ -96,7 +96,7 @@ const Highlights = () => {
       title: 'Funny Rage Moment',
       views: '900K',
       platform: 'TikTok',
-      thumbnail: '/images/highlight-3.jpg',
+      thumbnail: '/images/highlights/highlight-3.jpg',
       videoUrl: 'https://www.tiktok.com/@nix/...'
     },
     {
@@ -104,7 +104,7 @@ const Highlights = () => {
       title: 'Best Plays Compilation',
       views: '750K',
       platform: 'YouTube',
-      thumbnail: '/images/highlight-4.jpg',
+      thumbnail: '/images/highlights/highlight-4.jpg',
       videoUrl: 'https://www.youtube.com/watch?v=...'
     },
     {
@@ -112,7 +112,7 @@ const Highlights = () => {
       title: 'Stream Highlights #47',
       views: '620K',
       platform: 'Twitch',
-      thumbnail: '/images/highlight-5.jpg',
+      thumbnail: '/images/highlights/highlight-5.jpg',
       videoUrl: 'https://www.twitch.tv/videos/...'
     },
     {
@@ -120,7 +120,7 @@ const Highlights = () => {
       title: 'Insane Outplay',
       views: '580K',
       platform: 'TikTok',
-      thumbnail: '/images/highlight-6.jpg',
+      thumbnail: '/images/highlights/highlight-6.jpg',
       videoUrl: 'https://www.tiktok.com/@nix/...'
     }
   ];
