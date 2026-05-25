@@ -121,7 +121,7 @@ useEffect(() => {
       id: 'now',
       title: 'NOW',
       subtitle: 'Streamer & Creator',
-      description: 'Forbes 30 да 30\n1M+ community\nЕжедневный контент на Twtich & Youtube',
+      description: 'Forbes 30 до 30\n1M+ community\nЕжедневный контент на Twtich & Youtube',
       image: '/images/about/about-now.jpg',
       align: 'right'
     },

@@ -208,7 +208,7 @@ const handleSmoothScroll = (e, targetId) => {
           </p>
           
 <div ref={buttonsRef} className="hero__cta">
-  {/* ← CHANNELS & STATS → PLATFORMS (не #stats!) */}
+  {/* ← CHANNELS & STATS → PLATFORMS  */}
   <a 
     href="#platforms" 
     className="hero__btn hero__btn--secondary interactive"

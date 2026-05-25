@@ -74,6 +74,25 @@
     transition: opacity 1.8s ease;
   }
 
+  &__gradient {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+    animation: floatGradient 25s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1.8s ease;
+  }
+
   .container {
     position: relative;
     z-index: 3;
@@ -104,7 +123,15 @@
     border-radius: 0;
     z-index: 100;
     backdrop-filter: blur(10px);
-    transition: opacity 0.8s ease;
+    transition: all 0.3s ease;
+    text-decoration: none;
+
+    &:hover {
+      background-color: rgba(20, 20, 20, 0.95);
+      border-color: rgba(255, 0, 0, 1);
+      transform: translateY(-0.2vh);
+      box-shadow: 0 0.5vh 2vh rgba(255, 0, 0, 0.3);
+    }
 
     @media (max-width: $breakpoint-mobile) {
       top: auto;
@@ -116,9 +143,13 @@
   .live-dot {
     width: 0.8vh;
     height: 0.8vh;
-    background-color: #FF0000;
+    background-color: #555555;
     border-radius: 50%;
-    animation: pulse 2s infinite;
+    transition: background-color 0.3s ease;
+    &--active {
+      background-color: #FF0000;
+      animation: pulse 2s infinite;
+    }
   }
 
   .live-text {
@@ -127,6 +158,7 @@
     font-weight: 800;
     color: #FF0000;
     letter-spacing: 0.15em;
+    text-transform: uppercase;
   }
 
   .live-viewers {
@@ -368,7 +400,7 @@
       padding-top: 1.4vh;
       border-top: 0.1vh solid rgba(255, 255, 255, 0.1);
       margin-top: auto;
-      text-align: center; // ← ДОБАВЬ ЭТО
+      text-align: center;
       width: 100%;
     }
 
@@ -436,299 +468,157 @@
     }
   }
 
-  // === PARTNERS SECTION (конвертировано из partners.scss) ===
+  // === PARTNERS SECTION (ОБНОВЛЕННАЯ) ===
   .partners-section {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 100vh;
-    padding: 8vh 0;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+    top: 0; left: 0; width: 100%; min-height: 100vh;
+    padding: 0;
+    opacity: 0; visibility: hidden; pointer-events: none;
     transition: opacity 1.4s ease, visibility 1.4s ease;
-  }
-
-  // ← ЗАГОЛОВОК БЛИЖЕ К ЛЕВОМУ КРАЮ (конвертировано: 40px → 2.5vw)
-  .partners__title-wrapper {
-    position: absolute;
-    top: 41.8%;
-    transform: translateY(-50%);
-    z-index: 10;
-
-    @media (max-width: $breakpoint-tablet) {
-      position: relative;
-      left: 0;
-      top: 0;
-      transform: none;
-      padding: 4.5vh 0 2.3vh 2.5vw;
-    }
-  }
-
-  // ← ЗАГОЛОВОК (конвертировано: clamp(48px, 6vw, 96px) → 5vw)
-.partners__title {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg); // ← БЫЛО 180deg (снизу-вверх), СТАЛО 0deg (сверху-вниз)
-  
-  color: #000000;
-  font-family: $font-display;
-  font-size: 6.2vw; // ← БЫЛО 5vw, СТАЛО 6vw (+20%)
-  font-weight: 900;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  white-space: nowrap;  
-
-  @media (max-width: $breakpoint-tablet) {
-    writing-mode: horizontal-tb;
-    transform: none;
-    font-size: 3.5vw;
-  }
-}
-
-  // ← КОНТЕНТ (конвертировано: 80px → 5vw gap, 1400px → 90vw max-width)
-  .partners__content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(40px, 4vw, 100px);
-    max-width: 100vw;
-    margin: 0 auto;
-    padding: 9vh 4vw;
-    min-height: 100vh;
-    align-items: center;
-
-    @media (max-width: $breakpoint-tablet) {
-      grid-template-columns: 1fr;
-      gap: 2.5vw;
-      padding: 4.5vh 2vw;
-      min-height: auto;
-    }
-  }
-
-  // ← БРЕНДЫ (конвертировано: 600px → 65vh, 100px → 6.5vw)
-.partners__brands {
-  display: flex;
-  justify-content: center;
-  gap: 4vw;
-  height: 85vh;
-  bottom: 10%;
-  overflow: hidden;
-  position: relative;
-  margin-left: 6.5vw;
-  
-
-
-  // ← ДОБАВЛЯЕМ ГРАДИЕНТ К ВЕРХНЕМУ И НИЖНЕМУ КРАЮ КОНТЕЙНЕРА
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 8vh; // ← Размер градиента
-    pointer-events: none;
-    z-index: 5; // ← Поверх брендов, но под контентом
-  }
-  
-  &::before {
-    top: 0;
-    background: linear-gradient(to bottom, #b7b7b7 0%, transparent 100%);
-  }
-  
-  &::after {
-    bottom: 0;
-    background: linear-gradient(to top, #b7b7b7 0%, transparent 100%);
-  }
-
-  @media (max-width: $breakpoint-tablet) {
-    height: 45vh;
-    gap: 2vw;
-    margin-left: 0;
-    
-    &::before,
-    &::after {
-      height: 6vh; // ← Меньше на мобильных
-    }
-  }
-}
-
-  .partners__brands-column {
     display: flex;
     flex-direction: column;
-    gap: 2.8vh;
-    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  // ← 1. ГОРИЗОНТАЛЬНЫЙ ЗАГОЛОВОК
+  .partners__header-top {
+    text-align: center;
+    margin-bottom: 6vh; // ← УВЕЛИЧЕННЫЙ ОТСТУП (БЫЛО 0)
+    width: 100%;
+  }
+
+  .partners__title {
+    color: #000000;
+    font-family: $font-display;
+    font-size: 4.5vw;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+
+  .partners__subtitle {
+    color: #444444;
+    font-size: 1.1vw;
+    font-weight: 500;
+    margin-top: -0.5vh;
+  }
+
+  // ← 2. КОНТЕНТ СТЕК
+  .partners__content-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 5.5vh;
+    width: 100%;
+    max-width: 98vw;
+    padding: 0 1vw;
+  }
+
+  // ← РЯДЫ БРЕНДОВ
+  .partners__brands-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    width: 100%;
+    margin: 0;
+  }
+
+  .partners__brands-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+  }
+
+  // ← КАРТОЧКА БРЕНДА
+  .partners__brand-chip {
+    padding: 2vh 2vw;
     background: transparent;
-      &:nth-child(1) {
-    z-index: 3;
-  }
-  
-  &:nth-child(2) {
-    z-index: 2;
-  }
-  
-  &:nth-child(3) {
-    z-index: 1;
-  }
-  }
-  
-
-.partners__brand-item {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  
-  font-family: $font-display;
-  font-size: 3vw;
-  font-weight: 700;
-  color: #000000;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  background: transparent;
-  padding: 1.4vh 0;
-  transition: all 0.3s ease;
-
-  
-  // ← ЛИНИЯ СВЕРХУ (была)
-  border-right: 0.1vh solid rgba(0, 0, 0, 0.2);
-  border-left: 0.1vh solid rgba(0, 0, 0, 0.2);
-  
-  // ← РЕАКЦИЯ НА КУРСОР (ховер)
-  &:hover {
-    color: #333333; // ← Темнеет при наведении
-    transform: rotate(180deg) scale(1.08); // ← Увеличение при наведении
-    text-shadow: 0 0 1vh rgba(0, 0, 0, 0.2); // ← Лёгкая тень
-  }
-
-  &:last-child {
-    border-right: none;
-  }
-
-  @media (max-width: $breakpoint-tablet) {
-    writing-mode: horizontal-tb;
-    transform: none;
-    border-top: 0.1vh solid rgba(0, 0, 0, 0.2);
-    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.2);
-    border-right: none;
-    padding: 0.9vh 0;
+    border: 0.3vh solid rgba(0, 0, 0, 0.25);
+    color: #000000;
+    font-family: $font-display;
+    font-size: 1.5vw;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    min-width: 10vw;
+    text-align: center;
 
     &:hover {
-      transform: scale(1.05);
+      border-color: #000000;
+      background: rgba(0, 0, 0, 0.06);
+      transform: translateY(-0.2vh);
+    }
+
+    @media (max-width: $breakpoint-tablet) {
+      font-size: 2.2vw;
+      padding: 1.2vh 2.5vw;
     }
   }
-}
 
-  .partners__brands-column--up {
-    animation: scrollUp 25s linear infinite;
+  // ← 3. ИНФО-БЛОКИ
+  .partners__info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5vw;
+    width: 100%;
+
+    @media (max-width: $breakpoint-mobile) {
+      grid-template-columns: 1fr;
+      gap: 3vh;
+    }
   }
 
-  .partners__brands-column--down {
-    animation: scrollDown 25s linear infinite;
+  .partners__info-block {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(12px);
+    border: 0.15vh solid rgba(0, 0, 0, 0.15);
+    padding: 3vh 3vw;
+    width: 100%;
   }
-.partners__explore-arrow {
-  position: absolute;
-  bottom: 2vh;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8vh;
-  color: #000000;
-  font-family: $font-primary;
-  font-size: 0.7vw;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 3;
 
-  
-  &:hover {
-    opacity: 1;
-  }
-  
-  @media (max-width: $breakpoint-tablet) {
+  .partners__info-title {
+    font-family: $font-display;
     font-size: 0.9vw;
-    bottom: 1.5vh;
-    
-    svg {
-      width: 2vh;
-      height: 2vh;
-    }
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 1.5vh;
+    padding-bottom: 1vh;
+    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.15);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(0.5vh);
-  }
-}
-  // ← ИНФО-БЛОКИ (конвертировано: 24px → 2.8vh gap)
-.partners__info {
-  display: flex;
-  flex-direction: column;
-  gap: 6vh;
-  justify-content: center; // ← БЫЛО center, СТАЛО flex-start (поднимаем вверх)
-  padding-top: 0vh; // ← Убрал лишний отступ
-  margin-top: -17vh; // ← Поднимаем весь блок на 2vh вверх
-}
-
-.partners__info-block {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 0.1vh solid rgba(0, 0, 0, 0.15);
-  padding: 3.7vh; // ← БЫЛО 3.2vh, СТАЛО 3.7vh (+15%)
-  width: 100%;
-}
-
-.partners__info-title {
-  font-family: $font-display;
-  font-size: 0.85vw;
-  font-weight: 700;
-  color: #000000;
-  margin-bottom: 2.1vh;
-  padding-bottom: 1.4vh;
-  border-bottom: 0.1vh solid rgba(0, 0, 0, 0.15);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
 
   .partners__info-list {
     display: flex;
     flex-direction: column;
-    gap: 1.6vh;
+    gap: 1.2vh;
   }
 
   .partners__info-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 1.4vh;
-    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.1);
-
-    &:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
+    padding-bottom: 1.2vh;
+    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.08);
+    &:last-child { border-bottom: none; padding-bottom: 0; }
   }
 
   .partners__info-label {
     font-size: 0.7vw;
-    color: #333333;
+    color: #444444;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     font-weight: 600;
   }
 
   .partners__info-value {
-    font-size: 0.9vw;
+    font-size: 0.85vw;
     color: #000000;
     font-weight: 700;
     text-align: right;
@@ -738,65 +628,54 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.8vw;
-
-    @media (max-width: $breakpoint-mobile) {
-      grid-template-columns: 1fr;
-    }
+    @media (max-width: $breakpoint-mobile) { grid-template-columns: 1fr; }
   }
 
   .partners__format-item {
-    padding: 1.2vh 0;
-    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.1);
-
-    &:last-child {
-      border-bottom: none;
-    }
+    padding: 1vh 0;
+    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.08);
+    &:last-child { border-bottom: none; }
   }
 
   .partners__format-title {
     font-size: 0.8vw;
     color: #000000;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
   }
 
-  // ← КНОПКА (конвертировано: 20px 42px → 2.3vh 2.7vw)
-  .partners__cta-btn {
+  // ← 4. КНОПКА ПАРТНЕРСТВА
+  .partners__cta-btn-wide {
     width: 100%;
-    padding: 2.3vh 2.7vw;
+    padding: 3vh 0;
     background: #000000;
     color: #ffffff;
-    border: 0.1vh solid #000000;
+    border: 0.2vh solid #000000;
     font-family: $font-primary;
-    font-size: 0.85vw;
+    font-size: 1vw;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     transition: all 0.3s ease;
-    margin-top: 1.2vh;
+    cursor: pointer;
+    margin-top: 1vh;
 
     &:hover {
       background: transparent;
-      color: #ffffff;
+      color: #000000;
       transform: translateY(-0.3vh);
     }
   }
 }
 
 
-// === МОДАЛЬНЫЕ ОКНА (конвертировано) ===
+
+// === МОДАЛЬНЫЕ ОКНА ===
 .platforms-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background-color: rgba(0, 0, 0, 0.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10000; backdrop-filter: blur(12px);
   animation: fadeIn 0.3s ease;
 }
 
@@ -805,80 +684,35 @@
   background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
   border: 0.1vh solid #333333;
   padding: 4vh 3.5vw;
-  max-width: 42vw;
-  width: 90%;
-  text-align: center;
-  border-radius: 0;
+  max-width: 42vw; width: 90%;
+  text-align: center; border-radius: 0;
   animation: slideUp 0.4s ease;
 
   &__title {
-    color: #ffffff;
-    font-family: $font-display;
-    font-size: 1.7vw;
-    margin-bottom: 3.7vh;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-    line-height: 1.4;
+    color: #ffffff; font-family: $font-display; font-size: 1.7vw;
+    margin-bottom: 3.7vh; letter-spacing: 0.05em; font-weight: 700; line-height: 1.4;
   }
-
-  &__buttons {
-    display: flex;
-    gap: 1.3vw;
-    justify-content: center;
-  }
-
+  &__buttons { display: flex; gap: 1.3vw; justify-content: center; }
   &__btn {
-    padding: 1.9vh 3.5vw;
-    font-family: $font-primary;
-    font-size: 1.1vw;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border: 0.1vh solid #ffffff;
-    transition: all 0.3s ease;
-    min-width: 14vw;
-    border-radius: 0;
-
+    padding: 1.9vh 3.5vw; font-family: $font-primary; font-size: 1.1vw;
+    font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    border: 0.1vh solid #ffffff; transition: all 0.3s ease; min-width: 14vw; border-radius: 0;
     &--primary {
-      background: #ffffff;
-      color: #000000;
-      border-color: #ffffff;
-
-      &:hover {
-        background: transparent;
-        color: #ffffff;
-        transform: translateY(-0.3vh);
-        box-shadow: 0 0.7vh 2.2vh rgba(255, 255, 255, 0.2);
-      }
+      background: #ffffff; color: #000000; border-color: #ffffff;
+      &:hover { background: transparent; color: #ffffff; transform: translateY(-0.3vh); box-shadow: 0 0.7vh 2.2vh rgba(255,255,255,0.2); }
     }
-
     &--secondary {
-      background: transparent;
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.5);
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: #ffffff;
-        color: #ffffff;
-        transform: translateY(-0.3vh);
-      }
+      background: transparent; color: #ffffff; border-color: rgba(255,255,255,0.5);
+      &:hover { background: rgba(255,255,255,0.1); border-color: #ffffff; color: #ffffff; transform: translateY(-0.3vh); }
     }
   }
 }
 
 .partners-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background-color: rgba(183, 183, 183, 0.95);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10000; backdrop-filter: blur(10px);
   animation: fadeIn 0.3s ease;
 }
 
@@ -886,80 +720,29 @@
   position: relative;
   background: #ffffff;
   padding: 4vh 3.5vw;
-  max-width: 42vw;
-  width: 90%;
+  max-width: 42vw; width: 90%;
   animation: slideUp 0.4s ease;
 
-  &__header {
-    margin-bottom: 3.5vh;
-    padding-bottom: 2.3vh;
-    border-bottom: 0.1vh solid #e0e0e0;
-  }
-
+  &__header { margin-bottom: 3.5vh; padding-bottom: 2.3vh; border-bottom: 0.1vh solid #e0e0e0; }
   &__title {
-    font-family: $font-display;
-    font-size: 2.2vw;
-    font-weight: 800;
-    color: #000000;
-    letter-spacing: 0.05em;
+    font-family: $font-display; font-size: 2.2vw; font-weight: 800;
+    color: #000000; letter-spacing: 0.05em;
   }
-
-  &__content {
-    margin-bottom: 3.5vh;
-  }
-
-  &__year {
-    margin-bottom: 2.8vh;
-    padding: 1.9vh;
-    background: #f5f5f5;
-    border-radius: 0.5vh;
-  }
-
+  &__content { margin-bottom: 3.5vh; }
+  &__year { margin-bottom: 2.8vh; padding: 1.9vh; background: #f5f5f5; border-radius: 0.5vh; }
   &__label {
-    display: block;
-    font-size: 0.7vw;
-    color: #666666;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.9vh;
-    font-weight: 600;
+    display: block; font-size: 0.7vw; color: #666666;
+    text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.9vh; font-weight: 600;
   }
-
-  &__value {
-    font-size: 1.9vh;
-    color: #000000;
-    font-weight: 700;
-  }
-
-  &__description {
-    p {
-      font-size: 1.6vh;
-      color: #333333;
-      line-height: 1.7;
-    }
-  }
-
-  &__footer {
-    display: flex;
-    justify-content: center;
-  }
-
+  &__value { font-size: 1.9vh; color: #000000; font-weight: 700; }
+  &__description p { font-size: 1.6vh; color: #333333; line-height: 1.7; }
+  &__footer { display: flex; justify-content: center; }
   &__btn {
-    padding: 1.9vh 3.5vw;
-    font-family: $font-primary;
-    font-size: 0.8vw;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border: 0.1vh solid #000000;
-    background: #000000;
-    color: #ffffff;
+    padding: 1.9vh 3.5vw; font-family: $font-primary; font-size: 0.8vw;
+    font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    border: 0.1vh solid #000000; background: #000000; color: #ffffff;
     transition: all 0.3s ease;
-
-    &:hover {
-      background: transparent;
-      color: #000000;
-    }
+    &:hover { background: transparent; color: #000000; }
   }
 }
 
@@ -989,14 +772,4 @@
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(3.5vh); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes scrollUp {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-}
-
-@keyframes scrollDown {
-  0% { transform: translateY(-50%); }
-  100% { transform: translateY(0); }
 }

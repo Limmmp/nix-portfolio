@@ -16,12 +16,15 @@ const PlatformsPartners = () => {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [isContactOpen, setIsContactOpen] = useState(false);
 
+  const TWITCH_CHANNEL = 'nix';
+  const [twitchData, setTwitchData] = useState({ isLive: false, viewers: 0, loading: true });
+
   const animateCountUp = (element, endValue, duration = 1.2) => {
     const obj = { value: 0 };
     const isMillion = endValue.includes('M');
     const isThousand = endValue.includes('K');
-    
     let numericValue = parseFloat(endValue.replace(/[^0-9.]/g, ''));
+
     if (isMillion) numericValue *= 1000000;
     if (isThousand) numericValue *= 1000;
 
@@ -29,7 +32,7 @@ const PlatformsPartners = () => {
 
     gsap.to(obj, {
       value: numericValue,
-      duration: duration,
+      duration,
       ease: 'power2.out',
       onUpdate: () => {
         let displayValue = obj.value;
@@ -40,6 +43,30 @@ const PlatformsPartners = () => {
       }
     });
   };
+
+  useEffect(() => {
+    const fetchTwitchViewers = async () => {
+      try {
+        const res = await fetch(`https://decapi.me/twitch/viewercount/${TWITCH_CHANNEL}`);
+        const text = await res.text();
+        const count = parseInt(text, 10);
+        const isLive = !isNaN(count) && count > 0;
+
+        setTwitchData({
+          viewers: isNaN(count) ? 0 : count,
+          isLive,
+          loading: false
+        });
+      } catch (error) {
+        console.error('Twitch fetch error:', error);
+        setTwitchData(prev => ({ ...prev, isLive: false, viewers: 0, loading: false }));
+      }
+    };
+
+    fetchTwitchViewers();
+    const interval = setInterval(fetchTwitchViewers, 60000);
+    return () => clearInterval(interval);
+  }, [TWITCH_CHANNEL]);
 
   const handleCardClick = (e, platform) => {
     e.preventDefault();
@@ -83,20 +110,12 @@ const PlatformsPartners = () => {
         }
       });
 
-      // PLATFORMS - Появление
-      tl.fromTo('.platforms__header',
-        { opacity: 0, y: 100 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
-        0
-      );
+      // === PLATFORMS: ПОЯВЛЕНИЕ ===
+      tl.fromTo('.platforms__header', { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 0);
 
       cardsRef.current.forEach((card, index) => {
         if (!card) return;
-        tl.fromTo(card,
-          { opacity: 0, y: 150, scale: 0.9 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' },
-          index * 0.1
-        );
+        tl.fromTo(card, { opacity: 0, y: 150, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' }, index * 0.1);
         tl.call(() => {
           setTimeout(() => {
             const numberEls = card.querySelectorAll('.platform-stat__value');
@@ -108,98 +127,44 @@ const PlatformsPartners = () => {
         }, null, index * 0.1 + 0.5);
       });
 
-      tl.to('.platform-card', {
-        boxShadow: '0 2.5vh 6vh rgba(0, 0, 0, 0.5)',
-        duration: 0.5
-      }, '+=0.3');
-
+      tl.to('.platform-card', { boxShadow: '0 2.5vh 6vh rgba(0, 0, 0, 0.5)', duration: 0.5 }, '+=0.3');
       tl.to({}, { duration: 1 }, '+=1');
 
-      // ПЕРЕХОД - Исчезновение Platforms + ОТКЛЮЧЕНИЕ КЛИКОВ
-      tl.to('.platform-card', {
-        opacity: 0,
-        scale: 0.92,
-        duration: 1.4,
-        ease: 'power2.inOut'
-      });
+      // === ПЕРЕХОД: PLATFORMS → PARTNERS ===
+      tl.to('.platform-card', { opacity: 0, scale: 0.92, duration: 1.4, ease: 'power2.inOut' });
+      tl.set('.platforms-section', { pointerEvents: 'none' }, '<');
+      tl.to('.platforms__header', { opacity: 0, y: -40, duration: 1.4, ease: 'power2.inOut' }, '<');
+      tl.to('.platforms__live-indicator', { opacity: 0, duration: 1, ease: 'power2.inOut' }, '<');
+      tl.to('.pattern-nix', { opacity: 0, duration: 1.8, ease: 'power2.inOut' }, '<0.2');
+      tl.to('.platforms-partners__bg-overlay', { opacity: 0, duration: 1.8, ease: 'power2.inOut' }, '<');
+      tl.to('.platforms-partners__bg', { backgroundColor: '#b7b7b7', duration: 1.8, ease: 'power2.inOut' }, '<');
+      tl.to('.platforms-partners__gradient', { opacity: 1, duration: 1.8, ease: 'power2.inOut' }, '<');
 
-      // ← ОТКЛЮЧАЕМ КЛИКИ НА PLATFORMS
-      tl.set('.platforms-section', {
-        pointerEvents: 'none'
-      }, '<');
+      // === PARTNERS: ПОЯВЛЕНИЕ ===
+      tl.to('.partners-section', { opacity: 1, visibility: 'visible', duration: 1.4, ease: 'power2.inOut' });
+      tl.set('.partners-section', { pointerEvents: 'auto' }, '<');
 
-      tl.to('.platforms__header', {
-        opacity: 0,
-        y: -40,
-        duration: 1.4,
-        ease: 'power2.inOut'
-      }, '<');
-
-      tl.to('.platforms__live-indicator', {
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.inOut'
-      }, '<');
-
-      tl.to('.pattern-nix', {
-        opacity: 0,
-        duration: 1.8,
-        ease: 'power2.inOut'
-      }, '<0.2');
-
-      tl.to('.platforms-partners__bg-overlay', {
-        opacity: 0,
-        duration: 1.8,
-        ease: 'power2.inOut'
-      }, '<');
-
-      tl.to('.platforms-partners__bg', {
-        backgroundColor: '#b7b7b7',
-        duration: 1.8,
-        ease: 'power2.inOut'
-      }, '<');
-
-      tl.to('.platforms-partners__gradient', {
-        opacity: 1,
-        duration: 1.8,
-        ease: 'power2.inOut'
-      }, '<');
-
-      // ПОКАЗЫВАЕМ PARTNERS + ВКЛЮЧАЕМ КЛИКИ
-      tl.to('.partners-section', {
-        opacity: 1,
-        visibility: 'visible',
-        duration: 1.4,
-        ease: 'power2.inOut'
-      });
-
-      // ← ВКЛЮЧАЕМ КЛИКИ НА PARTNERS
-      tl.set('.partners-section', {
-        pointerEvents: 'auto'
-      }, '<');
-
-      // PARTNERS - Появление
-      tl.fromTo('.partners__title',
-        { opacity: 0, x: -100 },
-        { opacity: 1, x: 0, duration: 1, ease: 'power3.out' }
+      tl.fromTo('.partners__header-top', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
+      
+      tl.fromTo(brandsRef.current,
+        { opacity: 0, y: 20, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.03, ease: 'power3.out' },
+        '-=0.4'
       );
-
-      brandsRef.current.forEach((brand, index) => {
-        if (!brand) return;
-        tl.fromTo(brand,
-          { opacity: 0, y: 50 },
-          { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
-          index * 0.05
-        );
-      }, '-=0.5');
 
       tl.fromTo('.partners__info-block',
-        { opacity: 0, x: 80 },
-        { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' },
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out' },
         '-=0.3'
       );
-      tl.to({}, { duration: 1.5 }, '+=1'); // ← ГЭП В КОНЦЕ
 
+      tl.fromTo('.partners__cta-btn-wide',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+        '-=0.3'
+      );
+
+      tl.to({}, { duration: 1.5 }, '+=1');
     }, containerRef);
 
     return () => ctx.revert();
@@ -207,17 +172,12 @@ const PlatformsPartners = () => {
 
   const platformsData = [
     {
-      id: 'twitch',
-      name: 'Twitch',
-      url: 'https://www.twitch.tv/nix',
-      color: '#9146FF',
-      gradient: 'linear-gradient(180deg, rgba(145,70,255,0.15) 0%, rgba(0,0,0,0) 100%)',
-      stats: ['37.1K', '269K', '5.98M', '115M'],
+      id: 'twitch', name: 'Twitch', url: `https://www.twitch.tv/${TWITCH_CHANNEL}`, color: '#9146FF',
+      gradient: 'linear-gradient(180deg, rgba(145,70,255,0.15) 0%, rgba(0,0,0, 0) 100%)',
+      stats: ['35K', '400K', '6M', '100M+'],
       metrics: [
-        { label: 'Avg Viewers', value: '37.1K' },
-        { label: 'Peak Viewers', value: '269K' },
-        { label: 'Unique Viewers', value: '5.98M' },
-        { label: 'Total Views', value: '115M' }
+        { label: 'Avg Viewers', value: '35K' }, { label: 'Peak Viewers', value: '400K' },
+        { label: 'Unique Viewers', value: '5.98M' }, { label: 'Total Views', value: '100M+' }
       ],
       description: '#1 Dota 2 Streamer 2024. Самый просматриваемый стример в СНГ.',
       logo: (
@@ -227,17 +187,12 @@ const PlatformsPartners = () => {
       )
     },
     {
-      id: 'youtube',
-      name: 'YouTube',
-      url: 'https://www.youtube.com/@Nixtwitch',
-      color: '#FF0000',
+      id: 'youtube', name: 'YouTube', url: 'https://www.youtube.com/@Nixtwitch', color: '#FF0000',
       gradient: 'linear-gradient(180deg, rgba(255,0,0,0.15) 0%, rgba(0,0,0,0) 100%)',
-      stats: ['61.8M', '8.5M', '+17K', ''],
+      stats: ['60M+', '8.5M', '20k', '250k'],
       metrics: [
-        { label: 'Total Views', value: '61.8M' },
-        { label: 'Watch Hours', value: '8.5M' },
-        { label: 'New Subs', value: '+17K' },
-        { label: '', value: '' }
+        { label: 'Total Views', value: '60M+' }, { label: 'Watch Hours', value: '8.5M' },
+        { label: 'New Subs in month', value: '20K+' }, { label: 'Followers', value: '250k+' }
       ],
       description: 'Highlights, клипы и эксклюзивный контент. Быстрорастущий канал.',
       logo: (
@@ -247,17 +202,12 @@ const PlatformsPartners = () => {
       )
     },
     {
-      id: 'telegram',
-      name: 'Telegram',
-      url: 'https://t.me/nixtalk',
-      color: '#0088CC',
+      id: 'telegram', name: 'Telegram', url: 'https://t.me/nixtalk', color: '#0088CC',
       gradient: 'linear-gradient(180deg, rgba(0,136,204,0.15) 0%, rgba(0,0,0,0) 100%)',
-      stats: ['221.9K', '76.9K', '178', '840'],
+      stats: ['220K+', '70K+', '200+', '900+'],
       metrics: [
-        { label: 'Subscribers', value: '221.9K' },
-        { label: 'Views / Post', value: '76.9K' },
-        { label: 'Shares / Post', value: '178' },
-        { label: 'Reactions / Post', value: '840' }
+        { label: 'Subscribers', value: '220K+' }, { label: 'Views / Post', value: '70K+' },
+        { label: 'Shares / Post', value: '200+' }, { label: 'Reactions / Post', value: '900+' }
       ],
       description: '@nixtalk — новости, анонсы стримов и общение с комьюнити.',
       logo: (
@@ -267,17 +217,12 @@ const PlatformsPartners = () => {
       )
     },
     {
-      id: 'tiktok',
-      name: 'TikTok',
-      url: 'https://www.tiktok.com/@nix',
-      color: '#00f2ea',
+      id: 'tiktok', name: 'TikTok', url: 'https://www.tiktok.com/@nix', color: '#00f2ea',
       gradient: 'linear-gradient(180deg, rgba(0,242,234,0.15) 0%, rgba(0,0,0,0) 100%)',
-      stats: ['1.8M', '23K', '103K', '25K'],
+      stats: ['2M+', '20K+', '100K+', '25K'],
       metrics: [
-        { label: 'Pub Views', value: '1.8M' },
-        { label: 'Profile Views', value: '23K' },
-        { label: 'Likes on post', value: '103K' },
-        { label: 'Reposts', value: '25K' }
+        { label: 'Pub Views', value: '2M+' }, { label: 'Profile Views', value: '20K+' },
+        { label: 'Likes on post', value: '100K+' }, { label: 'Reposts', value: '25K' }
       ],
       description: 'Клипы и моменты со стримов. Быстрорастущая аудитория.',
       logo: (
@@ -288,23 +233,22 @@ const PlatformsPartners = () => {
     }
   ];
 
+  // ← РОВНО 13 БРЕНДОВ (7 + 6 для 2 строк)
   const brandsData = [
-    { id: 1, name: 'HAVAL', year: '2024', description: 'Нативная интеграция автомобиля во время стрима. Тест-драйв, обзор функций, промокод для зрителей.' },
-    { id: 2, name: 'Yandex', year: '2024', description: 'Брендирование канала в стиле Yandex Plus. Интеграция в оверлеи и чат-бот.' },
-    { id: 3, name: 'Kitfort', year: '2023', description: 'Серия видео с использованием техники. Приготовление еды во время стрима.' },
+    { id: 1, name: 'HAVAL', year: '2024', description: 'Нативная интеграция автомобиля во время стрима. Тест-драйв, обзор функций.' },
+    { id: 2, name: 'YANDEX', year: '2024', description: 'Брендирование канала в стиле Yandex Plus. Интеграция в оверлеи.' },
+    { id: 3, name: 'KITFORT', year: '2023', description: 'Серия видео с использованием техники. Приготовление еды во время стрима.' },
     { id: 4, name: 'MTS', year: '2024', description: 'Долгосрочное партнёрство. Спонсорство турниров, эксклюзивные тарифы.' },
-    { id: 5, name: 'Yota', year: '2024', description: 'Посты в Telegram и VK о безлимитном интернете для геймеров.' },
-    { id: 6, name: 'Nuw Store', year: '2024', description: 'Использование образа в рекламной кампании магазина электроники.' },
-    { id: 7, name: 'Точка Банк', year: '2023', description: 'Обзор бизнес-карты для стримеров. Интеграция в контент о монетизации.' },
-    { id: 8, name: 'Самокат', year: '2024', description: 'Стримы с доставкой еды. Промокоды для зрителей, спонсорские челленджи.' },
-    { id: 9, name: 'Majestic', year: '2024', description: 'Амбассадорство сервера в GTA 5 RP. Эксклюзивный контент, турниры.' },
-    { id: 10, name: 'Genshin', year: '2024', description: 'Стримы по новому обновлению. Ранний доступ, промокоды для зрителей.' },
-    { id: 11, name: 'MLBB', year: '2023', description: 'Организация турнира по Mobile Legends. Призовой фонд, трансляция.' }
+    { id: 5, name: 'YOTA', year: '2024', description: 'Посты в Telegram и VK о безлимитном интернете для геймеров.' },
+    { id: 6, name: 'NUW STORE', year: '2024', description: 'Использование образа в рекламной кампании магазина электроники.' },
+    { id: 7, name: 'ТОЧКА БАНК', year: '2023', description: 'Обзор бизнес-карты для стримеров. Интеграция в контент о монетизации.' },
+    { id: 8, name: 'САМОКАТ', year: '2024', description: 'Стримы с доставкой еды. Промокоды для зрителей, спонсорские челленджи.' },
+    { id: 9, name: 'MAJESTIC', year: '2024', description: 'Амбассадорство сервера в GTA 5 RP. Эксклюзивный контент, турниры.' },
+    { id: 10, name: 'GENSHIN', year: '2024', description: 'Стримы по новому обновлению. Ранний доступ, промокоды для зрителей.' },
+    { id: 11, name: 'MLBB', year: '2023', description: 'Организация турнира по Mobile Legends. Призовой фонд, трансляция.' },
+    { id: 12, name: 'PLAYEROK', year: '2026', description: 'Партнерство с игровым маркетплейсом. Промокод на пополнение Steam без комиссии.' },
+    { id: 13, name: 'BETBOOM', year: '2024', description: 'Спонсорство турниров и эксклюзивные бонусы для зрителей.' }
   ];
-
-  const column1 = [brandsData[0], brandsData[1], brandsData[2], brandsData[3], brandsData[4]];
-  const column2 = [brandsData[5], brandsData[6], brandsData[7], brandsData[8], brandsData[9]];
-  const column3 = [brandsData[10], brandsData[0], brandsData[1], brandsData[2], brandsData[3]];
 
   const targetAudience = [
     { label: 'ЦА', value: 'Киберспорт, игры' },
@@ -313,32 +257,40 @@ const PlatformsPartners = () => {
   ];
 
   const formats = [
-    'Нативные интеграции',
-    'Брендирование канала',
-    'Авторские интеграции',
-    'Посты в соцсетях',
-    'Права на медиа',
-    'Амбассадорство'
+    'Нативные интеграции', 'Брендирование канала', 'Авторские интеграции',
+    'Посты в соцсетях', 'Права на медиа', 'Амбассадорство'
   ];
 
   return (
     <section ref={containerRef} className="platforms-partners" id="platforms-partners">
-      <div className="platforms-partners__bg"></div>
+      <div className="platforms-partners__bg" />
       <div className="platforms-partners__bg-pattern">
-        {Array.from({ length: 120 }).map((_, i) => (
+        {Array.from({ length: 126 }).map((_, i) => (
           <span key={i} className="pattern-nix">NIX</span>
         ))}
       </div>
-      <div className="platforms-partners__bg-overlay"></div>
-      <div className="platforms-partners__gradient"></div>
+      <div className="platforms-partners__bg-overlay" />
+      <div className="platforms-partners__gradient" />
       
       <div className="container">
+        {/* === PLATFORMS === */}
         <div className="platforms-section" id="platforms">
-          <div className="platforms__live-indicator">
-            <span className="live-dot"></span>
-            <span className="live-text">LIVE</span>
-            <span className="live-viewers">37.1K viewers</span>
-          </div>
+          <a 
+            href={`https://twitch.tv/${TWITCH_CHANNEL}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="platforms__live-indicator interactive"
+          >
+            <div className={`live-dot ${twitchData.isLive ? 'live-dot--active' : ''}`} />
+            <span className="live-text">
+              {twitchData.loading ? '...' : twitchData.isLive ? 'LIVE' : 'OFFLINE'}
+            </span>
+            {twitchData.isLive && (
+              <span className="live-viewers">
+                {twitchData.viewers.toLocaleString('ru-RU')} viewers
+              </span>
+            )}
+          </a>
 
           <div className="platforms__header">
             <h3 className="platforms__title">PLATFORMS</h3>
@@ -355,20 +307,15 @@ const PlatformsPartners = () => {
                 ref={(el) => (cardsRef.current[index] = el)}
                 className="platform-card interactive"
                 onClick={(e) => handleCardClick(e, platform)}
-                style={{ 
-                  '--platform-color': platform.color,
-                  '--platform-gradient': platform.gradient
-                }}
+                style={{ '--platform-color': platform.color, '--platform-gradient': platform.gradient }}
               >
                 <div className="platform-card__border" />
                 <div className="platform-card__gradient" />
-                
                 <div className="platform-card__content">
                   <div className="platform-card__header">
                     <div className="platform-card__logo">{platform.logo}</div>
                     <h4 className="platform-card__name">{platform.name}</h4>
                   </div>
-
                   <div className="platform-card__stats platform-card__stats--grid">
                     {platform.metrics.map((metric, i) => (
                       <div key={i} className="platform-stat">
@@ -378,19 +325,17 @@ const PlatformsPartners = () => {
                             <span className="platform-stat__label">{metric.label}</span>
                           </>
                         ) : (
-                          <span className="platform-stat__empty"></span>
+                          <span className="platform-stat__empty" />
                         )}
                       </div>
                     ))}
                   </div>
-
                   <div className="platform-card__footer">
                     <p className="platform-card__description">{platform.description}</p>
                   </div>
-
                   <div className="platform-card__arrow">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M12 5v14M5 12l7 7 7-7"/>
+                      <path d="M12 5v14M5 12l7 7 7-7" />
                     </svg>
                   </div>
                 </div>
@@ -399,56 +344,50 @@ const PlatformsPartners = () => {
           </div>
         </div>
 
+        {/* === PARTNERS === */}
         <div className="partners-section" id="partners">
-          <div className="partners__title-wrapper">
+          
+          {/* 1. ГОРИЗОНТАЛЬНЫЙ ЗАГОЛОВОК */}
+          <div className="partners__header-top">
             <h3 className="partners__title">PARTNERS</h3>
+            <p className="partners__subtitle">Бренды, которые доверяют нам</p>
           </div>
 
-          <div className="partners__content">
-            <div className="partners__brands">
-              <div className="partners__brands-column partners__brands-column--up">
-                {column1.map((brand, i) => (
-                  <span
-                    key={`c1-${i}`}
-                    ref={(el) => (brandsRef.current[i] = el)}
-                    className="partners__brand-item interactive"
+          <div className="partners__content-stack">
+            
+            {/* 2. 2 СТАТИЧНЫЕ СТРОКИ (13 брендов: 7 + 6) */}
+            <div className="partners__brands-container">
+              {/* ← РЯД 1 (7 брендов) */}
+              <div className="partners__brands-row">
+                {brandsData.slice(0, 7).map((brand, index) => (
+                  <button
+                    key={`r1-${index}`}
+                    ref={(el) => (brandsRef.current[index] = el)}
+                    className="partners__brand-chip interactive"
                     onClick={() => handleBrandClick(brand)}
                   >
                     {brand.name}
-                  </span>
+                  </button>
                 ))}
               </div>
-              <div className="partners__brands-column partners__brands-column--down">
-                {column2.map((brand, i) => (
-                  <span
-                    key={`c2-${i}`}
-                    ref={(el) => (brandsRef.current[i + 5] = el)}
-                    className="partners__brand-item interactive"
+
+              {/* ← РЯД 2 (6 брендов) */}
+              <div className="partners__brands-row">
+                {brandsData.slice(7).map((brand, index) => (
+                  <button
+                    key={`r2-${index}`}
+                    ref={(el) => (brandsRef.current[index + 7] = el)}
+                    className="partners__brand-chip interactive"
                     onClick={() => handleBrandClick(brand)}
                   >
                     {brand.name}
-                  </span>
+                  </button>
                 ))}
               </div>
-              <div className="partners__brands-column partners__brands-column--up">
-                {column3.map((brand, i) => (
-                  <span
-                    key={`c3-${i}`}
-                    ref={(el) => (brandsRef.current[i + 10] = el)}
-                    className="partners__brand-item interactive"
-                    onClick={() => handleBrandClick(brand)}
-                  >
-                    {brand.name}
-                  </span>
-                ))}
-              </div>
-                {/* ← ДОБАВЬ СТРЕЛКУ "CLICK TO EXPLORE" */}
-  <div className="partners__explore-arrow">
-    <span>CLICK TO EXPLORE</span>
-  </div>
             </div>
 
-            <div className="partners__info">
+            {/* 3. ДВА БЛОКА ИНФОРМАЦИИ */}
+            <div className="partners__info-row">
               <div className="partners__info-block">
                 <h4 className="partners__info-title">Целевая аудитория</h4>
                 <div className="partners__info-list">
@@ -471,22 +410,25 @@ const PlatformsPartners = () => {
                   ))}
                 </div>
               </div>
-
-              <button className="partners__cta-btn" onClick={() => setIsContactOpen(true)}>
-                PARTNERSHIP
-              </button>
             </div>
+
+            {/* 4. КНОПКА ПАРТНЕРСТВА */}
+            <button className="partners__cta-btn-wide interactive" onClick={() => setIsContactOpen(true)}>
+              PARTNERSHIP
+            </button>
+
           </div>
         </div>
       </div>
 
+      {/* === МОДАЛКИ === */}
       {modalOpen && selectedPlatform && (
         <div className="platforms-modal-overlay" onClick={() => setModalOpen(false)}>
           <div className="platforms-modal" onClick={(e) => e.stopPropagation()}>
             <h3 className="platforms-modal__title">Перейти на {selectedPlatform?.name} Nix?</h3>
             <div className="platforms-modal__buttons">
-              <button className="platforms-modal__btn platforms-modal__btn--secondary" onClick={() => setModalOpen(false)}>ОТМЕНА</button>
-              <button className="platforms-modal__btn platforms-modal__btn--primary" onClick={handlePlatformConfirm}>ПЕРЕЙТИ</button>
+              <button className="platforms-modal__btn platforms-modal__btn--secondary interactive" onClick={() => setModalOpen(false)}>ОТМЕНА</button>
+              <button className="platforms-modal__btn platforms-modal__btn--primary interactive" onClick={handlePlatformConfirm}>ПЕРЕЙТИ</button>
             </div>
           </div>
         </div>
@@ -508,14 +450,14 @@ const PlatformsPartners = () => {
               </div>
             </div>
             <div className="partners-modal__footer">
-              <button className="partners-modal__btn" onClick={() => setModalOpen(false)}>Закрыть</button>
+              <button className="partners-modal__btn interactive" onClick={() => setModalOpen(false)}>Закрыть</button>
             </div>
           </div>
         </div>
       )}
 
       <div className="platforms__scroll-indicator">
-        <div className="scroll-progress"></div>
+        <div className="scroll-progress" />
       </div>
 
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
