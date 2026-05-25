@@ -8,9 +8,8 @@
   justify-content: center;
   overflow: hidden;
   background-color: $color-black;
-  perspective: 1000px;  // ← ДЛЯ 3D ЭФФЕКТА
+  perspective: 1000px;
 
-  // Фоновое изображение
   &__bg {
     position: absolute;
     top: 0;
@@ -19,7 +18,7 @@
     height: 100%;
     z-index: 1;
     overflow: hidden;
-    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
+    transform-style: preserve-3d;
   }
 
   &__bg-image {
@@ -29,11 +28,10 @@
     object-position: center top;
     filter: grayscale(100%) contrast(1.1);
     transition: filter $transition-slow;
-    transform: translateZ(0);  // ← ДЛЯ 3D ЭФФЕКТА
+    transform: translateZ(0);
     will-change: transform, opacity;
   }
 
-  // Затемнение
   &__overlay {
     position: absolute;
     top: 0;
@@ -49,7 +47,6 @@
     z-index: 2;
   }
 
-  // 🔧 Контент - только проценты
   &__content {
     position: relative;
     z-index: 5;
@@ -60,10 +57,9 @@
     height: 100vh;
     width: 100%;
     padding: 0 5vw;
-    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
+    transform-style: preserve-3d;
   }
 
-  // ← НОВЫЙ КЛАСС ДЛЯ 3D АНИМАЦИИ
   &__content-inner {
     display: flex;
     flex-direction: column;
@@ -71,7 +67,7 @@
     margin-top: 13vh;
     margin-bottom: 10vh;
     transform: translateY(0);
-    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
+    transform-style: preserve-3d;
     will-change: transform, opacity, filter;
   }
 
@@ -84,7 +80,7 @@
     max-width: 50vw;
     text-align: center;
     line-height: 1;
-    transform: translateZ(0);  // ← ДЛЯ 3D ЭФФЕКТА
+    transform: translateZ(0);
   }
 
   &__subtitle {
@@ -97,7 +93,6 @@
     line-height: 1.6;
   }
 
-  // Кнопки
   &__cta {
     display: flex;
     gap: 2vw;
@@ -123,12 +118,11 @@
     align-items: center;
     justify-content: center;
     margin-top: 12vh;
-    
+
     &--primary {
       background: $color-white;
       color: $color-black;
       border-color: $color-white;
-
       &:hover {
         background: transparent;
         color: $color-white;
@@ -140,7 +134,6 @@
       background: rgba(0, 0, 0, 0.5);
       color: $color-white;
       border-color: rgba(255, 255, 255, 0.5);
-
       &:hover {
         background: rgba(255, 255, 255, 0.1);
         border-color: $color-white;
@@ -150,7 +143,6 @@
     }
   }
 
-  // Статистика
   &__stats-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -160,17 +152,16 @@
     padding-bottom: 0;
     justify-content: center;
     justify-items: center;
-    transform: translateZ(0);  // ← ДЛЯ 3D ЭФФЕКТА
+    transform: translateZ(0);
     will-change: transform, opacity, filter;
   }
 
-  // Карточка статистики
   &-stat {
     position: relative;
     padding: 0;
     width: 100%;
     max-width: 20vw;
-    aspect-ratio: 4/1;  
+    aspect-ratio: 4/1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -230,104 +221,64 @@
     }
   }
 
-  // Ховер эффект на фото
   &:hover &__bg-image {
     filter: grayscale(80%) contrast(1.15);
   }
 }
 
-// Адаптивность
 @media (max-width: $breakpoint-tablet) {
   .hero {
-    &__content-inner {
-      margin-top: 15vh;
-      margin-bottom: 8vh;
-    }
-
-    &__title {
-      font-size: 8vw;
-    }
-
-    &__subtitle {
-      font-size: 1.4vw;
-    }
-
-    &__btn {
-      padding: 7vh 13vw;
-      font-size: 1.3vw;
-      width: 22vw;
-    }
-
-    &__stats-row {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 4vw;
-      width: 80vw;
-    }
-
-    &-stat {
-      max-width: 35vw;
-      
-      &__value {
-        font-size: 4.5vw;
-      }
-      
-      &__label {
-        font-size: 1.1vw;
-      }
-      
-      &__sublabel {
-        font-size: 1vw;
-      }
-    }
+    &__content-inner { margin-top: 15vh; margin-bottom: 8vh; }
+    &__title { font-size: 8vw; }
+    &__subtitle { font-size: 1.4vw; }
+    &__btn { padding: 7vh 13vw; font-size: 1.3vw; width: 22vw; }
+    &__stats-row { grid-template-columns: repeat(2, 1fr); gap: 4vw; width: 80vw; }
+    &-stat { max-width: 35vw; &__value { font-size: 4.5vw; } &__label { font-size: 1.1vw; } &__sublabel { font-size: 1vw; } }
   }
 }
 
+// ✅ ОБНОВЛЁННЫЙ МОБИЛЬНЫЙ БЛОК
 @media (max-width: $breakpoint-mobile) {
   .hero {
+    min-height: 85vh; // секция чуть меньше
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+
     &__content-inner {
-      margin-top: 18vh;
-      margin-bottom: 6vh;
+      margin-top: 18vh; // заголовок выше
+      margin-bottom: auto;
     }
 
     &__title {
-      font-size: 12vw;
+      font-size: clamp(2rem, 14vw, 3.5rem); // крупнее, адаптивно
+      margin-bottom: 1.5vh;
     }
 
     &__subtitle {
-      font-size: 2vw;
+      font-size: clamp(0.7rem, 3.5vw, 1rem); // чуть меньше
+      max-width: 90vw;
+      line-height: 1.4;
+      margin-bottom: 0;
     }
 
     &__cta {
+      margin-top: auto; // кнопки прижаты к низу
+      margin-bottom: 4vh;
       flex-direction: column;
-      gap: 3vw;
+      gap: 2vh;
+      width: 85vw;
     }
 
     &__btn {
-      padding: 8vh 15vw;
-      font-size: 1.5vw;
-      width: 45vw;
+      width: 100%;
+      padding: 2.5vh 0;
+      font-size: clamp(0.85rem, 4vw, 1rem);
+      margin-top: 0;
+      white-space: normal;
     }
 
     &__stats-row {
-      grid-template-columns: 1fr;
-      gap: 5vw;
-      width: 90vw;
-    }
-
-    &-stat {
-      max-width: 70vw;
-      
-      &__value {
-        font-size: 6vw;
-      }
-      
-      &__label {
-        font-size: 1.4vw;
-      }
-      
-      &__sublabel {
-        font-size: 1.2vw;
-      }
+      display: none !important; // метрики скрыты
     }
   }
 }

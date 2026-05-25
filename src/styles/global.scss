@@ -44,7 +44,7 @@ img, video {
   display: block;
 }
 
-// ✅ ПРЕДОТВРАЩАЕМ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ У ФИКСИРОВАННЫХ СЕКЦИЙ
+// ✅ ПРЕДОТВРАЩАЕМ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ
 .video-intro, .hero {
   max-width: 100vw;
   overflow-x: hidden;
