@@ -1,13 +1,9 @@
-// src/styles/global.scss
-
-// 1. ИМПОРТ ПЕРЕМЕННЫХ (новый синтаксис)
 @use './variables' as *;
 
-// 2. ШРИФТЫ
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Space+Grotesk:wght@700&display=swap');
 
-// 3. СБРОС СТИЛЕЙ
-* {
+// ✅ ИСПРАВЛЕН СБРОС (добавлен селектор *)
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -16,6 +12,7 @@
 html {
   font-size: 16px;
   overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -27,6 +24,8 @@ body {
   overflow-x: hidden;
   cursor: none;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
 }
 
 a, button {
@@ -35,23 +34,26 @@ a, button {
   cursor: none;
   border: none;
   background: none;
-  
   &:hover {
     color: $color-white;
   }
 }
 
-img {
+img, video {
   max-width: 100%;
   display: block;
 }
 
-// 4. УТИЛИТЫ
+// ✅ ПРЕДОТВРАЩАЕМ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ У ФИКСИРОВАННЫХ СЕКЦИЙ
+.video-intro, .hero {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 .container {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 $spacing-md;
-  
   @media (max-width: $breakpoint-mobile) {
     padding: 0 $spacing-sm;
   }
@@ -63,14 +65,8 @@ img {
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.02em;
-  
-  @media (max-width: $breakpoint-tablet) {
-    font-size: 64px;
-  }
-  
-  @media (max-width: $breakpoint-mobile) {
-    font-size: 48px;
-  }
+  @media (max-width: $breakpoint-tablet) { font-size: 64px; }
+  @media (max-width: $breakpoint-mobile) { font-size: 48px; }
 }
 
 .text-large {
@@ -79,44 +75,29 @@ img {
   font-weight: 700;
 }
 
-.text-medium {
-  font-size: $font-size-md;
-}
+.text-medium { font-size: $font-size-md; }
+.text-small { font-size: $font-size-xs; color: $color-light-gray; }
 
-.text-small {
-  font-size: $font-size-xs;
-  color: $color-light-gray;
-}
-
-// 5. РАЗДЕЛИТЕЛЬ
 .divider {
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    #1A1A1A 50%,
-    transparent 100%
-  );
+  background: linear-gradient(to right, transparent 0%, #1A1A1A 50%, transparent 100%);
   margin: $spacing-xl 0;
 }
 
-// 6. ОСНОВНОЙ КОНТЕНТ
 .main-content {
   opacity: 0;
   transition: opacity 1s ease;
-  
-  &.visible {
-    opacity: 1;
-  }
+  &.visible { opacity: 1; }
 }
 
-.interactive {
-  cursor: none;
-}
+.interactive { cursor: none; }
 
-// 7. МОБИЛЬНАЯ АДАПТАЦИЯ
+// ✅ МОБИЛЬНЫЕ ФИКСЫ
 @media (max-width: $breakpoint-mobile) {
-  body, a, button {
+  body, a, button, .interactive {
     cursor: auto;
+  }
+  html, body {
+    overscroll-behavior-y: none; // убирает "пружинку" iOS
   }
 }
