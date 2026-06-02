@@ -132,13 +132,6 @@
       transform: translateY(-0.2vh);
       box-shadow: 0 0.5vh 2vh rgba(255, 0, 0, 0.3);
     }
-
-    @media (max-width: $breakpoint-mobile) {
-      top: auto;
-      bottom: 8vh; // Чуть выше индикатора скролла
-      right: 4vw;
-      padding: 1.2vh 3vw;
-    }
   }
 
   .live-dot {
@@ -211,11 +204,6 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5vw;
     }
-
-    @media (max-width: $breakpoint-mobile) {
-      grid-template-columns: 1fr;
-      gap: 4vw;
-    }
   }
 
   .platforms__scroll-indicator {
@@ -256,36 +244,16 @@
       height: 48vh;
     }
 
-    @media (max-width: $breakpoint-mobile) {
-      height: auto;
-      min-height: 55vh;
-      width: 100%;
-      max-width: 90vw;
-    }
-
     &:hover {
       border-color: var(--platform-color);
       transform: translateY(-1vh) scale(1.01);
       box-shadow: 0 1.8vh 4.5vh rgba(0, 0, 0, 0.6),
                   0 0 3vw rgba(var(--platform-color), 0.35);
 
-      .platform-card__gradient {
-        opacity: 1;
-      }
-
-      .platform-card__arrow {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-      }
-
-      .platform-card__border {
-        opacity: 1;
-      }
-
-      .platform-card__logo {
-        transform: scale(1.1);
-        filter: drop-shadow(0 0 1.8vh var(--platform-color));
-      }
+      .platform-card__gradient { opacity: 1; }
+      .platform-card__arrow { transform: translateX(-50%) translateY(0); opacity: 1; }
+      .platform-card__border { opacity: 1; }
+      .platform-card__logo { transform: scale(1.1); filter: drop-shadow(0 0 1.8vh var(--platform-color)); }
     }
 
     &__border {
@@ -394,11 +362,6 @@
       align-content: start;
       min-height: 20vh;
       width: 100%;
-
-      @media (max-width: $breakpoint-mobile) {
-        gap: 1vw;
-        min-height: 18vh;
-      }
     }
 
     &__footer {
@@ -788,131 +751,151 @@
 }
 
 // =========================================================================
-// === МОБИЛЬНАЯ ВЕРСИЯ (ПОЛНАЯ НАСТРОЙКА ДЛЯ ИДЕАЛЬНОГО ВИДА) ===
+// === МОБИЛЬНАЯ ВЕРСИЯ (ПОСТЕПЕННО, СЕКЦИЯ PLATFORMS) ===
 // =========================================================================
 @media (max-width: $breakpoint-mobile) {
-  .platforms__title { font-size: 11vw; }
-  .platforms__subtitle { font-size: 3.8vw; max-width: 90vw; }
+  // === ФОНОВЫЙ ПАТТЕРН (оставляем видимым, чуть укрупняем) ===
+  .pattern-nix {
+    font-size: 6vw;
+    opacity: 0.5;
+  }
 
-  .live-text { font-size: 3vw; }
-  .live-viewers { font-size: 3.2vw; }
+  // === LIVE-ИНДИКАТОР ===
+  .platforms__live-indicator {
+    top: 1.5vh;
+    right: 3vw;
+    padding: 0.6vh 2.5vw;
+    gap: 1.5vw;
+  }
 
-  .platform-card {
-    // На мобильных ховер не работает, поэтому делаем красивый дефолтный вид
-    height: auto;
-    min-height: 55vh;
-    width: 100%;
+  .live-dot {
+    width: 1vh;
+    height: 1vh;
+  }
+
+  .live-text {
+    font-size: 2.5vw;
+  }
+
+  .live-viewers {
+    font-size: 2.5vw;
+  }
+
+  // === ЗАГОЛОВОК PLATFORMS (сделаем большим и заметным) ===
+  .platforms__header {
+    padding-top: 1.5vh;
+    margin-bottom: 1.5vh;
+  }
+
+  .platforms__title {
+    font-size: 12vw;
+    margin-bottom: 0.5vh;
+    letter-spacing: 0.1em;
+  }
+
+  .platforms__subtitle {
+    font-size: 3.5vw;
     max-width: 90vw;
-    margin: 0 auto;
+    line-height: 1.3;
+  }
 
-    &__header { 
-      min-height: 14vh; 
-      padding-bottom: 1.5vh; 
-      margin-bottom: 1.5vh; 
+  // === СЕТКА 2x2 (все 4 карточки на один экран для pin-скролла) ===
+  .platforms__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5vw;
+    max-width: 95vw;
+    padding: 0 2vw;
+  }
+
+  // === КАРТОЧКА ПЛАТФОРМЫ (компактная, 28vh) ===
+  .platform-card {
+    height: 28vh;      // Фиксированная высота — ключ к умещению на 1 экран
+    width: 100%;
+    max-width: 48vw;
+    margin: 0;
+
+    // На мобилке ховера нет — сразу показываем красивый дефолт
+    &__header {
+      min-height: auto;
+      padding-bottom: 0.5vh;
+      margin-bottom: 0.5vh;
+      gap: 0.3vh;
+      border-bottom-width: 0.1vh;
     }
-    
-    &__logo { 
-      width: 10vh; 
-      height: 10vh; 
-      opacity: 1 !important; // Показываем лого всегда
+
+    &__logo {
+      width: 4.5vh;
+      height: 4.5vh;
+      opacity: 1 !important;
       transform: none !important;
+
+      svg {
+        filter: drop-shadow(0 0 0.4vh rgba(255, 255, 255, 0.3));
+      }
     }
-    
-    &__name { 
-      font-size: 5vw; 
-      letter-spacing: 0.1em; 
-      opacity: 1 !important; // Показываем имя всегда
+
+    &__name {
+      font-size: 3vw;
+      letter-spacing: 0.08em;
+      opacity: 1 !important;
       transform: none !important;
       position: relative;
       top: auto;
-      margin-top: 1vh;
-    }
-    
-    &__description { 
-      font-size: 3.2vw; 
-      line-height: 1.5; 
-      max-width: 100%; 
+      left: auto;
+      width: auto;
+      margin-top: 0;
     }
 
     &__stats--grid {
-      gap: 0; 
-      min-height: auto;
+      min-height: 10vh;
+      gap: 0;
+      padding: 0.3vh 0;
     }
 
+    &__footer {
+      padding-top: 0.5vh;
+    }
+
+    &__description {
+      font-size: 2.2vw;
+      line-height: 1.25;
+      max-width: 100%;
+    }
+
+    // Стрелка мешает на компактной карточке — скрываем
     &__arrow {
-      opacity: 1 !important;
-      transform: translateX(-50%) translateY(0) !important;
-      bottom: 2vh;
+      display: none;
+    }
+
+    &__border {
+      opacity: 0.3;
     }
   }
 
+  // === СТАТЫ ВНУТРИ КАРТОЧКИ ===
   .platform-stat {
-    padding: 1.5vh 2vw;
-    &__value { font-size: 5.5vw; }
-    &__label { font-size: 2.8vw; }
+    padding: 0.3vh 1vw;
+    gap: 0.2vh;
+    border-bottom-width: 0.1vh;
+
+    &__value {
+      font-size: 3.8vw;
+    }
+
+    &__label {
+      font-size: 1.9vw;
+      letter-spacing: 0.05em;
+    }
+
+    &__empty {
+      min-height: 1.5vh;
+    }
   }
 
-  // Партнеры
-  .partners__title { font-size: 10vw; }
-  .partners__subtitle { font-size: 3.5vw; }
-  .partners__content-stack { gap: 4vh; }
-  .partners__header-top { margin-bottom: 3vh; }
-  .partners__brands-row { gap: 2vw; }
-
-  .partners__brand-chip {
-    font-size: 3.2vw;
-    padding: 1.5vh 4vw;
-    min-width: 120px; // Чтобы короткие названия не сплющивались
-  }
-
-  .partners__info-block { padding: 2.5vh 4vw; }
-
-  .partners__info-title {
-    font-size: 3.5vw;
-    margin-bottom: 1.5vh;
-    padding-bottom: 1vh;
-  }
-
-  .partners__info-item { padding-bottom: 1vh; }
-  .partners__info-label { font-size: 3vw; }
-  .partners__info-value { font-size: 3.2vw; }
-
-  .partners__format-item { padding: 1.2vh 0; }
-  .partners__format-title { font-size: 3.2vw; }
-
-  .partners__cta-btn-wide {
-    font-size: 3.5vw;
-    padding: 2.5vh 0;
-  }
-
-  // Модальные окна на мобильных
-  .platforms-modal, .partners-modal {
-    max-width: 90vw;
-    padding: 4vh 5vw;
-  }
-
-  .platforms-modal__title { font-size: 5vw; margin-bottom: 3vh; }
-  
-  .platforms-modal__buttons { 
-    flex-direction: column; // Кнопки друг под другом для удобного тапа
-    gap: 2vh; 
-  }
-  
-  .platforms-modal__btn { 
-    font-size: 3.5vw; 
-    padding: 2vh 4vw; 
-    min-width: auto; 
-    width: 100%; 
-  }
-
-  .partners-modal__title { font-size: 5.5vw; }
-  .partners-modal__label { font-size: 3vw; }
-  .partners-modal__value { font-size: 4vw; }
-  .partners-modal__description p { font-size: 3.5vw; }
-  
-  .partners-modal__btn { 
-    font-size: 3.5vw; 
-    padding: 2vh 4vw; 
-    width: 100%;
+  // === ИНДИКАТОР СКРОЛЛА (чуть заметнее) ===
+  .platforms__scroll-indicator {
+    bottom: 1.5vh;
+    width: 22vw;
+    height: 0.4vh;
   }
 }
