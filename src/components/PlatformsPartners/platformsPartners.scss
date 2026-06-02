@@ -855,472 +855,206 @@
 }
 
 // =========================================================================
-// === МОБИЛЬНАЯ ВЕРСИЯ — ПОЛНАЯ ПЕРЕРАБОТКА ===
+// === МОБИЛЬНАЯ ВЕРСИЯ — СЕКЦИЯ PLATFORMS (ПОЛНАЯ ПЕРЕРАБОТКА) ===
 // =========================================================================
 @media (max-width: $breakpoint-mobile) {
 
-  // === ПЛАВНОСТЬ ПИНСКРОЛЛА ===
-  .platforms-partners__bg,
-  .platforms-partners__bg-overlay,
-  .platforms-section,
-  .partners-section {
-    will-change: opacity, background-color;
+  // === ФОНОВЫЙ ПАТТЕРN (ИЗ УГЛА В УГОЛ, ЗАМЕТНЫЙ) ===
+  .platforms-partners__bg-pattern {
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    transform: rotate(-45deg);
+  }
+  .pattern-nix {
+    font-size: 12vw;
+    opacity: 0.25;
   }
 
-  // === PLATFORMS: ВЕРТИКАЛЬНЫЙ СПИСОК ===
+  // === СЕКЦИЯ (КОМПАКТНАЯ) ===
   .platforms-section {
-    padding: 8vh 5vw 6vh;
+    padding: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
 
+  // === LIVE-ИНДИКАТОР (СТИЛЬНАЯ КАПСУЛА) ===
   .platforms__live-indicator {
-    top: 2vh;
+    top: 2.5vh;
     right: 4vw;
-    padding: 1.5vh 3vw;
-    gap: 2vw;
-    backdrop-filter: none;
-    background: rgba(0, 0, 0, 0.9);
-    border: 0.2vh solid rgba(255, 0, 0, 0.7);
-    border-radius: 2vh;
+    padding: 1vh 3vw;
+    gap: 1.5vw;
+    border-radius: 50px;
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 0, 0, 0.4);
   }
-
   .live-dot {
-    width: 1.2vh;
-    height: 1.2vh;
+    width: 1vh;
+    height: 1vh;
   }
-
   .live-text {
-    font-size: 3vw;
-    letter-spacing: 0.08em;
+    font-size: 2.2vw;
+    letter-spacing: 0.05em;
   }
-
   .live-viewers {
-    font-size: 2.8vw;
+    font-size: 2vw;
   }
 
+  // === ЗАГОЛОВОК (КРУПНЫЙ, ПО ЦЕНТРУ) ===
   .platforms__header {
-    text-align: left;
-    padding: 0 0 4vh;
-    margin-bottom: 0;
+    text-align: center;
+    padding: 14vh 4vw 3vh;
+    margin-bottom: 4vh;
   }
-
   .platforms__title {
-    font-size: 12vw;
-    letter-spacing: 0.08em;
-    margin-bottom: 1vh;
-    line-height: 1;
+    font-size: 15vw;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5vh;
+    line-height: 0.9;
   }
-
   .platforms__subtitle {
     font-size: 4vw;
-    max-width: 100%;
-    color: #888;
-    line-height: 1.4;
+    max-width: 85vw;
+    margin: 0 auto;
+    line-height: 1.3;
+    color: #aaaaaa;
   }
 
-  // === СЕТКА: ОДНА КОЛОНКА ===
+  // === СЕТКА (ОДНА КОЛОНКА) ===
   .platforms__grid {
     display: flex;
     flex-direction: column;
-    gap: 3vh;
+    gap: 2.5vh;
+    padding: 0 4vw;
     max-width: 100%;
-    padding: 0;
   }
 
-  // === КАРТОЧКА: ГОРИЗОНТАЛЬНАЯ, НА ВСЮ ШИРИНУ ===
+  // === КАРТОЧКА (ГОРИЗОНТАЛЬНАЯ, КОМПАКТНАЯ) ===
   .platform-card {
-    height: auto;
     width: 100%;
-    max-width: 100%;
-    margin: 0;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-    border: 0.25vh solid #2a2a2a;
-    border-radius: 2vh;
-    box-shadow: 0 1.5vh 4vh rgba(0, 0, 0, 0.6);
+    height: 24vh;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     overflow: hidden;
-    transition: all 0.25s ease;
 
     &:hover {
       transform: none;
-      box-shadow: 0 1.5vh 4vh rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
-
     &:active {
       transform: scale(0.98);
       border-color: var(--platform-color);
     }
 
-    &__border,
-    &__gradient,
-    &__arrow {
+    &__border, &__gradient, &__footer, &__arrow {
       display: none;
     }
 
     &__content {
+      flex-direction: row !important;
+      height: 100%;
       padding: 0;
-      display: flex;
-      flex-direction: column;
+      align-items: stretch;
     }
 
-    // Хедер: лого + название в строку
+    // Левая часть: лого + название (32%)
     &__header {
-      display: flex;
-      flex-direction: row !important;
-      align-items: center;
-      justify-content: flex-start !important;
-      gap: 3vw !important;
-      padding: 3vh 5vw !important;
-      margin-bottom: 0;
+      width: 32% !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 1.5vh !important;
+      padding: 2vh 0 !important;
+      margin: 0 !important;
       min-height: auto !important;
-      border-bottom: 0.2vh solid rgba(255, 255, 255, 0.1);
+      border-bottom: none !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
     }
 
     &__logo {
-      width: 7vh !important;
-      height: 7vh !important;
+      width: 7.5vh !important;
+      height: 7.5vh !important;
       opacity: 1 !important;
       transform: none !important;
-      flex-shrink: 0;
 
       svg {
         width: 100% !important;
         height: 100% !important;
-        filter: drop-shadow(0 0 1vh rgba(255, 255, 255, 0.4));
+        filter: drop-shadow(0 0 8px rgba(255,255,255,0.15));
       }
     }
 
     &__name {
-      font-size: 5vw !important;
-      letter-spacing: 0.1em !important;
+      font-size: 3.8vw !important;
+      letter-spacing: 0.05em !important;
       opacity: 1 !important;
       transform: none !important;
       position: static !important;
-      width: auto !important;
-      text-align: left !important;
-      flex: 1;
+      width: 100% !important;
+      text-align: center !important;
+      padding: 0 1.5vw;
+      word-break: break-word;
+      line-height: 1.1;
     }
 
-    // Статистика: 2 строки по 2 столбца
+    // Правая часть: метрики 2x2 (68%)
     &__stats--grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0;
-      padding: 0;
+      width: 68%;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      grid-template-rows: 1fr 1fr !important;
+      gap: 0 !important;
+      padding: 0 !important;
       min-height: auto !important;
-    }
-
-    &__footer {
-      display: none;
     }
   }
 
-  // === СТАТЫ: КРУПНЫЕ, ЧИТАЕМЫЕ ===
+  // === МЕТРИКИ (ЧИТАЕМЫЕ, С ТОНКИМИ РАЗДЕЛИТЕЛЯМИ) ===
   .platform-stat {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding: 2.5vh 3vw;
-    gap: 0.8vh;
-    border: none;
-    border-right: 0.2vh solid rgba(255, 255, 255, 0.08);
-    border-bottom: 0.2vh solid rgba(255, 255, 255, 0.08);
+    align-items: center;
+    gap: 0.6vh;
+    padding: 1vh 1vw;
+    border: none !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.04) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
 
-    &:nth-child(even) {
-      border-right: none;
-    }
-
-    &:nth-last-child(-n+2) {
-      border-bottom: none;
-    }
+    &:nth-child(2n) { border-right: none !important; }
+    &:nth-child(n+3) { border-bottom: none !important; }
 
     &__value {
-      font-size: 7vw !important;
-      font-weight: 900 !important;
+      font-size: 4.8vw !important;
+      font-weight: 800 !important;
       color: #fff;
       line-height: 1;
-      letter-spacing: -0.02em;
     }
 
     &__label {
-      font-size: 2.8vw !important;
-      color: #888;
-      letter-spacing: 0.05em;
+      font-size: 2.2vw !important;
+      color: #777;
       text-transform: uppercase;
-      font-weight: 600;
+      letter-spacing: 0.03em;
       text-align: center;
       line-height: 1.2;
-    }
-
-    &__empty {
-      min-height: 2vh;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
   }
 
+  // === СКРОЛЛ-ИНДИКАТОР (СКРЫВАЕМ) ===
   .platforms__scroll-indicator {
-    bottom: 2vh;
-    width: 30vw;
-    height: 0.6vh;
-  }
-
-  // =========================================================================
-  // === PARTNERS: СВЕЖИЙ ДИЗАЙН ===
-  // =========================================================================
-  .partners-section {
-    padding: 6vh 5vw 8vh;
-    justify-content: flex-start;
-  }
-
-  .partners__header-top {
-    text-align: left;
-    margin-bottom: 5vh;
-  }
-
-  .partners__title {
-    font-size: 12vw;
-    letter-spacing: 0.08em;
-    margin-bottom: 1vh;
-    line-height: 1;
-  }
-
-  .partners__subtitle {
-    font-size: 4vw;
-    color: #555;
-    line-height: 1.4;
-  }
-
-  .partners__content-stack {
-    gap: 6vh;
-    max-width: 100%;
-    padding: 0;
-  }
-
-  // === БРЕНДЫ: ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ===
-  .partners__brands-container {
-    gap: 3vh;
-  }
-
-  .partners__brands-row {
-    display: flex;
-    overflow-x: auto;
-    gap: 3vw;
-    padding-bottom: 1vh;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    scroll-snap-type: x mandatory;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .partners__brand-chip {
-    flex-shrink: 0;
-    padding: 2.5vh 5vw;
-    font-size: 3.5vw;
-    border: 0.3vh solid rgba(0, 0, 0, 0.3);
-    border-radius: 1.5vh;
-    min-width: auto;
-    white-space: nowrap;
-    scroll-snap-align: start;
-    transition: all 0.2s ease;
-
-    &:hover {
-      transform: none;
-    }
-
-    &:active {
-      background: #000;
-      color: #fff;
-      border-color: #000;
-      transform: scale(0.95);
-    }
-  }
-
-  // === ИНФО-БЛОКИ: КРУПНЫЕ КАРТОЧКИ ===
-  .partners__info-row {
-    display: flex;
-    flex-direction: column;
-    gap: 4vh;
-  }
-
-  .partners__info-block {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: none;
-    border: 0.25vh solid rgba(0, 0, 0, 0.15);
-    border-radius: 2vh;
-    padding: 4vh 5vw;
-  }
-
-  .partners__info-title {
-    font-size: 4.5vw;
-    margin-bottom: 3vh;
-    padding-bottom: 2vh;
-    letter-spacing: 0.08em;
-  }
-
-  .partners__info-list {
-    gap: 0;
-  }
-
-  .partners__info-item {
-    padding: 2.5vh 0;
-    border-bottom: 0.15vh solid rgba(0, 0, 0, 0.1);
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  .partners__info-label {
-    font-size: 3.2vw;
-    letter-spacing: 0.06em;
-  }
-
-  .partners__info-value {
-    font-size: 3.8vw;
-  }
-
-  // === ФОРМАТЫ: СПИСОК ===
-  .partners__formats-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .partners__format-item {
-    padding: 2.5vh 0;
-    border-bottom: 0.15vh solid rgba(0, 0, 0, 0.1);
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  .partners__format-title {
-    font-size: 3.5vw;
-  }
-
-  // === CTA КНОПКА ===
-  .partners__cta-btn-wide {
-    padding: 4vh 0;
-    font-size: 4vw;
-    letter-spacing: 0.12em;
-    border-radius: 2vh;
-    box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.2);
-
-    &:hover {
-      transform: none;
-    }
-
-    &:active {
-      transform: scale(0.97);
-      box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.2);
-    }
-  }
-
-  // =========================================================================
-  // === МОДАЛКИ: УДОБНЫЕ НА МОБИЛКЕ ===
-  // =========================================================================
-  .platforms-modal {
-    max-width: 90vw;
-    padding: 5vh 6vw;
-    border-radius: 2vh;
-  }
-
-  .platforms-modal__title {
-    font-size: 5.5vw;
-    margin-bottom: 4vh;
-    line-height: 1.3;
-  }
-
-  .platforms-modal__buttons {
-    flex-direction: column;
-    gap: 2.5vh;
-  }
-
-  .platforms-modal__btn {
-    font-size: 3.5vw;
-    padding: 3vh 5vw;
-    min-width: 0;
-    width: 100%;
-    border-radius: 1.5vh;
-
-    &:hover {
-      transform: none;
-    }
-
-    &:active {
-      transform: scale(0.96);
-    }
-  }
-
-  .partners-modal {
-    max-width: 90vw;
-    padding: 5vh 6vw;
-    border-radius: 2vh;
-  }
-
-  .partners-modal__title {
-    font-size: 6.5vw;
-  }
-
-  .partners-modal__year {
-    padding: 3vh 4vw;
-    border-radius: 1vh;
-  }
-
-  .partners-modal__label {
-    font-size: 3.2vw;
-    margin-bottom: 1vh;
-  }
-
-  .partners-modal__value {
-    font-size: 4.5vw;
-  }
-
-  .partners-modal__description p {
-    font-size: 4vw;
-    line-height: 1.6;
-  }
-
-  .partners-modal__btn {
-    font-size: 3.5vw;
-    padding: 3vh 6vw;
-    width: 100%;
-    border-radius: 1.5vh;
-
-    &:hover {
-      transform: none;
-    }
-
-    &:active {
-      transform: scale(0.96);
-    }
-  }
-
-  .partners-modal__header {
-    margin-bottom: 3vh;
-    padding-bottom: 2.5vh;
-  }
-
-  .partners-modal__content {
-    margin-bottom: 3vh;
-  }
-}
-
-// === ОЧЕНЬ УЗКИЕ ЭКРАНЫ (< 360px) ===
-@media (max-width: 360px) {
-  .platform-card__name {
-    font-size: 5.5vw !important;
-  }
-  .platform-stat__value {
-    font-size: 7.5vw !important;
-  }
-  .partners__brand-chip {
-    font-size: 3.8vw;
-    padding: 2.3vh 4.5vw;
+    display: none;
   }
 }
