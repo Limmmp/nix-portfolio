@@ -284,37 +284,43 @@
 
 // 🔧 Мобильная версия (ИСПРАВЛЕНИЯ)
 @media (max-width: $breakpoint-mobile) {
+  // Глобальный фикс черной полосы справа
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
   .hero {
-    // Фикс черной полосы справа (защита от горизонтального скролла)
-    max-width: 100vw;
     overflow-x: hidden;
 
     &__content {
-      box-sizing: border-box; // Ключевой фикс: padding не будет раздвигать ширину
+      box-sizing: border-box; 
+      overflow-x: hidden;
+      max-width: 100vw;
     }
 
     &__content-inner {
-      margin-top: 12vh; // Заголовок стал чуть выше
+      margin-top: 12vh; 
       margin-bottom: 0;
-      flex: 1; // Занимаем всё оставшееся место, чтобы кнопки ушли вниз
+      flex: 1; 
       display: flex;
       flex-direction: column;
     }
 
     &__title {
-      font-size: 14vw; // Чуть больше (было 12vw)
-      margin-bottom: 1vh; // Сблизили с подзаголовком
+      font-size: 14vw; 
+      margin-bottom: 1vh; 
     }
 
     &__subtitle {
-      font-size: 1.4vw; // Чуть меньше (было 2vw)
-      letter-spacing: 0.1em; // Сделали компактнее
+      font-size: 1.4vw; 
+      letter-spacing: 0.1em; 
     }
 
     &__cta {
       flex-direction: column;
       gap: 3vw;
-      margin-top: auto; // ← Прижимаем кнопки к нижней части контентной области
+      margin-top: auto; 
       padding-bottom: 4vh;
       width: 100%;
       align-items: center;
@@ -322,35 +328,14 @@
 
     &__btn {
       padding: 3vh 8vw;
-      font-size: 3.5vw; // Фикс: в оригинале было 1.5vw (это 5px на телефоне, текст пропадал)
+      font-size: 3.5vw; 
       width: 80vw;
       max-width: 320px;
-      margin-top: 0; // Убираем десктопный отступ сверху, чтобы не ломал верстку в колонку
+      margin-top: 0; 
     }
 
     &__stats-row {
-      grid-template-columns: 1fr;
-      gap: 4vw;
-      width: 100%;
-      max-width: 350px;
-      padding: 0 5vw;
-      box-sizing: border-box; // Фикс для предотвращения вылезания за края
-    }
-
-    &-stat {
-      max-width: 100%;
-      
-      &__value {
-        font-size: 7vw; 
-      }
-      
-      &__label {
-        font-size: 2.5vw; // Фикс: было 1.4vw (слишком мелко)
-      }
-      
-      &__sublabel {
-        font-size: 2vw; // Фикс: было 1.2vw (слишком мелко)
-      }
+      display: none; // Скрываем статистику
     }
   }
 }
