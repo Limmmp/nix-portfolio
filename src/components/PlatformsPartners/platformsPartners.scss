@@ -123,6 +123,7 @@
     border-radius: 0;
     z-index: 100;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     text-decoration: none;
 
@@ -407,7 +408,7 @@
 
     .platform-card:hover & {
       border-bottom-color: var(--platform-color);
-      
+
       .platform-stat__value {
         color: var(--platform-color);
       }
@@ -439,13 +440,13 @@
   // === PARTNERS SECTION ===
   .partners-section {
     position: absolute;
-    top: 0; 
-    left: 0; 
-    width: 100%; 
+    top: 0;
+    left: 0;
+    width: 100%;
     min-height: 100vh;
     padding: 0;
-    opacity: 0; 
-    visibility: hidden; 
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     transition: opacity 1.4s ease, visibility 1.4s ease;
     display: flex;
@@ -545,6 +546,7 @@
   .partners__info-block {
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 0.15vh solid rgba(0, 0, 0, 0.15);
     padding: 3vh 3vw;
     width: 100%;
@@ -575,9 +577,9 @@
     padding-bottom: 1.2vh;
     border-bottom: 0.1vh solid rgba(0, 0, 0, 0.08);
 
-    &:last-child { 
-      border-bottom: none; 
-      padding-bottom: 0; 
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
     }
   }
 
@@ -601,8 +603,8 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 0.8vw;
 
-    @media (max-width: $breakpoint-mobile) { 
-      grid-template-columns: 1fr; 
+    @media (max-width: $breakpoint-mobile) {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -610,8 +612,8 @@
     padding: 1vh 0;
     border-bottom: 0.1vh solid rgba(0, 0, 0, 0.08);
 
-    &:last-child { 
-      border-bottom: none; 
+    &:last-child {
+      border-bottom: none;
     }
   }
 
@@ -647,17 +649,18 @@
 
 // === МОДАЛЬНЫЕ ОКНА ===
 .platforms-modal-overlay {
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  width: 100%; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.92);
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   justify-content: center;
-  z-index: 10000; 
+  z-index: 10000;
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   animation: fadeIn 0.3s ease;
 }
 
@@ -666,80 +669,81 @@
   background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
   border: 0.1vh solid #333333;
   padding: 4vh 3.5vw;
-  max-width: 42vw; 
+  max-width: 42vw;
   width: 90%;
-  text-align: center; 
+  text-align: center;
   border-radius: 0;
   animation: slideUp 0.4s ease;
 
   &__title {
-    color: #ffffff; 
-    font-family: $font-display; 
+    color: #ffffff;
+    font-family: $font-display;
     font-size: 1.7vw;
-    margin-bottom: 3.7vh; 
-    letter-spacing: 0.05em; 
-    font-weight: 700; 
+    margin-bottom: 3.7vh;
+    letter-spacing: 0.05em;
+    font-weight: 700;
     line-height: 1.4;
   }
 
-  &__buttons { 
-    display: flex; 
-    gap: 1.3vw; 
-    justify-content: center; 
+  &__buttons {
+    display: flex;
+    gap: 1.3vw;
+    justify-content: center;
   }
 
   &__btn {
-    padding: 1.9vh 3.5vw; 
-    font-family: $font-primary; 
+    padding: 1.9vh 3.5vw;
+    font-family: $font-primary;
     font-size: 1.1vw;
-    font-weight: 700; 
-    letter-spacing: 0.15em; 
+    font-weight: 700;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    border: 0.1vh solid #ffffff; 
-    transition: all 0.3s ease; 
-    min-width: 14vw; 
+    border: 0.1vh solid #ffffff;
+    transition: all 0.3s ease;
+    min-width: 14vw;
     border-radius: 0;
 
     &--primary {
-      background: #ffffff; 
-      color: #000000; 
+      background: #ffffff;
+      color: #000000;
       border-color: #ffffff;
 
-      &:hover { 
-        background: transparent; 
-        color: #ffffff; 
-        transform: translateY(-0.3vh); 
-        box-shadow: 0 0.7vh 2.2vh rgba(255,255,255,0.2); 
+      &:hover {
+        background: transparent;
+        color: #ffffff;
+        transform: translateY(-0.3vh);
+        box-shadow: 0 0.7vh 2.2vh rgba(255,255,255,0.2);
       }
     }
 
     &--secondary {
-      background: transparent; 
-      color: #ffffff; 
+      background: transparent;
+      color: #ffffff;
       border-color: rgba(255,255,255,0.5);
 
-      &:hover { 
-        background: rgba(255,255,255,0.1); 
-        border-color: #ffffff; 
-        color: #ffffff; 
-        transform: translateY(-0.3vh); 
+      &:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: #ffffff;
+        color: #ffffff;
+        transform: translateY(-0.3vh);
       }
     }
   }
 }
 
 .partners-modal-overlay {
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  width: 100%; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
   background-color: rgba(183, 183, 183, 0.95);
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   justify-content: center;
-  z-index: 10000; 
+  z-index: 10000;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   animation: fadeIn 0.3s ease;
 }
 
@@ -747,77 +751,77 @@
   position: relative;
   background: #ffffff;
   padding: 4vh 3.5vw;
-  max-width: 42vw; 
+  max-width: 42vw;
   width: 90%;
   animation: slideUp 0.4s ease;
 
-  &__header { 
-    margin-bottom: 3.5vh; 
-    padding-bottom: 2.3vh; 
-    border-bottom: 0.1vh solid #e0e0e0; 
+  &__header {
+    margin-bottom: 3.5vh;
+    padding-bottom: 2.3vh;
+    border-bottom: 0.1vh solid #e0e0e0;
   }
 
   &__title {
-    font-family: $font-display; 
-    font-size: 2.2vw; 
+    font-family: $font-display;
+    font-size: 2.2vw;
     font-weight: 800;
-    color: #000000; 
+    color: #000000;
     letter-spacing: 0.05em;
   }
 
-  &__content { 
-    margin-bottom: 3.5vh; 
+  &__content {
+    margin-bottom: 3.5vh;
   }
 
-  &__year { 
-    margin-bottom: 2.8vh; 
-    padding: 1.9vh; 
-    background: #f5f5f5; 
-    border-radius: 0.5vh; 
+  &__year {
+    margin-bottom: 2.8vh;
+    padding: 1.9vh;
+    background: #f5f5f5;
+    border-radius: 0.5vh;
   }
 
   &__label {
-    display: block; 
-    font-size: 0.7vw; 
+    display: block;
+    font-size: 0.7vw;
     color: #666666;
-    text-transform: uppercase; 
-    letter-spacing: 0.15em; 
-    margin-bottom: 0.9vh; 
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.9vh;
     font-weight: 600;
   }
 
-  &__value { 
-    font-size: 1.9vh; 
-    color: #000000; 
-    font-weight: 700; 
+  &__value {
+    font-size: 1.9vh;
+    color: #000000;
+    font-weight: 700;
   }
 
-  &__description p { 
-    font-size: 1.6vh; 
-    color: #333333; 
-    line-height: 1.7; 
+  &__description p {
+    font-size: 1.6vh;
+    color: #333333;
+    line-height: 1.7;
   }
 
-  &__footer { 
-    display: flex; 
-    justify-content: center; 
+  &__footer {
+    display: flex;
+    justify-content: center;
   }
 
   &__btn {
-    padding: 1.9vh 3.5vw; 
-    font-family: $font-primary; 
+    padding: 1.9vh 3.5vw;
+    font-family: $font-primary;
     font-size: 0.8vw;
-    font-weight: 700; 
-    letter-spacing: 0.15em; 
+    font-weight: 700;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    border: 0.1vh solid #000000; 
-    background: #000000; 
+    border: 0.1vh solid #000000;
+    background: #000000;
     color: #ffffff;
     transition: all 0.3s ease;
 
-    &:hover { 
-      background: transparent; 
-      color: #000000; 
+    &:hover {
+      background: transparent;
+      color: #000000;
     }
   }
 }
@@ -851,11 +855,20 @@
 }
 
 // =========================================================================
-// === МОБИЛЬНАЯ ВЕРСИЯ — СЕКЦИЯ PLATFORMS (ПОЛНЫЙ РЕДИЗАЙН) ===
+// === МОБИЛЬНАЯ ВЕРСИЯ — ПОЛНЫЙ РЕДИЗАЙН ===
 // =========================================================================
 @media (max-width: $breakpoint-mobile) {
-  
-  // === ОБЩИЙ КОНТЕЙНЕР (убираем лишние отступы) ===
+
+  // === ПЛАВНОСТЬ ПИНСКРОЛЛА ===
+  .platforms-partners__bg,
+  .platforms-partners__bg-overlay,
+  .platforms-partners__gradient,
+  .platforms-section,
+  .partners-section {
+    will-change: opacity, background-color, transform;
+  }
+
+  // === ОБЩИЙ КОНТЕЙНЕР ===
   .platforms-section {
     padding: 0;
     min-height: 100vh;
@@ -865,77 +878,84 @@
 
   // === ФОНОВЫЙ ПАТТЕРН ===
   .pattern-nix {
-    font-size: 8vw;
-    opacity: 0.35;
+    font-size: 12vw;
+    opacity: 0.25;
   }
 
-  // === LIVE-ИНДИКАТОР (компактный, в углу) ===
+  // === LIVE-ИНДИКАТОР (без blur для производительности) ===
   .platforms__live-indicator {
     top: 1.5vh;
     right: 2.5vw;
-    padding: 0.7vh 2vw;
-    gap: 1.2vw;
+    padding: 0.8vh 2.5vw;
+    gap: 1.5vw;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(0, 0, 0, 0.85);
   }
-
   .live-dot {
-    width: 0.8vh;
-    height: 0.8vh;
+    width: 1vh;
+    height: 1vh;
   }
-
   .live-text {
-    font-size: 2.4vw;
+    font-size: 2.6vw;
     letter-spacing: 0.1em;
   }
-
   .live-viewers {
-    font-size: 2.2vw;
+    font-size: 2.4vw;
   }
 
   // === ЗАГОЛОВОК PLATFORMS ===
   .platforms__header {
-    padding-top: 3vh;
-    margin-bottom: 1.5vh;
+    padding-top: 5vh;
+    padding-bottom: 2vh;
+    margin-bottom: 2vh;
   }
-
   .platforms__title {
-    font-size: 9vw;
+    font-size: 10vw;
     letter-spacing: 0.15em;
-    margin-bottom: 0.5vh;
+    margin-bottom: 0.8vh;
   }
-
   .platforms__subtitle {
-    font-size: 3vw;
-    max-width: 90vw;
-    line-height: 1.3;
-    color: #888888;
+    font-size: 3.4vw;
+    max-width: 92vw;
+    line-height: 1.35;
+    color: #999999;
   }
 
-  // === СЕТКА 2x2 (4 карточки на один экран) ===
+  // === СЕТКА 2x2 ===
   .platforms__grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2vw;
-    max-width: 95vw;
-    padding: 0 2.5vw;
+    gap: 2.5vw;
+    max-width: 96vw;
+    padding: 0 2vw;
     flex: 1;
     align-content: center;
   }
 
-  // === КАРТОЧКА ПЛАТФОРМЫ — ПОЛНЫЙ РЕДИЗАЙН ===
+  // === КАРТОЧКА ПЛАТФОРМЫ ===
   .platform-card {
-    height: 25vh; // ← Ключ: фиксированная высота для умещения 2x2
+    height: 28vh;
     width: 100%;
     max-width: none;
     margin: 0;
     background: linear-gradient(160deg, #1e1e1e 0%, #111111 100%);
     border: 0.2vh solid #2a2a2a;
-    border-radius: 1.5vh;
+    border-radius: 1.8vh;
     box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.5);
     overflow: hidden;
+    transition: border-color 0.3s ease, transform 0.2s ease;
 
-    // Убираем hover-эффекты на мобилке
+    // Убираем десктопные hover-эффекты
     &:hover {
       transform: none;
       box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.5);
+      border-color: #2a2a2a;
+    }
+
+    // Активное состояние при тапе
+    &:active {
+      transform: scale(0.97);
+      border-color: var(--platform-color);
     }
 
     &__border {
@@ -943,7 +963,7 @@
     }
 
     &__gradient {
-      opacity: 0.2;
+      opacity: 0.25;
     }
 
     &__content {
@@ -953,24 +973,23 @@
       flex-direction: column;
     }
 
-    // === HEADER: ЛОГО + НАЗВАНИЕ В ОДНУ СТРОКУ ===
+    // Хедер: лого + название в строку
     &__header {
       display: flex;
       flex-direction: row !important;
       align-items: center !important;
       justify-content: flex-start !important;
-      gap: 2vw !important;
-      padding: 2vh 3vw 1.5vh !important;
+      gap: 2.5vw !important;
+      padding: 2vh 3.5vw 1.5vh !important;
       margin-bottom: 0;
       min-height: auto !important;
       border-bottom: 0.15vh solid rgba(255, 255, 255, 0.08);
       flex-shrink: 0;
     }
 
-    // === ЛОГО: КОМПАКТНЫЙ ===
     &__logo {
-      width: 5.5vh !important;
-      height: 5.5vh !important;
+      width: 5.8vh !important;
+      height: 5.8vh !important;
       opacity: 1 !important;
       transform: none !important;
       flex-shrink: 0;
@@ -981,13 +1000,19 @@
       svg {
         width: 80% !important;
         height: 80% !important;
-        filter: drop-shadow(0 0 0.6vh rgba(255, 255, 255, 0.5));
+        filter: drop-shadow(0 0 0.8vh rgba(255, 255, 255, 0.5));
+      }
+
+      // Отключаем hover-анимацию лого
+      .platform-card:hover & {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: drop-shadow(0 0 0.8vh rgba(255, 255, 255, 0.5)) !important;
       }
     }
 
-    // === НАЗВАНИЕ: РЯДОМ С ЛОГО ===
     &__name {
-      font-size: 3.2vw !important;
+      font-size: 3.4vw !important;
       letter-spacing: 0.12em !important;
       opacity: 1 !important;
       transform: none !important;
@@ -996,9 +1021,14 @@
       text-align: left !important;
       flex: 1;
       margin: 0;
+      line-height: 1.1;
+
+      .platform-card:hover & {
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
 
-    // === СТАТИСТИКА: 2x2, КРУПНАЯ И ЧИТАЕМАЯ ===
     &__stats--grid {
       flex: 1;
       display: grid;
@@ -1010,18 +1040,16 @@
       align-content: stretch;
     }
 
-    // === ФУТЕР (ОПИСАНИЕ): СКРЫВАЕМ ===
     &__footer {
       display: none;
     }
 
-    // === СТРЕЛКА: СКРЫВАЕМ ===
     &__arrow {
       display: none;
     }
   }
 
-  // === СТАТЫ: КРУПНЫЕ И ЧИТАЕМЫЕ ===
+  // === СТАТЫ ===
   .platform-stat {
     display: flex;
     flex-direction: column;
@@ -1032,9 +1060,7 @@
     border: none;
     border-right: 0.15vh solid rgba(255, 255, 255, 0.06);
     border-bottom: 0.15vh solid rgba(255, 255, 255, 0.06);
-    position: relative;
 
-    // Убираем бордеры у крайних
     &:nth-child(even) {
       border-right: none;
     }
@@ -1044,7 +1070,7 @@
     }
 
     &__value {
-      font-size: 4.2vw !important;
+      font-size: 4.4vw !important;
       font-weight: 800 !important;
       color: #ffffff;
       line-height: 1;
@@ -1052,7 +1078,7 @@
     }
 
     &__label {
-      font-size: 2vw !important;
+      font-size: 2.1vw !important;
       color: #888888;
       letter-spacing: 0.04em;
       text-transform: uppercase;
@@ -1073,7 +1099,239 @@
   // === ИНДИКАТОР СКРОЛЛА ===
   .platforms__scroll-indicator {
     bottom: 1.5vh;
-    width: 25vw;
+    width: 28vw;
     height: 0.5vh;
+  }
+
+  // =========================================================================
+  // === СЕКЦИЯ PARTNERS (СВЕТЛАЯ, ФОН #b7b7b7) ===
+  // =========================================================================
+  .partners-section {
+    padding: 4vh 4vw 6vh;
+    justify-content: flex-start;
+    overflow-x: hidden;
+  }
+
+  .partners__header-top {
+    margin-bottom: 4vh;
+    padding-top: 2vh;
+  }
+
+  .partners__title {
+    font-size: 10vw;
+    letter-spacing: 0.15em;
+    margin-bottom: 1vh;
+    line-height: 1;
+  }
+
+  .partners__subtitle {
+    font-size: 3.4vw;
+    font-weight: 500;
+    color: #555555;
+    margin-top: 0;
+    line-height: 1.4;
+  }
+
+  .partners__content-stack {
+    gap: 4.5vh;
+    max-width: 100vw;
+    padding: 0;
+  }
+
+  // === БРЕНДЫ ===
+  .partners__brands-container {
+    gap: 2.5vw;
+  }
+
+  .partners__brands-row {
+    gap: 2.5vw;
+    justify-content: center;
+  }
+
+  .partners__brand-chip {
+    font-size: 3vw;
+    padding: 2vh 4vw;
+    min-width: auto;
+    border: 0.25vh solid rgba(0, 0, 0, 0.25);
+    letter-spacing: 0.04em;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      background: #000000;
+      color: #ffffff;
+      border-color: #000000;
+      transform: scale(0.95);
+    }
+  }
+
+  // === ИНФО-БЛОКИ (ЦА + Форматы) ===
+  .partners__info-block {
+    padding: 3.5vh 5vw;
+    background: rgba(255, 255, 255, 0.55);
+    border: 0.15vh solid rgba(0, 0, 0, 0.15);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .partners__info-title {
+    font-size: 3.2vw;
+    margin-bottom: 2.5vh;
+    padding-bottom: 1.5vh;
+    letter-spacing: 0.1em;
+  }
+
+  .partners__info-list {
+    gap: 0;
+  }
+
+  .partners__info-item {
+    padding: 1.8vh 0;
+    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.08);
+  }
+
+  .partners__info-label {
+    font-size: 2.6vw;
+    letter-spacing: 0.08em;
+  }
+
+  .partners__info-value {
+    font-size: 3vw;
+    text-align: right;
+  }
+
+  // === ФОРМАТЫ ===
+  .partners__formats-list {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .partners__format-item {
+    padding: 1.6vh 0;
+    border-bottom: 0.1vh solid rgba(0, 0, 0, 0.08);
+  }
+
+  .partners__format-title {
+    font-size: 3vw;
+    letter-spacing: 0.02em;
+  }
+
+  // === CTA КНОПКА ===
+  .partners__cta-btn-wide {
+    padding: 3vh 0;
+    font-size: 3.2vw;
+    letter-spacing: 0.15em;
+    border-radius: 0.5vh;
+    box-shadow: 0 0.8vh 2vh rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      transform: scale(0.98);
+      box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  // =========================================================================
+  // === МОДАЛЬНЫЕ ОКНА (МОБИЛЬНАЯ ВЕРСИЯ) ===
+  // =========================================================================
+  .platforms-modal {
+    max-width: 92vw;
+    padding: 4vh 5vw;
+  }
+
+  .platforms-modal__title {
+    font-size: 4.5vw;
+    margin-bottom: 3vh;
+    line-height: 1.3;
+  }
+
+  .platforms-modal__buttons {
+    flex-direction: column;
+    gap: 2vh;
+  }
+
+  .platforms-modal__btn {
+    font-size: 3vw;
+    padding: 2vh 4vw;
+    min-width: 0;
+    width: 100%;
+
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  .partners-modal {
+    max-width: 92vw;
+    padding: 4vh 5vw;
+  }
+
+  .partners-modal__title {
+    font-size: 5.5vw;
+  }
+
+  .partners-modal__year {
+    padding: 2vh 3vw;
+  }
+
+  .partners-modal__label {
+    font-size: 2.8vw;
+  }
+
+  .partners-modal__value {
+    font-size: 4vw;
+  }
+
+  .partners-modal__description p {
+    font-size: 3.4vw;
+    line-height: 1.55;
+  }
+
+  .partners-modal__btn {
+    font-size: 2.8vw;
+    padding: 2vh 5vw;
+    width: 100%;
+
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  .partners-modal__header {
+    margin-bottom: 2.5vh;
+    padding-bottom: 2vh;
+  }
+
+  .partners-modal__content {
+    margin-bottom: 2.5vh;
+  }
+}
+
+// === ОЧЕНЬ УЗКИЕ ЭКРАНЫ (< 360px) ===
+@media (max-width: 360px) {
+  .platform-card {
+    height: 30vh;
+  }
+  .platform-stat__value {
+    font-size: 4.8vw !important;
+  }
+  .partners__brand-chip {
+    font-size: 3.2vw;
+    padding: 1.8vh 3.5vw;
   }
 }
