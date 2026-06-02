@@ -308,8 +308,8 @@
     }
 
     &__title {
-      font-size: 14vw; 
-      margin-bottom: 1vh; 
+      font-size: 18vw; // ← Увеличил с 14vw
+      margin-bottom: 4vh; // ← Увеличил отступ с 1vh
     }
 
     &__subtitle {
@@ -335,7 +335,7 @@
     }
 
     &__stats-row {
-      display: none; // Скрываем статистику
+      display: none; 
     }
   }
 }
