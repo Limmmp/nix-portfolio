@@ -263,7 +263,7 @@
       border-color: var(--platform-color);
       transform: translateY(-1vh) scale(1.01);
       box-shadow: 0 1.8vh 4.5vh rgba(0, 0, 0, 0.6),
-                  0 0 3vw rgba(var(--platfor m-color), 0.35);
+                  0 0 3vw rgba(var(--platform-color), 0.35);
 
       .platform-card__gradient {
         opacity: 1;
@@ -274,7 +274,7 @@
         opacity: 1;
       }
 
-      .platform-card__ border {
+      .platform-card__border {
         opacity: 1;
       }
 
@@ -293,7 +293,7 @@
       border: 0.2vh solid var(--platform-color);
       border-radius: 0;
       opacity: 0;
-      transition: a ll 0.35s ease;
+      transition: all 0.35s ease;
       pointer-events: none;
     }
 
@@ -327,7 +327,7 @@
       justify-content: center;
       gap: 1.2vh;
       padding-bottom: 1.8vh;
-      border-bottom: 0.1vh solid rgba(25 5, 255, 255, 0.1);
+      border-bottom: 0.1vh solid rgba(255, 255, 255, 0.1);
       margin-bottom: 2vh;
       min-height: 18vh;
       position: relative;
@@ -343,17 +343,17 @@
       background: transparent;
       border: none;
       border-radius: 0;
-      color:  #ffffff;
+      color: #ffffff;
       transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
       svg {
         width: 75%;
         height: 75%;
         filter: drop-shadow(0 0 0.8vh rgba(255, 255, 255, 0.3));
-         transition: all 0.35s ease;
+        transition: all 0.35s ease;
       }
 
-      .platform-card:hover  & {
+      .platform-card:hover & {
         opacity: 0;
         transform: scale(0.9) rotate(-10deg);
       }
@@ -373,9 +373,9 @@
       position: absolute;
       width: 100%;
       left: 0;
-      top: 50% ;
+      top: 50%;
 
-      .platform-card:hover  & {
+      .platform-card:hover & {
         opacity: 1;
         transform: translateY(-50%) translateY(0);
       }
@@ -391,7 +391,7 @@
       min-height: 20vh;
       width: 100%;
 
-       @media (max-width: $breakpoint-mobile) {
+      @media (max-width: $breakpoint-mobile) {
         gap: 1vw;
         min-height: 18vh;
       }
@@ -422,7 +422,7 @@
       transform: translateX(-50%) translateY(2.2vh);
       color: var(--platform-color);
       opacity: 0;
-      transition: all 0.35 s ease;
+      transition: all 0.35s ease;
     }
   }
 
@@ -469,7 +469,7 @@
     }
   }
 
-  // === PARTNERS SECTION (ОБНОВЛЕННАЯ) ===
+  // === PARTNERS SECTION ===
   .partners-section {
     position: absolute;
     top: 0; left: 0; width: 100%; min-height: 100vh;
@@ -482,10 +482,9 @@
     justify-content: flex-start;
   }
 
-  // ← 1. ГОРИЗОНТАЛЬНЫЙ ЗАГОЛОВОК
   .partners__header-top {
     text-align: center;
-    margin-bottom: 6vh; // ← УВЕЛИЧЕННЫЙ ОТСТУП (БЫЛО 0)
+    margin-bottom: 6vh;
     width: 100%;
   }
 
@@ -506,7 +505,6 @@
     margin-top: -0.5vh;
   }
 
-  // ← 2. КОНТЕНТ СТЕК
   .partners__content-stack {
     display: flex;
     flex-direction: column;
@@ -516,7 +514,6 @@
     padding: 0 1vw;
   }
 
-  // ← РЯДЫ БРЕНДОВ
   .partners__brands-container {
     display: flex;
     flex-direction: column;
@@ -533,7 +530,6 @@
     gap: 2vw;
   }
 
-  // ← КАРТОЧКА БРЕНДА
   .partners__brand-chip {
     padding: 2vh 2vw;
     background: transparent;
@@ -562,7 +558,6 @@
     }
   }
 
-  // ← 3. ИНФО-БЛОКИ
   .partners__info-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -648,7 +643,6 @@
     letter-spacing: 0.03em;
   }
 
-  // ← 4. КНОПКА ПАРТНЕРСТВА
   .partners__cta-btn-wide {
     width: 100%;
     padding: 3vh 0;
@@ -789,22 +783,20 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-// === ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ (ДОБАВЛЕНО В КОНЕЦ) ===
+// === ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ===
 @media (max-width: $breakpoint-mobile) {
-  // Заголовки и тексты (в оригинале были микроскопические vw)
   .platforms__title { font-size: 11vw; }
   .platforms__subtitle { font-size: 3.8vw; max-width: 90vw; }
 
   .live-text { font-size: 3vw; }
   .live-viewers { font-size: 3.2vw; }
 
-  // Сетка и карточки
   .platforms__grid { gap: 4vw; }
 
   .platform-card {
-    width: 100%; // Фикс: было 20vw, карточки были узкими
+    width: 100%;
     max-width: 90vw;
-    height: auto; // Фикс: было 45vh, контент вылезал
+    height: auto;
     min-height: 55vh;
     margin: 0 auto;
 
@@ -825,7 +817,6 @@
     &__label { font-size: 2.8vw; }
   }
 
-  // Секция партнеров
   .partners__title { font-size: 10vw; }
   .partners__subtitle { font-size: 3.5vw; }
 
@@ -860,7 +851,6 @@
     padding: 2.5vh 0;
   }
 
-  // Модальные окна
   .platforms-modal, .partners-modal {
     max-width: 85vw;
     padding: 3vh 5vw;
