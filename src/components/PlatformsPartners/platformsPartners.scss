@@ -851,147 +851,218 @@
 }
 
 // =========================================================================
-// === МОБИЛЬНАЯ ВЕРСИЯ (ПОСТЕПЕННО, СЕКЦИЯ PLATFORMS) ===
+// === МОБИЛЬНАЯ ВЕРСИЯ — СЕКЦИЯ PLATFORMS (ПОЛНЫЙ РЕДИЗАЙН) ===
 // =========================================================================
 @media (max-width: $breakpoint-mobile) {
-  // === ФОНОВЫЙ ПАТТЕРН (оставляем видимым, чуть укрупняем) ===
-  .pattern-nix {
-    font-size: 7vw;
-    opacity: 0.4;
+  
+  // === ОБЩИЙ КОНТЕЙНЕР (убираем лишние отступы) ===
+  .platforms-section {
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
-  // === LIVE-ИНДИКАТОР (компактнее) ===
+  // === ФОНОВЫЙ ПАТТЕРН ===
+  .pattern-nix {
+    font-size: 8vw;
+    opacity: 0.35;
+  }
+
+  // === LIVE-ИНДИКАТОР (компактный, в углу) ===
   .platforms__live-indicator {
-    top: 1.2vh;
+    top: 1.5vh;
     right: 2.5vw;
-    padding: 0.5vh 2vw;
+    padding: 0.7vh 2vw;
     gap: 1.2vw;
   }
+
   .live-dot {
-    width: 0.9vh;
-    height: 0.9vh;
+    width: 0.8vh;
+    height: 0.8vh;
   }
+
   .live-text {
-    font-size: 2.2vw;
+    font-size: 2.4vw;
+    letter-spacing: 0.1em;
   }
+
   .live-viewers {
     font-size: 2.2vw;
   }
 
-  // === ЗАГОЛОВОК PLATFORMS (более компактный) ===
+  // === ЗАГОЛОВОК PLATFORMS ===
   .platforms__header {
-    padding-top: 1vh;
-    margin-bottom: 1vh;
+    padding-top: 3vh;
+    margin-bottom: 1.5vh;
   }
+
   .platforms__title {
-    font-size: 10vw;
-    margin-bottom: 0.3vh;
-    letter-spacing: 0.08em;
+    font-size: 9vw;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5vh;
   }
+
   .platforms__subtitle {
     font-size: 3vw;
-    max-width: 95vw;
-    line-height: 1.2;
+    max-width: 90vw;
+    line-height: 1.3;
+    color: #888888;
   }
 
-  // === СЕТКА 2x2 (все 4 карточки на один экран) ===
+  // === СЕТКА 2x2 (4 карточки на один экран) ===
   .platforms__grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.8vw;
-    max-width: 96vw;
-    padding: 0 2vw;
+    gap: 2vw;
+    max-width: 95vw;
+    padding: 0 2.5vw;
+    flex: 1;
+    align-content: center;
   }
 
-  // === КАРТОЧКА ПЛАТФОРМЫ (компактная, стильная) ===
+  // === КАРТОЧКА ПЛАТФОРМЫ — ПОЛНЫЙ РЕДИЗАЙН ===
   .platform-card {
-    height: 24vh; // Фиксированная высота — ключ к умещению на 1 экран
+    height: 25vh; // ← Ключ: фиксированная высота для умещения 2x2
     width: 100%;
-    max-width: 48vw;
+    max-width: none;
     margin: 0;
-    background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
-    border: 0.15vh solid #2a2a2a;
+    background: linear-gradient(160deg, #1e1e1e 0%, #111111 100%);
+    border: 0.2vh solid #2a2a2a;
+    border-radius: 1.5vh;
+    box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.5);
+    overflow: hidden;
 
-    // На мобилке ховера нет — сразу показываем красивый дефолт
-    &__header {
-      min-height: auto;
-      padding: 0.8vh 1.2vw 0.6vh;
-      margin-bottom: 0;
-      gap: 0.8vw;
-      border-bottom: none;
-      flex-direction: row; // Логотип и название в одну строку
-      justify-content: flex-start;
-    }
-
-    &__logo {
-      width: 3.5vh;
-      height: 3.5vh;
-      opacity: 1 !important;
-      transform: none !important;
-
-      svg {
-        width: 100%;
-        height: 100%;
-        filter: drop-shadow(0 0 0.5vh rgba(255, 255, 255, 0.4));
-      }
-    }
-
-    &__name {
-      font-size: 3.2vw;
-      letter-spacing: 0.06em;
-      opacity: 1 !important;
-      transform: none !important;
-      position: relative;
-      top: auto;
-      left: auto;
-      width: auto;
-      margin: 0;
-      text-align: left;
-    }
-
-    &__stats--grid {
-      min-height: auto;
-      gap: 0.5vw;
-      padding: 0.4vh 1vw;
-      border-top: 0.1vh solid rgba(255, 255, 255, 0.08);
-    }
-
-    &__footer {
-      display: none; // Скрываем описание на мобилке
-    }
-
-    &__arrow {
-      display: none;
+    // Убираем hover-эффекты на мобилке
+    &:hover {
+      transform: none;
+      box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.5);
     }
 
     &__border {
-      opacity: 0;
+      opacity: 0.15;
     }
 
     &__gradient {
-      opacity: 0.15; // Лёгкий градиент для стиля
+      opacity: 0.2;
+    }
+
+    &__content {
+      padding: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    // === HEADER: ЛОГО + НАЗВАНИЕ В ОДНУ СТРОКУ ===
+    &__header {
+      display: flex;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: 2vw !important;
+      padding: 2vh 3vw 1.5vh !important;
+      margin-bottom: 0;
+      min-height: auto !important;
+      border-bottom: 0.15vh solid rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+    }
+
+    // === ЛОГО: КОМПАКТНЫЙ ===
+    &__logo {
+      width: 5.5vh !important;
+      height: 5.5vh !important;
+      opacity: 1 !important;
+      transform: none !important;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 80% !important;
+        height: 80% !important;
+        filter: drop-shadow(0 0 0.6vh rgba(255, 255, 255, 0.5));
+      }
+    }
+
+    // === НАЗВАНИЕ: РЯДОМ С ЛОГО ===
+    &__name {
+      font-size: 3.2vw !important;
+      letter-spacing: 0.12em !important;
+      opacity: 1 !important;
+      transform: none !important;
+      position: static !important;
+      width: auto !important;
+      text-align: left !important;
+      flex: 1;
+      margin: 0;
+    }
+
+    // === СТАТИСТИКА: 2x2, КРУПНАЯ И ЧИТАЕМАЯ ===
+    &__stats--grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 0;
+      padding: 0;
+      min-height: auto !important;
+      align-content: stretch;
+    }
+
+    // === ФУТЕР (ОПИСАНИЕ): СКРЫВАЕМ ===
+    &__footer {
+      display: none;
+    }
+
+    // === СТРЕЛКА: СКРЫВАЕМ ===
+    &__arrow {
+      display: none;
     }
   }
 
-  // === СТАТЫ ВНУТРИ КАРТОЧКИ (более выразительные) ===
+  // === СТАТЫ: КРУПНЫЕ И ЧИТАЕМЫЕ ===
   .platform-stat {
-    padding: 0.4vh 0.5vw;
-    gap: 0.15vh;
-    border-bottom: none;
-    border-right: 0.1vh solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2vh 1.5vw;
+    gap: 0.4vh;
+    border: none;
+    border-right: 0.15vh solid rgba(255, 255, 255, 0.06);
+    border-bottom: 0.15vh solid rgba(255, 255, 255, 0.06);
+    position: relative;
 
-    &:last-child {
+    // Убираем бордеры у крайних
+    &:nth-child(even) {
       border-right: none;
     }
 
+    &:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+
     &__value {
-      font-size: 3.5vw;
+      font-size: 4.2vw !important;
+      font-weight: 800 !important;
       color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.01em;
     }
 
     &__label {
-      font-size: 1.8vw;
-      letter-spacing: 0.03em;
+      font-size: 2vw !important;
       color: #888888;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-align: center;
+      line-height: 1.2;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     &__empty {
@@ -999,10 +1070,10 @@
     }
   }
 
-  // === ИНДИКАТОР СКРОЛЛА (чуть заметнее) ===
+  // === ИНДИКАТОР СКРОЛЛА ===
   .platforms__scroll-indicator {
-    bottom: 1vh;
-    width: 20vw;
-    height: 0.4vh;
+    bottom: 1.5vh;
+    width: 25vw;
+    height: 0.5vh;
   }
 }
