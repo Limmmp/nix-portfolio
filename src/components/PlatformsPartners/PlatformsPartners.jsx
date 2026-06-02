@@ -13,6 +13,7 @@ const PlatformsPartners = () => {
   const brandsRef = useRef([]);
   
   const [modalOpen, setModalOpen] = useState(false);
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState(null);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [isContactOpen, setIsContactOpen] = useState(false);
@@ -71,9 +72,13 @@ const PlatformsPartners = () => {
 
   const handleCardClick = (e, platform) => {
     e.preventDefault();
-    setSelectedPlatform(platform);
-    setSelectedBrand(null);
-    setModalOpen(true);
+    if (window.innerWidth <= 768) {
+      setSelectedPlatform(platform);
+      setDetailModalOpen(true);
+    } else {
+      setSelectedPlatform(platform);
+      setModalOpen(true);
+    }
   };
 
   const handlePlatformConfirm = () => {
@@ -111,7 +116,6 @@ const PlatformsPartners = () => {
         }
       });
 
-      // === PLATFORMS: ПОЯВЛЕНИЕ ===
       tl.fromTo('.platforms__header', { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 0);
 
       cardsRef.current.forEach((card, index) => {
@@ -131,7 +135,6 @@ const PlatformsPartners = () => {
       tl.to('.platform-card', { boxShadow: '0 2.5vh 6vh rgba(0, 0, 0, 0.5)', duration: 0.5 }, '+=0.3');
       tl.to({}, { duration: 1 }, '+=1');
 
-      // === ПЕРЕХОД: PLATFORMS → PARTNERS ===
       tl.to('.platform-card', { opacity: 0, scale: 0.92, duration: 1.4, ease: 'power2.inOut' });
       tl.set('.platforms-section', { pointerEvents: 'none' }, '<');
       tl.to('.platforms__header', { opacity: 0, y: -40, duration: 1.4, ease: 'power2.inOut' }, '<');
@@ -141,7 +144,6 @@ const PlatformsPartners = () => {
       tl.to('.platforms-partners__bg', { backgroundColor: '#b7b7b7', duration: 1.8, ease: 'power2.inOut' }, '<');
       tl.to('.platforms-partners__gradient', { opacity: 1, duration: 1.8, ease: 'power2.inOut' }, '<');
 
-      // === PARTNERS: ПОЯВЛЕНИЕ ===
       tl.to('.partners-section', { opacity: 1, visibility: 'visible', duration: 1.4, ease: 'power2.inOut' });
       tl.set('.partners-section', { pointerEvents: 'auto' }, '<');
 
@@ -174,7 +176,7 @@ const PlatformsPartners = () => {
   const platformsData = [
     {
       id: 'twitch', name: 'Twitch', url: `https://www.twitch.tv/${TWITCH_CHANNEL}`, color: '#9146FF',
-      gradient: 'linear-gradient(180deg, rgba(145,70,255,0.15) 0%, rgba(0,0,0, 0) 100%)',
+      gradient: 'linear-gradient(180deg, rgba(145,70,255,0.15) 0%, rgba(0,0,0,0) 100%)',
       stats: ['35K', '400K', '6M', '100M+'],
       metrics: [
         { label: 'Avg Viewers', value: '35K' }, { label: 'Peak Viewers', value: '400K' },
@@ -273,7 +275,6 @@ const PlatformsPartners = () => {
       <div className="platforms-partners__gradient" />
 
       <div className="container">
-        {/* === PLATFORMS === */}
         <div className="platforms-section" id="platforms">
           <a 
             href={`https://twitch.tv/${TWITCH_CHANNEL}`}
@@ -344,7 +345,6 @@ const PlatformsPartners = () => {
           </div>
         </div>
 
-        {/* === PARTNERS === */}
         <div className="partners-section" id="partners">
           <div className="partners__header-top">
             <h3 className="partners__title">PARTNERS</h3>
@@ -412,14 +412,39 @@ const PlatformsPartners = () => {
         </div>
       </div>
 
-      {/* === МОДАЛКИ === */}
-      {modalOpen && selectedPlatform && (
+      {modalOpen && selectedPlatform && !detailModalOpen && (
         <div className="platforms-modal-overlay" onClick={() => setModalOpen(false)}>
           <div className="platforms-modal" onClick={(e) => e.stopPropagation()}>
             <h3 className="platforms-modal__title">Перейти на {selectedPlatform?.name} Nix?</h3>
             <div className="platforms-modal__buttons">
               <button className="platforms-modal__btn platforms-modal__btn--secondary interactive" onClick={() => setModalOpen(false)}>ОТМЕНА</button>
               <button className="platforms-modal__btn platforms-modal__btn--primary interactive" onClick={handlePlatformConfirm}>ПЕРЕЙТИ</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {detailModalOpen && selectedPlatform && (
+        <div className="platforms-detail-modal-overlay" onClick={() => setDetailModalOpen(false)}>
+          <div className="platforms-detail-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="platforms-detail-modal__header">
+              <div className="platforms-detail-modal__logo">
+                {selectedPlatform.logo}
+              </div>
+              <h3 className="platforms-detail-modal__title">{selectedPlatform.name}</h3>
+            </div>
+            <div className="platforms-detail-modal__stats">
+              {selectedPlatform.metrics.map((metric, i) => (
+                <div key={i} className="platforms-detail-modal__stat">
+                  <span className="platforms-detail-modal__value">{metric.value}</span>
+                  <span className="platforms-detail-modal__label">{metric.label}</span>
+                </div>
+              ))}
+            </div>
+            <p className="platforms-detail-modal__description">{selectedPlatform.description}</p>
+            <div className="platforms-detail-modal__buttons">
+              <button className="platforms-detail-modal__btn platforms-detail-modal__btn--secondary interactive" onClick={() => setDetailModalOpen(false)}>Закрыть</button>
+              <button className="platforms-detail-modal__btn platforms-detail-modal__btn--primary interactive" onClick={handlePlatformConfirm}>Перейти</button>
             </div>
           </div>
         </div>
