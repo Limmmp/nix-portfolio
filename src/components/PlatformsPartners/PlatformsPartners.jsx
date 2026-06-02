@@ -11,13 +11,13 @@ const PlatformsPartners = () => {
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
   const brandsRef = useRef([]);
-  
+
   const [modalOpen, setModalOpen] = useState(false);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState(null);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [isContactOpen, setIsContactOpen] = useState(false);
-  
+
   const TWITCH_CHANNEL = 'nix';
   const [twitchData, setTwitchData] = useState({ isLive: false, viewers: 0, loading: true });
 
@@ -26,7 +26,7 @@ const PlatformsPartners = () => {
     const isMillion = endValue.includes('M');
     const isThousand = endValue.includes('K');
     let numericValue = parseFloat(endValue.replace(/[^0-9.]/g, ''));
-    
+
     if (isMillion) numericValue *= 1000000;
     if (isThousand) numericValue *= 1000;
 
@@ -53,7 +53,7 @@ const PlatformsPartners = () => {
         const text = await res.text();
         const count = parseInt(text, 10);
         const isLive = !isNaN(count) && count > 0;
-        
+
         setTwitchData({
           viewers: isNaN(count) ? 0 : count,
           isLive,
@@ -72,7 +72,9 @@ const PlatformsPartners = () => {
 
   const handleCardClick = (e, platform) => {
     e.preventDefault();
-    if (window.innerWidth <= 768) {
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
       setSelectedPlatform(platform);
       setDetailModalOpen(true);
     } else {
@@ -86,6 +88,7 @@ const PlatformsPartners = () => {
       window.open(selectedPlatform.url, '_blank', 'noopener,noreferrer');
     }
     setModalOpen(false);
+    setDetailModalOpen(false);
     setSelectedPlatform(null);
   };
 
@@ -148,7 +151,7 @@ const PlatformsPartners = () => {
       tl.set('.partners-section', { pointerEvents: 'auto' }, '<');
 
       tl.fromTo('.partners__header-top', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
-      
+
       tl.fromTo(brandsRef.current,
         { opacity: 0, y: 20, scale: 0.95 },
         { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.03, ease: 'power3.out' },
@@ -275,8 +278,9 @@ const PlatformsPartners = () => {
       <div className="platforms-partners__gradient" />
 
       <div className="container">
+        {/* === PLATFORMS === */}
         <div className="platforms-section" id="platforms">
-          <a 
+          <a
             href={`https://twitch.tv/${TWITCH_CHANNEL}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -345,6 +349,7 @@ const PlatformsPartners = () => {
           </div>
         </div>
 
+        {/* === PARTNERS === */}
         <div className="partners-section" id="partners">
           <div className="partners__header-top">
             <h3 className="partners__title">PARTNERS</h3>
@@ -412,6 +417,7 @@ const PlatformsPartners = () => {
         </div>
       </div>
 
+      {/* === CONFIRM MODAL (DESKTOP) === */}
       {modalOpen && selectedPlatform && !detailModalOpen && (
         <div className="platforms-modal-overlay" onClick={() => setModalOpen(false)}>
           <div className="platforms-modal" onClick={(e) => e.stopPropagation()}>
@@ -424,32 +430,38 @@ const PlatformsPartners = () => {
         </div>
       )}
 
+      {/* === DETAIL MODAL (MOBILE) === */}
       {detailModalOpen && selectedPlatform && (
-        <div className="platforms-detail-modal-overlay" onClick={() => setDetailModalOpen(false)}>
-          <div className="platforms-detail-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="platforms-detail-modal__header">
-              <div className="platforms-detail-modal__logo">
-                {selectedPlatform.logo}
-              </div>
-              <h3 className="platforms-detail-modal__title">{selectedPlatform.name}</h3>
+        <div className="platforms-detail-overlay" onClick={() => setDetailModalOpen(false)}>
+          <div className="platforms-detail" onClick={(e) => e.stopPropagation()} style={{ '--accent': selectedPlatform.color }}>
+            <div className="platforms-detail__logo">
+              {selectedPlatform.logo}
             </div>
-            <div className="platforms-detail-modal__stats">
+            <h3 className="platforms-detail__name">{selectedPlatform.name}</h3>
+            <p className="platforms-detail__desc">{selectedPlatform.description}</p>
+
+            <div className="platforms-detail__stats">
               {selectedPlatform.metrics.map((metric, i) => (
-                <div key={i} className="platforms-detail-modal__stat">
-                  <span className="platforms-detail-modal__value">{metric.value}</span>
-                  <span className="platforms-detail-modal__label">{metric.label}</span>
+                <div key={i} className="platforms-detail__stat">
+                  <span className="platforms-detail__stat-value">{metric.value}</span>
+                  <span className="platforms-detail__stat-label">{metric.label}</span>
                 </div>
               ))}
             </div>
-            <p className="platforms-detail-modal__description">{selectedPlatform.description}</p>
-            <div className="platforms-detail-modal__buttons">
-              <button className="platforms-detail-modal__btn platforms-detail-modal__btn--secondary interactive" onClick={() => setDetailModalOpen(false)}>Закрыть</button>
-              <button className="platforms-detail-modal__btn platforms-detail-modal__btn--primary interactive" onClick={handlePlatformConfirm}>Перейти</button>
+
+            <div className="platforms-detail__actions">
+              <button className="platforms-detail__btn platforms-detail__btn--close interactive" onClick={() => setDetailModalOpen(false)}>
+                Закрыть
+              </button>
+              <button className="platforms-detail__btn platforms-detail__btn--open interactive" onClick={handlePlatformConfirm}>
+                Перейти
+              </button>
             </div>
           </div>
         </div>
       )}
 
+      {/* === BRAND MODAL === */}
       {modalOpen && selectedBrand && !selectedPlatform && (
         <div className="partners-modal-overlay" onClick={() => setModalOpen(false)}>
           <div className="partners-modal" onClick={(e) => e.stopPropagation()}>
