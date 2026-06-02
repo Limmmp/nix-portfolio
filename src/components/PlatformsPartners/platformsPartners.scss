@@ -146,6 +146,7 @@
     background-color: #555555;
     border-radius: 50%;
     transition: background-color 0.3s ease;
+
     &--active {
       background-color: #FF0000;
       animation: pulse 2s infinite;
@@ -262,7 +263,7 @@
       border-color: var(--platform-color);
       transform: translateY(-1vh) scale(1.01);
       box-shadow: 0 1.8vh 4.5vh rgba(0, 0, 0, 0.6),
-                  0 0 3vw rgba(var(--platform-color), 0.35);
+                  0 0 3vw rgba(var(--platfor m-color), 0.35);
 
       .platform-card__gradient {
         opacity: 1;
@@ -273,7 +274,7 @@
         opacity: 1;
       }
 
-      .platform-card__border {
+      .platform-card__ border {
         opacity: 1;
       }
 
@@ -292,7 +293,7 @@
       border: 0.2vh solid var(--platform-color);
       border-radius: 0;
       opacity: 0;
-      transition: all 0.35s ease;
+      transition: a ll 0.35s ease;
       pointer-events: none;
     }
 
@@ -326,7 +327,7 @@
       justify-content: center;
       gap: 1.2vh;
       padding-bottom: 1.8vh;
-      border-bottom: 0.1vh solid rgba(255, 255, 255, 0.1);
+      border-bottom: 0.1vh solid rgba(25 5, 255, 255, 0.1);
       margin-bottom: 2vh;
       min-height: 18vh;
       position: relative;
@@ -342,17 +343,17 @@
       background: transparent;
       border: none;
       border-radius: 0;
-      color: #ffffff;
+      color:  #ffffff;
       transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
       svg {
         width: 75%;
         height: 75%;
         filter: drop-shadow(0 0 0.8vh rgba(255, 255, 255, 0.3));
-        transition: all 0.35s ease;
+         transition: all 0.35s ease;
       }
 
-      .platform-card:hover & {
+      .platform-card:hover  & {
         opacity: 0;
         transform: scale(0.9) rotate(-10deg);
       }
@@ -372,9 +373,9 @@
       position: absolute;
       width: 100%;
       left: 0;
-      top: 50%;
+      top: 50% ;
 
-      .platform-card:hover & {
+      .platform-card:hover  & {
         opacity: 1;
         transform: translateY(-50%) translateY(0);
       }
@@ -390,7 +391,7 @@
       min-height: 20vh;
       width: 100%;
 
-      @media (max-width: $breakpoint-mobile) {
+       @media (max-width: $breakpoint-mobile) {
         gap: 1vw;
         min-height: 18vh;
       }
@@ -421,7 +422,7 @@
       transform: translateX(-50%) translateY(2.2vh);
       color: var(--platform-color);
       opacity: 0;
-      transition: all 0.35s ease;
+      transition: all 0.35 s ease;
     }
   }
 
@@ -606,6 +607,7 @@
     align-items: center;
     padding-bottom: 1.2vh;
     border-bottom: 0.1vh solid rgba(0, 0, 0, 0.08);
+
     &:last-child { border-bottom: none; padding-bottom: 0; }
   }
 
@@ -628,12 +630,14 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.8vw;
+
     @media (max-width: $breakpoint-mobile) { grid-template-columns: 1fr; }
   }
 
   .partners__format-item {
     padding: 1vh 0;
     border-bottom: 0.1vh solid rgba(0, 0, 0, 0.08);
+
     &:last-child { border-bottom: none; }
   }
 
@@ -668,8 +672,6 @@
   }
 }
 
-
-
 // === МОДАЛЬНЫЕ ОКНА ===
 .platforms-modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -692,15 +694,19 @@
     color: #ffffff; font-family: $font-display; font-size: 1.7vw;
     margin-bottom: 3.7vh; letter-spacing: 0.05em; font-weight: 700; line-height: 1.4;
   }
+
   &__buttons { display: flex; gap: 1.3vw; justify-content: center; }
+
   &__btn {
     padding: 1.9vh 3.5vw; font-family: $font-primary; font-size: 1.1vw;
     font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
     border: 0.1vh solid #ffffff; transition: all 0.3s ease; min-width: 14vw; border-radius: 0;
+
     &--primary {
       background: #ffffff; color: #000000; border-color: #ffffff;
       &:hover { background: transparent; color: #ffffff; transform: translateY(-0.3vh); box-shadow: 0 0.7vh 2.2vh rgba(255,255,255,0.2); }
     }
+
     &--secondary {
       background: transparent; color: #ffffff; border-color: rgba(255,255,255,0.5);
       &:hover { background: rgba(255,255,255,0.1); border-color: #ffffff; color: #ffffff; transform: translateY(-0.3vh); }
@@ -724,24 +730,33 @@
   animation: slideUp 0.4s ease;
 
   &__header { margin-bottom: 3.5vh; padding-bottom: 2.3vh; border-bottom: 0.1vh solid #e0e0e0; }
+
   &__title {
     font-family: $font-display; font-size: 2.2vw; font-weight: 800;
     color: #000000; letter-spacing: 0.05em;
   }
+
   &__content { margin-bottom: 3.5vh; }
+
   &__year { margin-bottom: 2.8vh; padding: 1.9vh; background: #f5f5f5; border-radius: 0.5vh; }
+
   &__label {
     display: block; font-size: 0.7vw; color: #666666;
     text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.9vh; font-weight: 600;
   }
+
   &__value { font-size: 1.9vh; color: #000000; font-weight: 700; }
+
   &__description p { font-size: 1.6vh; color: #333333; line-height: 1.7; }
+
   &__footer { display: flex; justify-content: center; }
+
   &__btn {
     padding: 1.9vh 3.5vw; font-family: $font-primary; font-size: 0.8vw;
     font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
     border: 0.1vh solid #000000; background: #000000; color: #ffffff;
     transition: all 0.3s ease;
+
     &:hover { background: transparent; color: #000000; }
   }
 }
@@ -772,4 +787,92 @@
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(3.5vh); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+// === ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ (ДОБАВЛЕНО В КОНЕЦ) ===
+@media (max-width: $breakpoint-mobile) {
+  // Заголовки и тексты (в оригинале были микроскопические vw)
+  .platforms__title { font-size: 11vw; }
+  .platforms__subtitle { font-size: 3.8vw; max-width: 90vw; }
+
+  .live-text { font-size: 3vw; }
+  .live-viewers { font-size: 3.2vw; }
+
+  // Сетка и карточки
+  .platforms__grid { gap: 4vw; }
+
+  .platform-card {
+    width: 100%; // Фикс: было 20vw, карточки были узкими
+    max-width: 90vw;
+    height: auto; // Фикс: было 45vh, контент вылезал
+    min-height: 55vh;
+    margin: 0 auto;
+
+    &__header { min-height: 14vh; padding-bottom: 1.5vh; margin-bottom: 1.5vh; }
+    &__logo { width: 12vh; height: 12vh; }
+    &__name { font-size: 5vw; letter-spacing: 0.1em; }
+    &__description { font-size: 3.2vw; line-height: 1.5; max-width: 100%; }
+
+    &__stats--grid {
+      gap: 0; 
+      min-height: auto;
+    }
+  }
+
+  .platform-stat {
+    padding: 1.5vh 2vw;
+    &__value { font-size: 5.5vw; }
+    &__label { font-size: 2.8vw; }
+  }
+
+  // Секция партнеров
+  .partners__title { font-size: 10vw; }
+  .partners__subtitle { font-size: 3.5vw; }
+
+  .partners__content-stack { gap: 4vh; }
+  .partners__header-top { margin-bottom: 3vh; }
+
+  .partners__brands-row { gap: 2vw; }
+
+  .partners__brand-chip {
+    font-size: 3.2vw;
+    padding: 1.5vh 4vw;
+    min-width: auto; 
+  }
+
+  .partners__info-block { padding: 2.5vh 4vw; }
+
+  .partners__info-title {
+    font-size: 3.5vw;
+    margin-bottom: 1.5vh;
+    padding-bottom: 1vh;
+  }
+
+  .partners__info-item { padding-bottom: 1vh; }
+  .partners__info-label { font-size: 3vw; }
+  .partners__info-value { font-size: 3.2vw; }
+
+  .partners__format-item { padding: 1.2vh 0; }
+  .partners__format-title { font-size: 3.2vw; }
+
+  .partners__cta-btn-wide {
+    font-size: 3.5vw;
+    padding: 2.5vh 0;
+  }
+
+  // Модальные окна
+  .platforms-modal, .partners-modal {
+    max-width: 85vw;
+    padding: 3vh 5vw;
+  }
+
+  .platforms-modal__title { font-size: 4.5vw; margin-bottom: 2.5vh; }
+  .platforms-modal__buttons { gap: 3vw; }
+  .platforms-modal__btn { font-size: 3.2vw; padding: 1.5vh 4vw; min-width: auto; width: 45%; }
+
+  .partners-modal__title { font-size: 5vw; }
+  .partners-modal__label { font-size: 3vw; }
+  .partners-modal__value { font-size: 4vw; }
+  .partners-modal__description p { font-size: 3.5vw; }
+  .partners-modal__btn { font-size: 3.2vw; padding: 1.5vh 4vw; }
 }
