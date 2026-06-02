@@ -13,7 +13,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 0.4vh; // ← БЫЛО 4px
+    height: 0.4vh; 
     background-color: rgba(255, 255, 255, 0.1);
     z-index: 100;
   }
@@ -27,10 +27,10 @@
 
   &__slide-indicator {
     position: fixed;
-    top: 1.2vh; // ← БЫЛО 12px
-    right: 3vw; // ← БЫЛО 30px
+    top: 1.2vh; 
+    right: 3vw; 
     font-family: $font-display;
-    font-size: 0.7vw; // ← БЫЛО 12px
+    font-size: 0.7vw; 
     color: #ffffff;
     letter-spacing: 0.15em;
     z-index: 100;
@@ -63,7 +63,7 @@
       width: 65vw;
       height: 75vh;
       object-fit: cover;
-      border-radius: 0.4vh; // ← БЫЛО 4px
+      border-radius: 0.4vh; 
       overflow: hidden;
       z-index: 1;
 
@@ -107,44 +107,44 @@
       position: relative;
       z-index: 3;
       padding: 0 5vw;
-      max-width: 31vw; // ← БЫЛО 500px
+      max-width: 31vw; 
     }
 
     &-number {
       display: inline-block;
       font-family: $font-display;
-      font-size: 0.7vw; // ← БЫЛО 12px
+      font-size: 0.7vw; 
       color: #666666;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      margin-bottom: 2vh; // ← БЫЛО 20px
+      margin-bottom: 2vh; 
     }
 
     &-title {
       font-family: $font-display;
-      font-size: 5vw; // ← БЫЛО clamp(48px, 6vw, 72px)
+      font-size: 5vw; 
       font-weight: 900;
       color: #ffffff;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      margin-bottom: 0.8vh; // ← БЫЛО 8px
+      margin-bottom: 0.8vh; 
       line-height: 1;
     }
 
     &-subtitle {
       font-family: $font-display;
-      font-size: 2.2vw; // ← БЫЛО clamp(20px, 2.5vw, 28px)
+      font-size: 2.2vw; 
       font-weight: 700;
       color: #ffffff;
       letter-spacing: 0.1em;
-      margin-bottom: 2.2vh; // ← БЫЛО 24px
+      margin-bottom: 2.2vh; 
     }
 
     &-description {
-      font-size: 1.5vw; // ← БЫЛО clamp(14px, 1.5vw, 17px)
+      font-size: 1.5vw; 
       color: #999999;
       line-height: 1.8;
-      margin-bottom: 3.7vh; // ← БЫЛО 40px
+      margin-bottom: 3.7vh; 
 
       span {
         display: block;
@@ -154,13 +154,13 @@
     &-cta {
       display: inline-flex;
       align-items: center;
-      gap: 0.6vw; // ← БЫЛО 12px
-      padding: 1.7vh 2.2vw; // ← БЫЛО 18px 42px
+      gap: 0.6vw; 
+      padding: 1.7vh 2.2vw; 
       background: #ffffff;
       color: #000000;
-      border: 0.1vh solid #ffffff; // ← БЫЛО 1px
+      border: 0.1vh solid #ffffff; 
       font-family: $font-primary;
-      font-size: 0.8vw; // ← БЫЛО 13px
+      font-size: 0.8vw; 
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -170,17 +170,17 @@
       &:hover {
         background: transparent;
         color: #ffffff;
-        transform: translateX(0.3vw); // ← БЫЛО 5px
+        transform: translateX(0.3vw); 
       }
 
       svg {
-        width: 1vw; // ← БЫЛО 20
+        width: 1vw; 
         height: 1vw;
         transition: transform 0.3s ease;
       }
 
       &:hover svg {
-        transform: translateX(0.2vw); // ← БЫЛО 3px
+        transform: translateX(0.2vw); 
       }
     }
 
@@ -212,16 +212,16 @@
   // ← НАВИГАЦИОННЫЕ ТОЧКИ
   &__dots {
     position: fixed;
-    bottom: 3.7vh; // ← БЫЛО 40px
+    bottom: 3.7vh; 
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 0.6vw; // ← БЫЛО 12px
+    gap: 0.6vw; 
     z-index: 100;
   }
 
   &__dot {
-    width: 0.9vh; // ← БЫЛО 10px
+    width: 0.9vh; 
     height: 0.9vh;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.3);
@@ -238,7 +238,7 @@
   }
 }
 
-// === АДАПТИВНОСТЬ ===
+// === ПЛАНШЕТ ===
 @media (max-width: $breakpoint-tablet) {
   .about {
     &__slide {
@@ -265,49 +265,99 @@
       }
 
       &-title {
-        font-size: 5vw; // ← БЫЛО clamp(36px, 8vw, 56px)
+        font-size: 5vw; 
       }
 
       &-subtitle {
-        font-size: 2vw; // ← БЫЛО clamp(18px, 4vw, 24px)
+        font-size: 2vw; 
       }
     }
 
     &__dots {
-      bottom: 2.8vh; // ← БЫЛО 30px
+      bottom: 2.8vh; 
     }
   }
 }
 
+// === МОБИЛЬНАЯ ВЕРСИЯ (ПОЛНОСТЬЮ ПЕРЕПИСАНО ДЛЯ КРАСОТЫ) ===
 @media (max-width: $breakpoint-mobile) {
   .about {
     &__slide {
+      // Меняем layout на вертикальную колонку для мобильных
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 14vh; // Отступ сверху под прогресс-бар
+      gap: 4vh;
+
       &-image {
-        width: 90vw;
-        height: 50vh;
+        // Сбрасываем абсолютное позиционирование, чтобы картинка и текст не накладывались
+        position: relative;
+        width: 85vw;
+        height: 40vh;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+        border-radius: 1.5vh;
+        margin: 0 auto;
       }
 
       &-content {
-        padding: 0 4vw;
+        width: 85vw;
+        max-width: 100%;
+        padding: 0;
+        margin: 0 auto;
+        text-align: center !important;
+
+        &-inner {
+          margin: 0 auto !important;
+        }
+      }
+
+      &-number {
+        font-size: 2.5vw;
+        margin-bottom: 1.5vh;
+      }
+
+      &-title {
+        font-size: 11vw; // Читаемый размер
+        margin-bottom: 1.5vh;
+      }
+
+      &-subtitle {
+        font-size: 4.5vw; // Читаемый размер
+        margin-bottom: 2.5vh;
       }
 
       &-description {
-        font-size: 1.2vw; // ← БЫЛО clamp(13px, 3.5vw, 15px)
+        font-size: 3.8vw; // ИСПРАВЛЕНО (было 1.2vw - нечитаемо)
+        line-height: 1.6;
+        margin-bottom: 3vh;
       }
 
       &-cta {
-        padding: 1.5vh 2vw; // ← БЫЛО 16px 32px
-        font-size: 0.9vw; // ← БЫЛО 12px
+        padding: 2vh 5vw; // Удобно для тапа
+        font-size: 3.2vw; // ИСПРАВЛЕНО (было 0.9vw - нечитаемо)
       }
     }
 
     &__progress-container {
-      height: 0.3vh; // ← БЫЛО 3px
+      height: 0.5vh; // Чуть толще, чтобы было видно на мобилках
     }
 
     &__slide-indicator {
-      font-size: 0.6vw; // ← БЫЛО 11px
-      right: 2vw; // ← БЫЛО 20px
+      font-size: 2.8vw; // ИСПРАВЛЕНО (было 0.6vw)
+      top: 1.5vh;
+      right: 4vw;
+    }
+
+    &__dots {
+      bottom: 2.5vh;
+      gap: 2vw; // Увеличил расстояние между точками для тапа
+    }
+
+    &__dot {
+      width: 1.2vh; // Чуть крупнее
+      height: 1.2vh;
     }
   }
 }
