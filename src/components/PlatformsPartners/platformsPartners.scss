@@ -135,8 +135,9 @@
 
     @media (max-width: $breakpoint-mobile) {
       top: auto;
-      bottom: 2vh;
-      right: 2vw;
+      bottom: 8vh; // Чуть выше индикатора скролла
+      right: 4vw;
+      padding: 1.2vh 3vw;
     }
   }
 
@@ -213,7 +214,7 @@
 
     @media (max-width: $breakpoint-mobile) {
       grid-template-columns: 1fr;
-      gap: 1.5vw;
+      gap: 4vw;
     }
   }
 
@@ -256,7 +257,10 @@
     }
 
     @media (max-width: $breakpoint-mobile) {
-      height: 45vh;
+      height: auto;
+      min-height: 55vh;
+      width: 100%;
+      max-width: 90vw;
     }
 
     &:hover {
@@ -783,7 +787,9 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-// === ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ===
+// =========================================================================
+// === МОБИЛЬНАЯ ВЕРСИЯ (ПОЛНАЯ НАСТРОЙКА ДЛЯ ИДЕАЛЬНОГО ВИДА) ===
+// =========================================================================
 @media (max-width: $breakpoint-mobile) {
   .platforms__title { font-size: 11vw; }
   .platforms__subtitle { font-size: 3.8vw; max-width: 90vw; }
@@ -791,23 +797,52 @@
   .live-text { font-size: 3vw; }
   .live-viewers { font-size: 3.2vw; }
 
-  .platforms__grid { gap: 4vw; }
-
   .platform-card {
-    width: 100%;
-    max-width: 90vw;
+    // На мобильных ховер не работает, поэтому делаем красивый дефолтный вид
     height: auto;
     min-height: 55vh;
+    width: 100%;
+    max-width: 90vw;
     margin: 0 auto;
 
-    &__header { min-height: 14vh; padding-bottom: 1.5vh; margin-bottom: 1.5vh; }
-    &__logo { width: 12vh; height: 12vh; }
-    &__name { font-size: 5vw; letter-spacing: 0.1em; }
-    &__description { font-size: 3.2vw; line-height: 1.5; max-width: 100%; }
+    &__header { 
+      min-height: 14vh; 
+      padding-bottom: 1.5vh; 
+      margin-bottom: 1.5vh; 
+    }
+    
+    &__logo { 
+      width: 10vh; 
+      height: 10vh; 
+      opacity: 1 !important; // Показываем лого всегда
+      transform: none !important;
+    }
+    
+    &__name { 
+      font-size: 5vw; 
+      letter-spacing: 0.1em; 
+      opacity: 1 !important; // Показываем имя всегда
+      transform: none !important;
+      position: relative;
+      top: auto;
+      margin-top: 1vh;
+    }
+    
+    &__description { 
+      font-size: 3.2vw; 
+      line-height: 1.5; 
+      max-width: 100%; 
+    }
 
     &__stats--grid {
       gap: 0; 
       min-height: auto;
+    }
+
+    &__arrow {
+      opacity: 1 !important;
+      transform: translateX(-50%) translateY(0) !important;
+      bottom: 2vh;
     }
   }
 
@@ -817,18 +852,17 @@
     &__label { font-size: 2.8vw; }
   }
 
+  // Партнеры
   .partners__title { font-size: 10vw; }
   .partners__subtitle { font-size: 3.5vw; }
-
   .partners__content-stack { gap: 4vh; }
   .partners__header-top { margin-bottom: 3vh; }
-
   .partners__brands-row { gap: 2vw; }
 
   .partners__brand-chip {
     font-size: 3.2vw;
     padding: 1.5vh 4vw;
-    min-width: auto; 
+    min-width: 120px; // Чтобы короткие названия не сплющивались
   }
 
   .partners__info-block { padding: 2.5vh 4vw; }
@@ -851,18 +885,34 @@
     padding: 2.5vh 0;
   }
 
+  // Модальные окна на мобильных
   .platforms-modal, .partners-modal {
-    max-width: 85vw;
-    padding: 3vh 5vw;
+    max-width: 90vw;
+    padding: 4vh 5vw;
   }
 
-  .platforms-modal__title { font-size: 4.5vw; margin-bottom: 2.5vh; }
-  .platforms-modal__buttons { gap: 3vw; }
-  .platforms-modal__btn { font-size: 3.2vw; padding: 1.5vh 4vw; min-width: auto; width: 45%; }
+  .platforms-modal__title { font-size: 5vw; margin-bottom: 3vh; }
+  
+  .platforms-modal__buttons { 
+    flex-direction: column; // Кнопки друг под другом для удобного тапа
+    gap: 2vh; 
+  }
+  
+  .platforms-modal__btn { 
+    font-size: 3.5vw; 
+    padding: 2vh 4vw; 
+    min-width: auto; 
+    width: 100%; 
+  }
 
-  .partners-modal__title { font-size: 5vw; }
+  .partners-modal__title { font-size: 5.5vw; }
   .partners-modal__label { font-size: 3vw; }
   .partners-modal__value { font-size: 4vw; }
   .partners-modal__description p { font-size: 3.5vw; }
-  .partners-modal__btn { font-size: 3.2vw; padding: 1.5vh 4vw; }
+  
+  .partners-modal__btn { 
+    font-size: 3.5vw; 
+    padding: 2vh 4vw; 
+    width: 100%;
+  }
 }
