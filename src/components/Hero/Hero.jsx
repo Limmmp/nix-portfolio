@@ -131,7 +131,7 @@ useEffect(() => {
         markers: false
       }
     });
-
+// gbgbcb
     // Тонкий эффект "отъезжания" для контента (без сильного blur)
     tl.to('.hero__content-inner', {
       scale: 0.92,           // ← Меньше масштабирование
