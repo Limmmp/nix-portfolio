@@ -1009,7 +1009,7 @@
   }
   
   .pattern-nix {
-    font-size: 8vw; /* Увеличили относительно десктопных 4.5vw, чтобы на мобильном было читаемо, но стиль сохранен */
+    font-size: 8vw;
     opacity: 0.7;
     letter-spacing: 0.08em;
     background: linear-gradient(135deg, #555555 0%, #888888 40%, #ffffff 50%, #888888 60%, #555555 100%);
@@ -1071,7 +1071,7 @@
   .platform-card {
     width: 100%;
     height: 0;
-    padding-bottom: 100%; /* квадрат */
+    padding-bottom: 100%;
     position: relative;
     border-radius: 22px;
     background: rgba(255, 255, 255, 0.03);
@@ -1093,7 +1093,6 @@
       transition: transform 0.1s ease;
     }
 
-    // Прячем десктопные элементы
     &__border,
     &__gradient,
     &__stats--grid,
@@ -1128,9 +1127,8 @@
       border: none !important;
     }
 
-    // === ИЗМЕНЕНИЯ ЗДЕСЬ: ЛОГОТИП БОЛЬШЕ И БЕЗ ПОДСВЕТКИ ===
     &__logo {
-      width: 24vw !important; /* Было 13vw, сделали заметно больше */
+      width: 24vw !important;
       height: 24vw !important;
       opacity: 1 !important;
       transform: none !important;
@@ -1141,7 +1139,7 @@
       svg {
         width: 65% !important;
         height: 65% !important;
-        filter: none !important; /* Убрали drop-shadow (подсветку) */
+        filter: none !important;
       }
     }
 
@@ -1168,17 +1166,17 @@
     display: none;
   }
   
-  // === МОБИЛЬНАЯ ДЕТАЛЬНАЯ МОДАЛКА ===
+  // === МОБИЛЬНАЯ ДЕТАЛЬНАЯ МОДАЛКА PLATFORMS ===
   .platforms-detail-overlay {
     align-items: flex-end;
     padding: 0;
   }
-  
+
   // =========================================================================
-  // === PARTNERS SECTION (ULTRA-COMPACT PINNED MOBILE) ===
+  // === PARTNERS SECTION (COMPACT PINNED MOBILE) ===
   // =========================================================================
   .partners-section {
-    padding: 3vh 0 5vh; // Минимальные внешние отступы
+    padding: 3vh 0 5vh;
   }
 
   .partners__header-top {
@@ -1188,7 +1186,7 @@
   }
 
   .partners__title {
-    font-size: 10vw; // Компактнее, но все еще читаемо
+    font-size: 10vw;
     letter-spacing: 0.03em;
     color: #000000;
     margin-bottom: 0.5vh;
@@ -1205,36 +1203,37 @@
   }
 
   .partners__content-stack {
-    gap: 2.5vh; // Уменьшили общий шаг между блоками
+    gap: 2.5vh;
     padding: 0 4vw;
   }
 
   .partners__brands-container {
     gap: 1.5vh;
-    // Разрешаем горизонтальный скролл для строк, если нужно, но основная экономия ниже
   }
 
-  // === ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ДЛЯ БРЕНДОВ (ЭКОНОМИТ ВЕРТИКАЛЬНОЕ МЕСТО) ===
+  // === ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ДЛЯ БРЕНДОВ (ИСПРАВЛЕННЫЙ) ===
   .partners__brands-row {
     display: flex;
-    flex-wrap: nowrap; // Запрещаем перенос на новую строку
-    overflow-x: auto; // Включаем горизонтальный скролл
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 2vw;
-    padding-bottom: 1vh; // Место под палец/скроллбар
-    scrollbar-width: none; // Скрываем скроллбар для Firefox
-    -ms-overflow-style: none; // Скрываем для IE/Edge
+    padding: 0 4vw 1.5vh 4vw; // Добавил padding по бокам чтобы карточки не обрезались
+    margin: 0 -4vw; // Компенсируем padding контейнера
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch; // Плавный скролл на iOS
     
     &::-webkit-scrollbar {
-      display: none; // Скрываем скроллбар для Chrome/Safari
+      display: none;
     }
   }
 
   .partners__brand-chip {
-    flex: 0 0 auto; // Запрещаем сжатие
-    min-width: 24vw; // Комфортная ширина для нажатия пальцем
+    flex: 0 0 auto;
+    min-width: 26vw; // Чуть шире для комфорта
     width: auto;
     font-size: 3vw !important;
-    padding: 2.5vw 3vw !important;
+    padding: 2.8vw 3.5vw !important; // Чуть больше padding
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
     background: rgba(255, 255, 255, 0.5) !important;
@@ -1256,7 +1255,7 @@
 
   .partners__info-row {
     grid-template-columns: 1fr;
-    gap: 2vh; // Минимальный разрыв между блоками
+    gap: 2vh;
   }
 
   .partners__info-block {
@@ -1265,7 +1264,7 @@
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 16px;
-    padding: 3vw; // Компактные внутренние отступы
+    padding: 3vw;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   }
 
@@ -1355,6 +1354,112 @@
       transform: scale(0.97);
       background: #222222;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // =========================================================================
+  // === PARTNERS MODAL (MOBILE FIX) ===
+  // =========================================================================
+  .partners-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+    background-color: rgba(183, 183, 183, 0.85);
+  }
+
+  .partners-modal {
+    width: 100%;
+    max-width: 100%;
+    padding: 28px 20px calc(24px + env(safe-area-inset-bottom)) 20px;
+    border-radius: 24px 24px 0 0;
+    animation: slideFromBottom 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+
+    &__header {
+      margin-bottom: 3vh;
+      padding-bottom: 2vh;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    &__title {
+      font-size: 5.5vw;
+      font-weight: 800;
+      color: #000000;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+    }
+
+    &__content {
+      margin-bottom: 3vh;
+    }
+
+    &__year {
+      margin-bottom: 2.5vh;
+      padding: 2vh 2.5vw;
+      background: rgba(0, 0, 0, 0.04);
+      border-radius: 12px;
+    }
+
+    &__label {
+      display: block;
+      font-size: 3vw;
+      color: #666666;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1vh;
+      font-weight: 600;
+    }
+
+    &__value {
+      font-size: 4vw;
+      color: #000000;
+      font-weight: 700;
+    }
+
+    &__description {
+      p {
+        font-size: 3.5vw;
+        color: #333333;
+        line-height: 1.6;
+        margin: 0;
+      }
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: center;
+      padding-top: 1vh;
+    }
+
+    &__btn {
+      width: 100%;
+      padding: 3.5vw 0;
+      font-size: 3.8vw;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      background: #000000;
+      color: #ffffff;
+      border-radius: 14px;
+      transition: all 0.2s ease;
+
+      &:active {
+        transform: scale(0.97);
+        background: #222222;
+      }
     }
   }
 }
