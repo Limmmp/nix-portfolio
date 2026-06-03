@@ -8,7 +8,7 @@
   justify-content: center;
   overflow: hidden;
   background-color: $color-black;
-  perspective: 1000px;  // ← ДЛЯ 3D ЭФФЕКТА
+  perspective: 1000px; // ← ДЛЯ 3D ЭФФЕКТА
 
   // Фоновое изображение
   &__bg {
@@ -19,7 +19,7 @@
     height: 100%;
     z-index: 1;
     overflow: hidden;
-    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
+    transform-style: preserve-3d; // ← ДЛЯ 3D ЭФФЕКТА
   }
 
   &__bg-image {
@@ -29,7 +29,7 @@
     object-position: center top;
     filter: grayscale(100%) contrast(1.1);
     transition: filter $transition-slow;
-    transform: translateZ(0);  // ← ДЛЯ 3D ЭФФЕКТА
+    transform: translateZ(0); // ← ДЛЯ 3D ЭФФЕКТА
     will-change: transform, opacity;
   }
 
@@ -49,7 +49,7 @@
     z-index: 2;
   }
 
-  // 🔧 Контент - только проценты
+  // 🔧 Контент
   &__content {
     position: relative;
     z-index: 5;
@@ -59,8 +59,9 @@
     justify-content: space-between;
     height: 100vh;
     width: 100%;
-    padding: 0 5vw;
-    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
+    // ← ФИКС: ограничиваем боковые отступы на 2K+
+    padding: 0 min(5vw, 100px); 
+    transform-style: preserve-3d; // ← ДЛЯ 3D ЭФФЕКТА
   }
 
   // ← НОВЫЙ КЛАСС ДЛЯ 3D АНИМАЦИИ
@@ -71,174 +72,184 @@
     margin-top: 13vh;
     margin-bottom: 10vh;
     transform: translateY(0);
-    transform-style: preserve-3d;  // ← ДЛЯ 3D ЭФФЕКТА
+    transform-style: preserve-3d; // ← ДЛЯ 3D ЭФФЕКТА
     will-change: transform, opacity, filter;
   }
 
-&__title {
-  color: $color-white;
-  text-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.15em;
-  margin-bottom: 1.5vh;
-  font-size: 5.5vw;
-  width: 100%;
-  max-width: 900px; // ← Ограничиваем вместо 50vw
-  text-align: center;
-  line-height: 1;
-  transform: translateZ(0);
-}
+  &__title {
+    color: $color-white;
+    text-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5vh;
+    // ← ФИКС: ограничиваем размер шрифта и ширину
+    font-size: min(5.5vw, 80px);
+    max-width: min(50vw, 900px);
+    text-align: center;
+    line-height: 1;
+    transform: translateZ(0); // ← ДЛЯ 3D ЭФФЕКТА
+  }
 
-&__subtitle {
-  color: $color-light-gray;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  width: 100%;
-  max-width: 800px; // ← Ограничиваем вместо 45vw
-  font-size: 1.1vw;
-  text-align: center;
-  line-height: 1.6;
-}
+  &__subtitle {
+    color: $color-light-gray;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    // ← ФИКС: ограничиваем размер шрифта и ширину
+    font-size: min(1.1vw, 18px);
+    max-width: min(45vw, 800px);
+    text-align: center;
+    line-height: 1.6;
+  }
 
   // Кнопки
   &__cta {
     display: flex;
-    gap: 2vw;
+    // ← ФИКС: ограничиваем gap
+    gap: min(2vw, 30px);
     margin-top: 3vh;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
   }
 
-&__btn {
-  padding: 5vh 2vw; // ← Заменил 11vw на 2vw, чтобы ширина контролировалась через max-width
-  font-family: $font-primary;
-  font-size: 1.1vw;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  transition: all $transition-medium;
-  border: 1px solid $color-white;
-  white-space: nowrap;
-  cursor: pointer;
-  
-  width: 100%;
-  max-width: 280px; // ← ГЛАВНЫЙ ФИКС: вместо 18vw (460px на 2K)
-  min-width: 200px; // Минимальный размер, чтобы не схлопывались
-  
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 12vh;
-  text-align: center;
-
-  &--primary {
-    background: $color-white;
-    color: $color-black;
-    border-color: $color-white;
-
-    &:hover {
-      background: transparent;
-      color: $color-white;
-      transform: translateY(-3px);
-    }
-  }
-
-  &--secondary {
-    background: rgba(0, 0, 0, 0.5);
-    color: $color-white;
-    border-color: rgba(255, 255, 255, 0.5);
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: $color-white;
-      color: $color-white;
-      transform: translateY(-3px);
-    }
-  }
-}
-
-// Статистика
-&__stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2vw; // Чуть уменьшил gap для более плотной и безопасной компоновки
-  width: 100%;
-  max-width: 1400px; // ← ГЛАВНЫЙ ФИКС: ограничиваем общую ширину ряда
-  margin-bottom: 3vh;
-  padding: 0 2vw; // Добавил небольшой внутренний отступ для безопасности по краям
-  justify-content: center;
-  justify-items: center;
-  transform: translateZ(0);
-  will-change: transform, opacity, filter;
-}
-
-// Карточка статистики
-&-stat {
-  position: relative;
-  padding: 0;
-  width: 100%;
-  max-width: 320px; // ← ГЛАВНЫЙ ФИКС: вместо 20vw (которое на 2K равно 512px!)
-  aspect-ratio: 4/1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  // flex-shrink: 0; // ← УДАЛИЛ это свойство, в grid-контейнере оно только ломает адаптивность
-  
-  &__border {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: transparent;
-    backdrop-filter: blur(10px);
-    transition: all $transition-medium;
-  }
-
-  &__content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5vh;
-    align-items: center;
-    padding: 2vh 1vw; // Чуть уменьшил горизонтальный padding внутри
-  }
-
-  &__value {
-    font-family: $font-display;
-    font-size: 3.5vw;
-    font-weight: 700;
-    color: $color-white;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    flex-shrink: 0;
-  }
-
-  &__label {
-    font-size: 0.9vw;
+  &__btn {
+    // ← ФИКС: вместо гигантских 11vw padding и 18vw width
+    padding: 2.5vh min(3vw, 30px);
+    font-family: $font-primary;
+    font-size: min(1.1vw, 16px);
     font-weight: 600;
-    color: $color-white;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    white-space: nowrap; // Чтобы текст не переносился некрасиво
-  }
-
-  &__sublabel {
-    font-size: 0.8vw;
-    color: $color-white;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    transition: all $transition-medium;
+    border: 1px solid $color-white;
     white-space: nowrap;
+    cursor: pointer;
+    
+    width: min(18vw, 280px); // ← Ограничиваем максимальную ширину кнопки
+    min-width: 200px;        // ← Чтобы не схлопывалась на маленьких экранах
+    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12vh;
+
+    &--primary {
+      background: $color-white;
+      color: $color-black;
+      border-color: $color-white;
+
+      &:hover {
+        background: transparent;
+        color: $color-white;
+        transform: translateY(-3px);
+      }
+    }
+
+    &--secondary {
+      background: rgba(0, 0, 0, 0.5);
+      color: $color-white;
+      border-color: rgba(255, 255, 255, 0.5);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: $color-white;
+        color: $color-white;
+        transform: translateY(-3px);
+      }
+    }
   }
 
-  &:hover &__border {
-    border-color: $color-white;
-    background: rgba(0, 0, 0, 0.7);
+  // Статистика
+  &__stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    // ← ФИКС: ограничиваем общую ширину и отступы
+    width: min(50vw, 1100px);
+    gap: min(3vw, 40px);
+    margin: 0 auto 3vh auto; // ← Гарантированное центрирование
+    padding-bottom: 0;
+    justify-content: center;
+    justify-items: center;
+    transform: translateZ(0); // ← ДЛЯ 3D ЭФФЕКТА
+    will-change: transform, opacity, filter;
   }
-}
+
+  // Карточка статистики
+  &-stat {
+    position: relative;
+    padding: 0;
+    width: 100%;
+    // ← ФИКС: ограничиваем ширину карточки
+    max-width: min(20vw, 260px);
+    aspect-ratio: 4/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-shrink: 0;
+
+    &__border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: transparent;
+      backdrop-filter: blur(10px);
+      transition: all $transition-medium;
+    }
+
+    &__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5vh;
+      align-items: center;
+      // ← ФИКС: ограничиваем внутренний отступ
+      padding: 2vh min(2vw, 20px);
+    }
+
+    &__value {
+      font-family: $font-display;
+      // ← ФИКС: ограничиваем размер цифры
+      font-size: min(3.5vw, 48px);
+      font-weight: 700;
+      color: $color-white;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    &__label {
+      // ← ФИКС: ограничиваем размер + запрет переноса
+      font-size: min(0.9vw, 14px);
+      font-weight: 600;
+      color: $color-white;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    &__sublabel {
+      // ← ФИКС: ограничиваем размер + запрет переноса
+      font-size: min(0.8vw, 12px);
+      color: $color-white;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    &:hover &__border {
+      border-color: $color-white;
+      background: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  // Ховер эффект на фото
+  &:hover &__bg-image {
+    filter: grayscale(80%) contrast(1.15);
+  }
 }
 
 // Адаптивность
