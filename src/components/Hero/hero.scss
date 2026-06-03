@@ -75,27 +75,29 @@
     will-change: transform, opacity, filter;
   }
 
-  &__title {
-    color: $color-white;
-    text-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
-    letter-spacing: 0.15em;
-    margin-bottom: 1.5vh;
-    font-size: 5.5vw;
-    max-width: 50vw;
-    text-align: center;
-    line-height: 1;
-    transform: translateZ(0);  // ← ДЛЯ 3D ЭФФЕКТА
-  }
+&__title {
+  color: $color-white;
+  text-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5vh;
+  font-size: 5.5vw;
+  width: 100%;
+  max-width: 900px; // ← Ограничиваем вместо 50vw
+  text-align: center;
+  line-height: 1;
+  transform: translateZ(0);
+}
 
-  &__subtitle {
-    color: $color-light-gray;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    max-width: 45vw;
-    font-size: 1.1vw;
-    text-align: center;
-    line-height: 1.6;
-  }
+&__subtitle {
+  color: $color-light-gray;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  width: 100%;
+  max-width: 800px; // ← Ограничиваем вместо 45vw
+  font-size: 1.1vw;
+  text-align: center;
+  line-height: 1.6;
+}
 
   // Кнопки
   &__cta {
@@ -107,133 +109,136 @@
     flex-wrap: wrap;
   }
 
-  &__btn {
-    padding: 5vh 11vw;
-    font-family: $font-primary;
-    font-size: 1.1vw;
+&__btn {
+  padding: 5vh 2vw; // ← Заменил 11vw на 2vw, чтобы ширина контролировалась через max-width
+  font-family: $font-primary;
+  font-size: 1.1vw;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all $transition-medium;
+  border: 1px solid $color-white;
+  white-space: nowrap;
+  cursor: pointer;
+  
+  width: 100%;
+  max-width: 280px; // ← ГЛАВНЫЙ ФИКС: вместо 18vw (460px на 2K)
+  min-width: 200px; // Минимальный размер, чтобы не схлопывались
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12vh;
+  text-align: center;
+
+  &--primary {
+    background: $color-white;
+    color: $color-black;
+    border-color: $color-white;
+
+    &:hover {
+      background: transparent;
+      color: $color-white;
+      transform: translateY(-3px);
+    }
+  }
+
+  &--secondary {
+    background: rgba(0, 0, 0, 0.5);
+    color: $color-white;
+    border-color: rgba(255, 255, 255, 0.5);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: $color-white;
+      color: $color-white;
+      transform: translateY(-3px);
+    }
+  }
+}
+
+// Статистика
+&__stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2vw; // Чуть уменьшил gap для более плотной и безопасной компоновки
+  width: 100%;
+  max-width: 1400px; // ← ГЛАВНЫЙ ФИКС: ограничиваем общую ширину ряда
+  margin-bottom: 3vh;
+  padding: 0 2vw; // Добавил небольшой внутренний отступ для безопасности по краям
+  justify-content: center;
+  justify-items: center;
+  transform: translateZ(0);
+  will-change: transform, opacity, filter;
+}
+
+// Карточка статистики
+&-stat {
+  position: relative;
+  padding: 0;
+  width: 100%;
+  max-width: 320px; // ← ГЛАВНЫЙ ФИКС: вместо 20vw (которое на 2K равно 512px!)
+  aspect-ratio: 4/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  // flex-shrink: 0; // ← УДАЛИЛ это свойство, в grid-контейнере оно только ломает адаптивность
+  
+  &__border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: transparent;
+    backdrop-filter: blur(10px);
+    transition: all $transition-medium;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+    align-items: center;
+    padding: 2vh 1vw; // Чуть уменьшил горизонтальный padding внутри
+  }
+
+  &__value {
+    font-family: $font-display;
+    font-size: 3.5vw;
+    font-weight: 700;
+    color: $color-white;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    font-size: 0.9vw;
     font-weight: 600;
+    color: $color-white;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    transition: all $transition-medium;
-    border: 1px solid $color-white;
+    white-space: nowrap; // Чтобы текст не переносился некрасиво
+  }
+
+  &__sublabel {
+    font-size: 0.8vw;
+    color: $color-white;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     white-space: nowrap;
-    cursor: pointer;
-    width: 18vw;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 12vh;
-
-    &--primary {
-      background: $color-white;
-      color: $color-black;
-      border-color: $color-white;
-
-      &:hover {
-        background: transparent;
-        color: $color-white;
-        transform: translateY(-3px);
-      }
-    }
-
-    &--secondary {
-      background: rgba(0, 0, 0, 0.5);
-      color: $color-white;
-      border-color: rgba(255, 255, 255, 0.5);
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: $color-white;
-        color: $color-white;
-        transform: translateY(-3px);
-      }
-    }
   }
 
-  // Статистика
-  &__stats-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 3vw;
-    width: 50vw;
-    margin-bottom: 3vh;
-    padding-bottom: 0;
-    justify-content: center;
-    justify-items: center;
-    transform: translateZ(0);  // ← ДЛЯ 3D ЭФФЕКТА
-    will-change: transform, opacity, filter;
+  &:hover &__border {
+    border-color: $color-white;
+    background: rgba(0, 0, 0, 0.7);
   }
-
-  // Карточка статистики
-  &-stat {
-    position: relative;
-    padding: 0;
-    width: 100%;
-    max-width: 20vw;
-    aspect-ratio: 4/1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    flex-shrink: 0;
-
-    &__border {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      background: transparent;
-      backdrop-filter: blur(10px);
-      transition: all $transition-medium;
-    }
-
-    &__content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5vh;
-      align-items: center;
-      padding: 2vh 2vw;
-    }
-
-    &__value {
-      font-family: $font-display;
-      font-size: 3.5vw;
-      font-weight: 700;
-      color: $color-white;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      flex-shrink: 0;
-    }
-
-    &__label {
-      font-size: 0.9vw;
-      font-weight: 600;
-      color: $color-white;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    &__sublabel {
-      font-size: 0.8vw;
-      color: $color-white;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    &:hover &__border {
-      border-color: $color-white;
-      background: rgba(0, 0, 0, 0.7);
-    }
-  }
-
-  // Ховер эффект на фото
-  &:hover &__bg-image {
-    filter: grayscale(80%) contrast(1.15);
-  }
+}
 }
 
 // Адаптивность
