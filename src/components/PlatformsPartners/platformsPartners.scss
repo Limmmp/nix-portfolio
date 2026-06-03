@@ -1000,19 +1000,26 @@
 // === MOBILE ===
 // =========================================================================
 @media (max-width: $breakpoint-mobile) {
-  // === ФОНОВЫЙ ПАТТЕРН NIX (ЗАМЕТНЫЙ) ===
+  // === ФОНОВЫЙ ПАТТЕРН NIX (КАК НА ДЕСКТОПЕ) ===
   .platforms-partners__bg-pattern {
-    width: 300%;
-    height: 300%;
-    top: -100%;
-    left: -100%;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
     transform: rotate(-45deg);
   }
-
+  
   .pattern-nix {
-    font-size: 14vw;
-    opacity: 0.28;
-    letter-spacing: 0.05em;
+    font-size: 8vw; /* Увеличили относительно десктопных 4.5vw, чтобы на мобильном было читаемо, но стиль сохранен */
+    opacity: 0.7;
+    letter-spacing: 0.08em;
+    /* Дублируем градиент и анимацию с десктопа для гарантии корректного отображения */
+    background: linear-gradient(135deg, #555555 0%, #888888 40%, #ffffff 50%, #888888 60%, #555555 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 10s ease-in-out infinite;
   }
 
   // === LIVE ===
@@ -1027,7 +1034,6 @@
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 0, 0, 0.4);
   }
-
   .live-dot { width: 1vh; height: 1vh; }
   .live-text { font-size: 2.2vw; letter-spacing: 0.05em; }
   .live-viewers { font-size: 2vw; }
@@ -1038,14 +1044,12 @@
     padding: 18vh 6vw 4vh;
     margin-bottom: 4vh;
   }
-
   .platforms__title {
     font-size: 14vw;
     letter-spacing: 0.04em;
     margin-bottom: 2vh;
     line-height: 0.95;
   }
-
   .platforms__subtitle {
     font-size: 3.8vw;
     max-width: 85vw;
@@ -1079,7 +1083,7 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     overflow: hidden;
     display: block;
-
+    
     &:hover {
       transform: none;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -1126,9 +1130,10 @@
       border: none !important;
     }
 
+    // === ИЗМЕНЕНИЯ ЗДЕСЬ: ЛОГОТИП БОЛЬШЕ И БЕЗ ПОДСВЕТКИ ===
     &__logo {
-      width: 13vw !important;
-      height: 13vw !important;
+      width: 24vw !important; /* Было 13vw, сделали заметно больше */
+      height: 24vw !important;
       opacity: 1 !important;
       transform: none !important;
       background: rgba(255, 255, 255, 0.04);
@@ -1136,9 +1141,9 @@
       border-radius: 18px;
 
       svg {
-        width: 60% !important;
-        height: 60% !important;
-        filter: drop-shadow(0 0 10px var(--platform-color));
+        width: 65% !important;
+        height: 65% !important;
+        filter: none !important; /* Убрали drop-shadow (подсветку) */
       }
     }
 
@@ -1153,29 +1158,29 @@
       margin: 0;
     }
   }
-
+  
   .platform-stat,
   .platform-stat__value,
   .platform-stat__label,
   .platform-stat__empty {
     display: none !important;
   }
-
+  
   .platforms__scroll-indicator {
     display: none;
   }
-
+  
   // === МОБИЛЬНАЯ ДЕТАЛЬНАЯ МОДАЛКА ===
   .platforms-detail-overlay {
     align-items: flex-end;
     padding: 0;
   }
-
+  
   .partners__info-row {
     grid-template-columns: 1fr;
     gap: 3vh;
   }
-
+  
   .partners__formats-list {
     grid-template-columns: 1fr;
   }
