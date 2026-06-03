@@ -233,7 +233,6 @@
     border-color: var(--platform-color);
     transform: translateY(-1vh) scale(1.01);
     box-shadow: 0 1.8vh 4.5vh rgba(0, 0, 0, 0.6), 0 0 3vw var(--platform-color);
-
     .platform-card__gradient { opacity: 1; }
     .platform-card__arrow { transform: translateX(-50%) translateY(0); opacity: 1; }
     .platform-card__border { opacity: 1; }
@@ -1013,7 +1012,6 @@
     font-size: 8vw; /* Увеличили относительно десктопных 4.5vw, чтобы на мобильном было читаемо, но стиль сохранен */
     opacity: 0.7;
     letter-spacing: 0.08em;
-    /* Дублируем градиент и анимацию с десктопа для гарантии корректного отображения */
     background: linear-gradient(135deg, #555555 0%, #888888 40%, #ffffff 50%, #888888 60%, #555555 100%);
     background-size: 300% 300%;
     -webkit-background-clip: text;
@@ -1176,12 +1174,163 @@
     padding: 0;
   }
   
+  // =========================================================================
+  // === PARTNERS SECTION (MOBILE ENHANCEMENTS) ===
+  // =========================================================================
+  .partners-section {
+    padding: 6vh 0 12vh; // Больше воздуха снизу для удобного скролла
+  }
+
+  .partners__header-top {
+    margin-bottom: 5vh;
+    padding: 0 5vw;
+  }
+
+  .partners__title {
+    font-size: 14vw; // Крупный, акцентный заголовок
+    letter-spacing: 0.05em;
+    color: #000000;
+    margin-bottom: 1.5vh;
+    line-height: 1;
+  }
+
+  .partners__subtitle {
+    font-size: 4vw;
+    color: #444444;
+    line-height: 1.4;
+    max-width: 90vw;
+    margin: 0 auto;
+    font-weight: 500;
+  }
+
+  .partners__content-stack {
+    gap: 4vh;
+    padding: 0 5vw;
+  }
+
+  .partners__brands-container {
+    gap: 2.5vh;
+  }
+
+  .partners__brands-row {
+    gap: 2.5vw;
+    justify-content: center;
+  }
+
+  // === ЧИПЫ БРЕНДОВ: удобные для нажатия, с эффектом стекла ===
+  .partners__brand-chip {
+    font-size: 3.5vw !important;
+    padding: 3vw 5vw !important;
+    min-width: 28vw;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #000000 !important;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+
+    &:active {
+      transform: scale(0.96);
+      background: rgba(0, 0, 0, 0.06) !important;
+    }
+  }
+
   .partners__info-row {
     grid-template-columns: 1fr;
     gap: 3vh;
   }
-  
+
+  // === ИНФО-БЛОКИ: премиальный вид с мягкими тенями ===
+  .partners__info-block {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+    padding: 5vw;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  }
+
+  .partners__info-title {
+    font-size: 3.8vw;
+    margin-bottom: 2.5vh;
+    padding-bottom: 1.5vh;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    letter-spacing: 0.06em;
+    color: #000000;
+  }
+
+  .partners__info-list {
+    gap: 2vh;
+  }
+
+  .partners__info-item {
+    padding-bottom: 2vh;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  .partners__info-label {
+    font-size: 3.2vw;
+    color: #666666;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+  }
+
+  .partners__info-value {
+    font-size: 3.6vw;
+    color: #000000;
+    font-weight: 700;
+  }
+
   .partners__formats-list {
     grid-template-columns: 1fr;
+    gap: 0; // Убираем gap, используем границы для чистоты
+  }
+
+  .partners__format-item {
+    padding: 2.5vh 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  .partners__format-title {
+    font-size: 3.6vw;
+    color: #000000;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+  }
+
+  // === CTA КНОПКА: крупная, заметная, с приятным тактильным откликом ===
+  .partners__cta-btn-wide {
+    padding: 4.5vw 0;
+    font-size: 4.2vw;
+    border-radius: 20px;
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    letter-spacing: 0.08em;
+    margin-top: 2vh;
+    transition: all 0.2s ease;
+
+    &:active {
+      transform: scale(0.97);
+      background: #222222;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
   }
 }
