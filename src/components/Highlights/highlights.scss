@@ -2,13 +2,13 @@
 
 .highlights {
   position: relative;
-  padding: 11vh 0; // ← БЫЛО 120px
+  padding: 11vh 0;
   background-color: #0a0a0a;
-  border-top: 0.1vh solid #222222; // ← БЫЛО 1px
+  border-top: 0.1vh solid #222222;
   border-bottom: 0.1vh solid #222222;
 
   &__header {
-    margin-bottom: 5.5vh; // ← БЫЛО 60px
+    margin-bottom: 5.5vh;
     text-align: center;
   }
 
@@ -16,14 +16,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.2vw; // ← БЫЛО 20px
-    margin-bottom: 1.5vh; // ← БЫЛО 16px
+    gap: 1.2vw;
+    margin-bottom: 1.5vh;
   }
 
   &__title {
     color: #ffffff;
     font-family: $font-display;
-    font-size: 4vw; // ← БЫЛО clamp(40px, 5vw, 64px)
+    font-size: 4vw;
     font-weight: 800;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -31,30 +31,30 @@
 
   &__counter {
     font-family: $font-display;
-    font-size: 0.9vw; // ← БЫЛО 14px
+    font-size: 0.9vw;
     color: #666666;
     letter-spacing: 0.15em;
   }
 
   &__subtitle {
     color: #888888;
-    font-size: 1vw; // ← БЫЛО clamp(14px, 1.3vw, 17px)
-    max-width: 26vw; // ← БЫЛО 500px
+    font-size: 1vw;
+    max-width: 26vw;
     margin: 0 auto;
   }
 
   // Главное видео (featured)
   &__featured {
-    margin-bottom: 7.5vh; // ← БЫЛО 80px
+    margin-bottom: 7.5vh;
   }
 
   &__featured-video {
     position: relative;
     width: 100%;
-    max-width: 52vw; // ← БЫЛО 1000px
+    max-width: 52vw;
     aspect-ratio: 16/9;
     margin: 0 auto;
-    border-radius: 0.4vh; // ← БЫЛО 4px
+    border-radius: 0.4vh;
     overflow: hidden;
     border: 0.1vh solid #333333;
     transition: all 0.4s ease;
@@ -62,7 +62,7 @@
     &:hover {
       border-color: #ffffff;
       transform: scale(1.02);
-      box-shadow: 0 2vh 6vh rgba(0, 0, 0, 0.6); // ← БЫЛО 20px 60px
+      box-shadow: 0 2vh 6vh rgba(0, 0, 0, 0.6);
     }
   }
 
@@ -93,7 +93,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2.2vh; // ← БЫЛО 24px
+    gap: 2.2vh;
     opacity: 0;
     transition: opacity 0.4s ease;
 
@@ -103,7 +103,7 @@
   }
 
   &__featured-play {
-    width: 4.5vh; // ← БЫЛО 80px
+    width: 4.5vh;
     height: 4.5vh;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
@@ -120,7 +120,7 @@
     }
 
     svg {
-      margin-left: 0.2vh; // ← БЫЛО 4px
+      margin-left: 0.2vh;
     }
   }
 
@@ -130,21 +130,21 @@
 
   &__featured-views {
     display: block;
-    font-size: 0.9vw; // ← БЫЛО 14px
+    font-size: 0.9vw;
     color: #999999;
-    margin-bottom: 0.7vh; // ← БЫЛО 8px
+    margin-bottom: 0.7vh;
   }
 
   &__featured-title {
     font-family: $font-display;
-    font-size: 1.5vw; // ← БЫЛО clamp(20px, 2.5vw, 28px)
+    font-size: 1.5vw;
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 0.7vh;
   }
 
   &__featured-platform {
-    font-size: 0.75vw; // ← БЫЛО 12px
+    font-size: 0.75vw;
     color: #666666;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -154,17 +154,17 @@
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5vw; // ← БЫЛО 24px
-    margin-bottom: 9vh; // ← БЫЛО 100px
+    gap: 1.5vw;
+    margin-bottom: 9vh;
 
     @media (max-width: $breakpoint-tablet) {
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.2vw; // ← БЫЛО 20px
+      gap: 1.2vw;
     }
 
     @media (max-width: $breakpoint-mobile) {
       grid-template-columns: 1fr;
-      gap: 1vw; // ← БЫЛО 16px
+      gap: 1vw;
     }
   }
 
@@ -172,7 +172,7 @@
     transition: all 0.4s ease;
 
     &:hover {
-      transform: translateY(-0.7vh); // ← БЫЛО -8px
+      transform: translateY(-0.7vh);
     }
   }
 
@@ -183,7 +183,7 @@
     border-radius: 0.4vh;
     overflow: hidden;
     border: 0.1vh solid #333333;
-    margin-bottom: 1.5vh; // ← БЫЛО 16px
+    margin-bottom: 1.5vh;
     transition: all 0.4s ease;
 
     .highlights__video-card:hover & {
@@ -221,7 +221,7 @@
   }
 
   &__video-play {
-    width: 3vh; // ← БЫЛО 50px
+    width: 3vh;
     height: 3vh;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
@@ -238,32 +238,32 @@
     }
 
     svg {
-      margin-left: 0.1vh; // ← БЫЛО 2px
+      margin-left: 0.1vh;
     }
   }
 
   &__video-info {
     display: flex;
     flex-direction: column;
-    gap: 0.5vh; // ← БЫЛО 8px
+    gap: 0.5vh;
   }
 
   &__video-views {
-    font-size: 0.8vw; // ← БЫЛО 13px
+    font-size: 0.8vw;
     color: #666666;
     font-weight: 600;
   }
 
   &__video-title {
     font-family: $font-display;
-    font-size: 1.2vw; // ← БЫЛО clamp(16px, 1.8vw, 20px)
+    font-size: 1.2vw;
     font-weight: 700;
     color: #ffffff;
     line-height: 1.3;
   }
 
   &__video-platform {
-    font-size: 0.7vw; // ← БЫЛО 11px
+    font-size: 0.7vw;
     color: #888888;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -271,34 +271,34 @@
 
   // Достижения
   &__awards {
-    padding-top: 7.5vh; // ← БЫЛО 80px
+    padding-top: 7.5vh;
     border-top: 0.1vh solid #222222;
   }
 
   &__awards-header {
     text-align: center;
-    margin-bottom: 5.5vh; // ← БЫЛО 60px
+    margin-bottom: 5.5vh;
   }
 
   &__awards-title {
     color: #ffffff;
     font-family: $font-display;
-    font-size: 3vw; // ← БЫЛО clamp(32px, 4vw, 48px)
+    font-size: 3vw;
     font-weight: 800;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    margin-bottom: 1.1vh; // ← БЫЛО 12px
+    margin-bottom: 1.1vh;
   }
 
   &__awards-subtitle {
     color: #888888;
-    font-size: 1vw; // ← БЫЛО clamp(14px, 1.3vw, 17px)
+    font-size: 1vw;
   }
 
   &__awards-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5vw; // ← БЫЛО 24px
+    gap: 1.5vw;
 
     @media (max-width: $breakpoint-tablet) {
       grid-template-columns: repeat(2, 1fr);
@@ -314,7 +314,7 @@
   &__award-card {
     background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
     border: 0.1vh solid #333333;
-    padding: 3vh 2.2vw; // ← БЫЛО 32px 24px
+    padding: 3vh 2.2vw;
     text-align: center;
     transition: all 0.4s ease;
     position: relative;
@@ -340,7 +340,7 @@
     &:hover {
       border-color: #ffffff;
       transform: translateY(-0.7vh);
-      box-shadow: 0 1.2vh 4vh rgba(0, 0, 0, 0.4); // ← БЫЛО 12px 40px
+      box-shadow: 0 1.2vh 4vh rgba(0, 0, 0, 0.4);
 
       &::before {
         left: 100%;
@@ -349,41 +349,41 @@
   }
 
   &__award-icon {
-    font-size: 2.5vw; // ← БЫЛО 48px
-    margin-bottom: 1.8vh; // ← БЫЛО 20px
+    font-size: 2.5vw;
+    margin-bottom: 1.8vh;
     display: block;
   }
 
   &__award-year {
     display: inline-block;
-    font-size: 0.7vw; // ← БЫЛО 11px
+    font-size: 0.7vw;
     color: #666666;
     background: #0d0d0d;
-    padding: 0.5vh 1vw; // ← БЫЛО 6px 12px
-    margin-bottom: 1.5vh; // ← БЫЛО 16px
+    padding: 0.5vh 1vw;
+    margin-bottom: 1.5vh;
     font-weight: 600;
     letter-spacing: 0.1em;
   }
 
   &__award-title {
     font-family: $font-display;
-    font-size: 1.2vw; // ← БЫЛО clamp(16px, 1.8vw, 20px)
+    font-size: 1.2vw;
     font-weight: 800;
     color: #ffffff;
-    margin-bottom: 0.7vh; // ← БЫЛО 8px
+    margin-bottom: 0.7vh;
     line-height: 1.3;
   }
 
   &__award-subtitle {
     display: block;
-    font-size: 0.8vw; // ← БЫЛО 13px
+    font-size: 0.8vw;
     color: #999999;
     font-weight: 600;
-    margin-bottom: 1.1vh; // ← БЫЛО 12px
+    margin-bottom: 1.1vh;
   }
 
   &__award-description {
-    font-size: 0.75vw; // ← БЫЛО 12px
+    font-size: 0.75vw;
     color: #666666;
     line-height: 1.6;
   }
@@ -402,29 +402,225 @@
   }
 }
 
+// =========================================================================
+// === MOBILE VERSION ONLY (TOUCH-OPTIMIZED) ===
+// =========================================================================
 @media (max-width: $breakpoint-mobile) {
   .highlights {
-    padding: 7.5vh 0; // ← БЫЛО 80px
+    padding: 6vh 0;
 
     &__header {
-      margin-bottom: 3.7vh; // ← БЫЛО 40px
+      margin-bottom: 4vh;
+      padding: 0 4vw;
     }
 
+    &__header-top {
+      gap: 2vw;
+      margin-bottom: 1.5vh;
+    }
+
+    &__title {
+      font-size: 9vw;
+      letter-spacing: 0.15em;
+    }
+
+    &__counter {
+      font-size: 3vw;
+      padding: 1vw 2vw;
+    }
+
+    &__subtitle {
+      font-size: 3.5vw;
+      max-width: 90vw;
+      line-height: 1.4;
+    }
+
+    // === ГЛАВНОЕ ВИДЕО ===
     &__featured {
-      margin-bottom: 5.5vh; // ← БЫЛО 60px
+      margin-bottom: 5vh;
+      padding: 0 2vw;
     }
 
+    &__featured-video {
+      border-radius: 16px;
+      border: 1px solid #333333;
+      
+      &:hover {
+        transform: none; // Отключаем hover-эффекты на тач-устройствах
+      }
+    }
+
+    &__featured-overlay {
+      opacity: 1; // На мобильном оверлей виден всегда для понятности
+      background: linear-gradient(0deg, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.2) 60%, transparent 100%);
+    }
+
+    &__featured-play {
+      width: 64px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      
+      &:active {
+        transform: scale(0.92);
+        background: rgba(255, 255, 255, 0.25);
+      }
+    }
+
+    &__featured-info {
+      transform: translateY(0);
+      padding: 0 4vw 3vh;
+    }
+
+    &__featured-views {
+      font-size: 3vw;
+      margin-bottom: 1vh;
+    }
+
+    &__featured-title {
+      font-size: 4.5vw;
+      margin-bottom: 1vh;
+      line-height: 1.3;
+    }
+
+    &__featured-platform {
+      font-size: 3vw;
+    }
+
+    // === СЕТКА ВИДЕО ===
     &__grid {
       grid-template-columns: 1fr;
-      margin-bottom: 7.5vh; // ← БЫЛО 80px
+      gap: 3vh;
+      margin-bottom: 7vh;
+      padding: 0 4vw;
     }
 
+    &__video-card {
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+
+    &__video-thumbnail {
+      border-radius: 12px;
+      margin-bottom: 1.5vh;
+      border: 1px solid #2a2a2a;
+      
+      .highlights__video-overlay {
+        opacity: 1; // Кнопка Play видна всегда на мобильном
+        background: linear-gradient(0deg, rgba(10, 10, 10, 0.8) 0%, transparent 100%);
+      }
+    }
+
+    &__video-play {
+      width: 52px;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      
+      &:active {
+        transform: scale(0.92);
+      }
+    }
+
+    &__video-info {
+      padding: 0;
+      gap: 0.8vh;
+    }
+
+    &__video-views {
+      font-size: 3vw;
+    }
+
+    &__video-title {
+      font-size: 4vw;
+      line-height: 1.3;
+    }
+
+    &__video-platform {
+      font-size: 3vw;
+    }
+
+    // === ДОСТИЖЕНИЯ (AWARDS) ===
     &__awards {
-      padding-top: 5.5vh; // ← БЫЛО 60px
+      padding-top: 6vh;
+      padding-left: 4vw;
+      padding-right: 4vw;
+    }
+
+    &__awards-header {
+      margin-bottom: 4vh;
+    }
+
+    &__awards-title {
+      font-size: 8vw;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5vh;
+    }
+
+    &__awards-subtitle {
+      font-size: 3.5vw;
     }
 
     &__awards-grid {
       grid-template-columns: 1fr;
+      gap: 2.5vh;
+    }
+
+    &__award-card {
+      padding: 3vh 4vw;
+      border-radius: 16px;
+      border: 1px solid #2a2a2a;
+      
+      &:active {
+        transform: scale(0.98);
+      }
+      
+      &::before {
+        display: none; // Отключаем hover-эффект блика на мобильном
+      }
+    }
+
+    &__award-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 2vh;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__award-year {
+      font-size: 3vw;
+      padding: 1vw 3vw;
+      margin-bottom: 1.5vh;
+      border-radius: 6px;
+    }
+
+    &__award-title {
+      font-size: 4.5vw;
+      margin-bottom: 1vh;
+    }
+
+    &__award-subtitle {
+      font-size: 3.5vw;
+      margin-bottom: 1.5vh;
+    }
+
+    &__award-description {
+      font-size: 3.2vw;
+      line-height: 1.5;
     }
   }
 }
