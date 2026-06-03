@@ -1172,11 +1172,11 @@
     padding: 0;
   }
 
-  // =========================================================================
-  // === PARTNERS SECTION (COMPACT PINNED MOBILE) ===
+    // =========================================================================
+  // === PARTNERS SECTION (FIXED SCROLL & COMPACT BOTTOM) ===
   // =========================================================================
   .partners-section {
-    padding: 3vh 0 5vh;
+    padding: 2vh 0 1vh; // Минимальный нижний отступ всей секции
   }
 
   .partners__header-top {
@@ -1203,53 +1203,57 @@
   }
 
   .partners__content-stack {
-    gap: 2.5vh;
+    gap: 2vh; // Компактный шаг между блоками
     padding: 0 4vw;
+    padding-bottom: 0; // Убираем лишний нижний отступ у стека
   }
 
   .partners__brands-container {
     gap: 1.5vh;
   }
 
-  // === ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ДЛЯ БРЕНДОВ (ИСПРАВЛЕННЫЙ) ===
+  // === ИСПРАВЛЕНИЕ ГОРИЗОНТАЛЬНОГО СКРОЛЛА (НЕ ОБРЕЗАЕТСЯ) ===
   .partners__brands-row {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    gap: 2vw;
-    padding: 0 4vw 1.5vh 4vw; // Добавил padding по бокам чтобы карточки не обрезались
-    margin: 0 -4vw; // Компенсируем padding контейнера
+    gap: 3vw; // Оптимальный зазор между чипами
+    // Растягиваем на ширину экрана + компенсируем padding родителя (4vw слева + 4vw справа)
+    width: calc(100% + 8vw);
+    margin-left: -4vw;
+    // Внутренний padding обеспечивает "воздух" для первой и последней карточки при скролле
+    padding: 0 4vw 1.5vh 4vw; 
     scrollbar-width: none;
     -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch; // Плавный скролл на iOS
-    
+    -webkit-overflow-scrolling: touch; // Плавный инерционный скролл на iOS
+
     &::-webkit-scrollbar {
       display: none;
     }
   }
 
   .partners__brand-chip {
-    flex: 0 0 auto;
-    min-width: 26vw; // Чуть шире для комфорта
+    flex: 0 0 auto; // Запрещаем сжатие
+    min-width: 28vw; // Комфортная ширина для надежного нажатия пальцем
     width: auto;
-    font-size: 3vw !important;
-    padding: 2.8vw 3.5vw !important; // Чуть больше padding
+    font-size: 3.2vw !important;
+    padding: 3vw 4vw !important; // Увеличили padding для лучшего тач-таргета
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    background: rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.6) !important; // Чуть плотнее фон для читаемости
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     color: #000000 !important;
     font-weight: 700;
     letter-spacing: 0.01em;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     transition: all 0.2s ease;
     text-align: center;
     white-space: nowrap;
 
     &:active {
       transform: scale(0.95);
-      background: rgba(0, 0, 0, 0.06) !important;
+      background: rgba(0, 0, 0, 0.08) !important;
     }
   }
 
@@ -1337,17 +1341,18 @@
     white-space: nowrap;
   }
 
-  // === CTA КНОПКА ===
+  // === CTA КНОПКА (ПРИЖАТА К НИЗУ) ===
   .partners__cta-btn-wide {
-    padding: 3vw 0;
-    font-size: 3.5vw;
+    padding: 3.5vw 0;
+    font-size: 3.8vw;
     border-radius: 14px;
     background: #000000;
     color: #ffffff;
     border: none;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     letter-spacing: 0.06em;
-    margin-top: 1vh;
+    margin-top: 0.5vh; // Минимальный отступ сверху
+    margin-bottom: 0; // Гарантируем отсутствие нижнего отступа
     transition: all 0.2s ease;
 
     &:active {
@@ -1357,6 +1362,111 @@
     }
   }
 
+  // =========================================================================
+  // === PARTNERS MODAL (MOBILE FIX) ===
+  // =========================================================================
+  .partners-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+    background-color: rgba(183, 183, 183, 0.85);
+  }
+
+  .partners-modal {
+    width: 100%;
+    max-width: 100%;
+    padding: 28px 20px calc(24px + env(safe-area-inset-bottom)) 20px;
+    border-radius: 24px 24px 0 0;
+    animation: slideFromBottom 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+
+    &__header {
+      margin-bottom: 3vh;
+      padding-bottom: 2vh;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    &__title {
+      font-size: 5.5vw;
+      font-weight: 800;
+      color: #000000;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+    }
+
+    &__content {
+      margin-bottom: 3vh;
+    }
+
+    &__year {
+      margin-bottom: 2.5vh;
+      padding: 2vh 2.5vw;
+      background: rgba(0, 0, 0, 0.04);
+      border-radius: 12px;
+    }
+
+    &__label {
+      display: block;
+      font-size: 3vw;
+      color: #666666;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1vh;
+      font-weight: 600;
+    }
+
+    &__value {
+      font-size: 4vw;
+      color: #000000;
+      font-weight: 700;
+    }
+
+    &__description {
+      p {
+        font-size: 3.5vw;
+        color: #333333;
+        line-height: 1.6;
+        margin: 0;
+      }
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: center;
+      padding-top: 1vh;
+    }
+
+    &__btn {
+      width: 100%;
+      padding: 3.5vw 0;
+      font-size: 3.8vw;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      background: #000000;
+      color: #ffffff;
+      border-radius: 14px;
+      transition: all 0.2s ease;
+
+      &:active {
+        transform: scale(0.97);
+        background: #222222;
+      }
+    }
+  }
   // =========================================================================
   // === PARTNERS MODAL (MOBILE FIX) ===
   // =========================================================================
