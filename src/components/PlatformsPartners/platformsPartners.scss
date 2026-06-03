@@ -1172,11 +1172,11 @@
     padding: 0;
   }
 
-    // =========================================================================
-  // === PARTNERS SECTION (FIXED SCROLL & COMPACT BOTTOM) ===
+  // =========================================================================
+  // === PARTNERS SECTION (GRID LAYOUT - NO CLIPPING) ===
   // =========================================================================
   .partners-section {
-    padding: 2vh 0 1vh; // Минимальный нижний отступ всей секции
+    padding: 2vh 0 1vh; // Минимальный нижний отступ
   }
 
   .partners__header-top {
@@ -1203,44 +1203,33 @@
   }
 
   .partners__content-stack {
-    gap: 2vh; // Компактный шаг между блоками
+    gap: 2vh;
     padding: 0 4vw;
-    padding-bottom: 0; // Убираем лишний нижний отступ у стека
+    padding-bottom: 0;
   }
 
   .partners__brands-container {
     gap: 1.5vh;
   }
 
-  // === ИСПРАВЛЕНИЕ ГОРИЗОНТАЛЬНОГО СКРОЛЛА (НЕ ОБРЕЗАЕТСЯ) ===
+  // === СЕТКА БРЕНДОВ 3 КОЛОНКИ (ГАРАНТИРОВАННО ПОКАЗЫВАЕТ ВСЁ) ===
   .partners__brands-row {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 3vw; // Оптимальный зазор между чипами
-    // Растягиваем на ширину экрана + компенсируем padding родителя (4vw слева + 4vw справа)
-    width: calc(100% + 8vw);
-    margin-left: -4vw;
-    // Внутренний padding обеспечивает "воздух" для первой и последней карточки при скролле
-    padding: 0 4vw 1.5vh 4vw; 
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch; // Плавный инерционный скролл на iOS
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // Ровно 3 колонки
+    gap: 2vw; // Компактный зазор между чипами
+    width: 100%;
+    padding: 0;
+    margin: 0;
   }
 
   .partners__brand-chip {
-    flex: 0 0 auto; // Запрещаем сжатие
-    min-width: 28vw; // Комфортная ширина для надежного нажатия пальцем
-    width: auto;
-    font-size: 3.2vw !important;
-    padding: 3vw 4vw !important; // Увеличили padding для лучшего тач-таргета
-    border-radius: 12px;
+    width: 100%;
+    min-width: 0; // Позволяет элементу сжиматься внутри grid
+    font-size: 2.8vw !important; // Оптимальный размер для 3 колонок
+    padding: 2.5vw 1.5vw !important; // Компактные боковые отступы
+    border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    background: rgba(255, 255, 255, 0.6) !important; // Чуть плотнее фон для читаемости
+    background: rgba(255, 255, 255, 0.6) !important;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     color: #000000 !important;
@@ -1249,7 +1238,11 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     transition: all 0.2s ease;
     text-align: center;
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    white-space: normal; // РАЗРЕШАЕМ перенос текста на 2 строки для длинных названий
 
     &:active {
       transform: scale(0.95);
@@ -1341,7 +1334,7 @@
     white-space: nowrap;
   }
 
-  // === CTA КНОПКА (ПРИЖАТА К НИЗУ) ===
+  // === CTA КНОПКА ===
   .partners__cta-btn-wide {
     padding: 3.5vw 0;
     font-size: 3.8vw;
@@ -1351,7 +1344,7 @@
     border: none;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     letter-spacing: 0.06em;
-    margin-top: 0.5vh; // Минимальный отступ сверху
+    margin-top: 0.5vh;
     margin-bottom: 0; // Гарантируем отсутствие нижнего отступа
     transition: all 0.2s ease;
 
@@ -1362,111 +1355,6 @@
     }
   }
 
-  // =========================================================================
-  // === PARTNERS MODAL (MOBILE FIX) ===
-  // =========================================================================
-  .partners-modal-overlay {
-    align-items: flex-end;
-    padding: 0;
-    background-color: rgba(183, 183, 183, 0.85);
-  }
-
-  .partners-modal {
-    width: 100%;
-    max-width: 100%;
-    padding: 28px 20px calc(24px + env(safe-area-inset-bottom)) 20px;
-    border-radius: 24px 24px 0 0;
-    animation: slideFromBottom 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    position: relative;
-    max-height: 85vh;
-    overflow-y: auto;
-
-    &::before {
-      content: '';
-      display: block;
-      width: 36px;
-      height: 4px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 2px;
-      margin: 0 auto 20px;
-    }
-
-    &__header {
-      margin-bottom: 3vh;
-      padding-bottom: 2vh;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-
-    &__title {
-      font-size: 5.5vw;
-      font-weight: 800;
-      color: #000000;
-      letter-spacing: 0.03em;
-      line-height: 1.2;
-    }
-
-    &__content {
-      margin-bottom: 3vh;
-    }
-
-    &__year {
-      margin-bottom: 2.5vh;
-      padding: 2vh 2.5vw;
-      background: rgba(0, 0, 0, 0.04);
-      border-radius: 12px;
-    }
-
-    &__label {
-      display: block;
-      font-size: 3vw;
-      color: #666666;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 1vh;
-      font-weight: 600;
-    }
-
-    &__value {
-      font-size: 4vw;
-      color: #000000;
-      font-weight: 700;
-    }
-
-    &__description {
-      p {
-        font-size: 3.5vw;
-        color: #333333;
-        line-height: 1.6;
-        margin: 0;
-      }
-    }
-
-    &__footer {
-      display: flex;
-      justify-content: center;
-      padding-top: 1vh;
-    }
-
-    &__btn {
-      width: 100%;
-      padding: 3.5vw 0;
-      font-size: 3.8vw;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      border: none;
-      background: #000000;
-      color: #ffffff;
-      border-radius: 14px;
-      transition: all 0.2s ease;
-
-      &:active {
-        transform: scale(0.97);
-        background: #222222;
-      }
-    }
-  }
   // =========================================================================
   // === PARTNERS MODAL (MOBILE FIX) ===
   // =========================================================================
