@@ -23,7 +23,7 @@
   &__title {
     color: #ffffff;
     font-family: $font-display;
-    font-size: 4vw;
+    font-size: min(4vw, 64px);
     font-weight: 800;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -31,15 +31,15 @@
 
   &__counter {
     font-family: $font-display;
-    font-size: 0.9vw;
+    font-size: min(0.9vw, 14px);
     color: #666666;
     letter-spacing: 0.15em;
   }
 
   &__subtitle {
     color: #888888;
-    font-size: 1vw;
-    max-width: 26vw;
+    font-size: min(1vw, 16px);
+    max-width: min(26vw, 400px);
     margin: 0 auto;
   }
 
@@ -130,21 +130,21 @@
 
   &__featured-views {
     display: block;
-    font-size: 0.9vw;
+    font-size: min(0.9vw, 14px);
     color: #999999;
     margin-bottom: 0.7vh;
   }
 
   &__featured-title {
     font-family: $font-display;
-    font-size: 1.5vw;
+    font-size: min(1.5vw, 22px);
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 0.7vh;
   }
 
   &__featured-platform {
-    font-size: 0.75vw;
+    font-size: min(0.75vw, 12px);
     color: #666666;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -249,21 +249,21 @@
   }
 
   &__video-views {
-    font-size: 0.8vw;
+    font-size: min(0.8vw, 13px);
     color: #666666;
     font-weight: 600;
   }
 
   &__video-title {
     font-family: $font-display;
-    font-size: 1.2vw;
+    font-size: min(1.2vw, 18px);
     font-weight: 700;
     color: #ffffff;
     line-height: 1.3;
   }
 
   &__video-platform {
-    font-size: 0.7vw;
+    font-size: min(0.7vw, 12px);
     color: #888888;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -283,7 +283,7 @@
   &__awards-title {
     color: #ffffff;
     font-family: $font-display;
-    font-size: 3vw;
+    font-size: min(3vw, 52px);
     font-weight: 800;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -292,7 +292,7 @@
 
   &__awards-subtitle {
     color: #888888;
-    font-size: 1vw;
+    font-size: min(1vw, 16px);
   }
 
   &__awards-grid {
@@ -314,7 +314,7 @@
   &__award-card {
     background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
     border: 0.1vh solid #333333;
-    padding: 3vh 2.2vw;
+    padding: 3vh min(2.2vw, 36px);
     text-align: center;
     transition: all 0.4s ease;
     position: relative;
@@ -349,17 +349,17 @@
   }
 
   &__award-icon {
-    font-size: 2.5vw;
+    font-size: min(2.5vw, 40px);
     margin-bottom: 1.8vh;
     display: block;
   }
 
   &__award-year {
     display: inline-block;
-    font-size: 0.7vw;
+    font-size: min(0.7vw, 12px);
     color: #666666;
     background: #0d0d0d;
-    padding: 0.5vh 1vw;
+    padding: 0.5vh min(1vw, 14px);
     margin-bottom: 1.5vh;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -367,7 +367,7 @@
 
   &__award-title {
     font-family: $font-display;
-    font-size: 1.2vw;
+    font-size: min(1.2vw, 18px);
     font-weight: 800;
     color: #ffffff;
     margin-bottom: 0.7vh;
@@ -376,14 +376,14 @@
 
   &__award-subtitle {
     display: block;
-    font-size: 0.8vw;
+    font-size: min(0.8vw, 13px);
     color: #999999;
     font-weight: 600;
     margin-bottom: 1.1vh;
   }
 
   &__award-description {
-    font-size: 0.75vw;
+    font-size: min(0.75vw, 12px);
     color: #666666;
     line-height: 1.6;
   }

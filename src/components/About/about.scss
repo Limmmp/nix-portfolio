@@ -27,10 +27,10 @@
 
   &__slide-indicator {
     position: fixed;
-    top: 1.2vh; 
-    right: 3vw; 
+    top: 1.2vh;
+    right: 3vw;
     font-family: $font-display;
-    font-size: 0.7vw; 
+    font-size: min(0.7vw, 12px);
     color: #ffffff;
     letter-spacing: 0.15em;
     z-index: 100;
@@ -107,44 +107,44 @@
       position: relative;
       z-index: 3;
       padding: 0 5vw;
-      max-width: 31vw; 
+      max-width: min(31vw, 480px);
     }
 
     &-number {
       display: inline-block;
       font-family: $font-display;
-      font-size: 0.7vw; 
+      font-size: min(0.7vw, 12px);
       color: #666666;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      margin-bottom: 2vh; 
+      margin-bottom: 2vh;
     }
 
     &-title {
       font-family: $font-display;
-      font-size: 5vw; 
+      font-size: min(5vw, 80px);
       font-weight: 900;
       color: #ffffff;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      margin-bottom: 0.8vh; 
+      margin-bottom: 0.8vh;
       line-height: 1;
     }
 
     &-subtitle {
       font-family: $font-display;
-      font-size: 2.2vw; 
+      font-size: min(2.2vw, 36px);
       font-weight: 700;
       color: #ffffff;
       letter-spacing: 0.1em;
-      margin-bottom: 2.2vh; 
+      margin-bottom: 2.2vh;
     }
 
     &-description {
-      font-size: 1.5vw; 
+      font-size: min(1.5vw, 22px);
       color: #999999;
       line-height: 1.8;
-      margin-bottom: 3.7vh; 
+      margin-bottom: 3.7vh;
 
       span {
         display: block;
@@ -154,13 +154,13 @@
     &-cta {
       display: inline-flex;
       align-items: center;
-      gap: 0.6vw; 
-      padding: 1.7vh 2.2vw; 
+      gap: min(0.6vw, 10px);
+      padding: 1.7vh min(2.2vw, 32px);
       background: #ffffff;
       color: #000000;
-      border: 0.1vh solid #ffffff; 
+      border: 0.1vh solid #ffffff;
       font-family: $font-primary;
-      font-size: 0.8vw; 
+      font-size: min(0.8vw, 13px);
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -170,17 +170,17 @@
       &:hover {
         background: transparent;
         color: #ffffff;
-        transform: translateX(0.3vw); 
+        transform: translateX(min(0.3vw, 5px));
       }
 
       svg {
-        width: 1vw; 
-        height: 1vw;
+        width: min(1vw, 16px);
+        height: min(1vw, 16px);
         transition: transform 0.3s ease;
       }
 
       &:hover svg {
-        transform: translateX(0.2vw); 
+        transform: translateX(min(0.2vw, 4px));
       }
     }
 
@@ -212,11 +212,11 @@
   // ← НАВИГАЦИОННЫЕ ТОЧКИ
   &__dots {
     position: fixed;
-    bottom: 3.7vh; 
+    bottom: 3.7vh;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 0.6vw; 
+    gap: min(0.6vw, 10px);
     z-index: 100;
   }
 

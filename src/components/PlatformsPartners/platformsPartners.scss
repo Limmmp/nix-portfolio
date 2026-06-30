@@ -134,7 +134,7 @@
 
 .live-text {
   font-family: $font-display;
-  font-size: 1vw;
+  font-size: min(1vw, 15px);
   font-weight: 800;
   color: #FF0000;
   letter-spacing: 0.15em;
@@ -142,7 +142,7 @@
 }
 
 .live-viewers {
-  font-size: 1.1vw;
+  font-size: min(1.1vw, 16px);
   color: #cccccc;
   font-weight: 500;
 }
@@ -159,7 +159,7 @@
   color: #ffffff;
   margin-bottom: 1vh;
   letter-spacing: 0.25em;
-  font-size: 4.5vw;
+  font-size: min(4.5vw, 76px);
   font-family: $font-display;
   font-weight: 800;
   text-transform: uppercase;
@@ -167,8 +167,8 @@
 
 .platforms__subtitle {
   color: #999999;
-  font-size: 1.3vw;
-  max-width: 40vw;
+  font-size: min(1.3vw, 20px);
+  max-width: min(40vw, 600px);
   margin: 0 auto;
   line-height: 1.5;
 }
@@ -317,7 +317,7 @@
   &__name {
     color: #ffffff;
     font-family: $font-display;
-    font-size: 1.5vw;
+    font-size: min(1.5vw, 22px);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     font-weight: 800;
@@ -357,7 +357,7 @@
 
   &__description {
     color: #999999;
-    font-size: 0.85vw;
+    font-size: min(0.85vw, 14px);
     line-height: 1.6;
     text-align: center;
     font-weight: 400;
@@ -398,7 +398,7 @@
 
   &__value {
     font-family: $font-display;
-    font-size: 1.9vw;
+    font-size: min(1.9vw, 28px);
     font-weight: 800;
     color: #ffffff;
     line-height: 1;
@@ -406,7 +406,7 @@
   }
 
   &__label {
-    font-size: 0.75vw;
+    font-size: min(0.75vw, 12px);
     color: #888888;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -446,7 +446,7 @@
 .partners__title {
   color: #000000;
   font-family: $font-display;
-  font-size: 4.5vw;
+  font-size: min(4.5vw, 76px);
   font-weight: 900;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -455,7 +455,7 @@
 
 .partners__subtitle {
   color: #444444;
-  font-size: 1.1vw;
+  font-size: min(1.1vw, 17px);
   font-weight: 500;
   margin-top: -0.5vh;
 }
@@ -491,7 +491,7 @@
   border: 0.3vh solid rgba(0, 0, 0, 0.25);
   color: #000000;
   font-family: $font-display;
-  font-size: 1.5vw;
+  font-size: min(1.5vw, 22px);
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -536,7 +536,7 @@
 
 .partners__info-title {
   font-family: $font-display;
-  font-size: 0.9vw;
+  font-size: min(0.9vw, 14px);
   font-weight: 700;
   color: #000000;
   margin-bottom: 1.5vh;
@@ -566,7 +566,7 @@
 }
 
 .partners__info-label {
-  font-size: 0.7vw;
+  font-size: min(0.7vw, 12px);
   color: #444444;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -574,7 +574,7 @@
 }
 
 .partners__info-value {
-  font-size: 0.85vw;
+  font-size: min(0.85vw, 14px);
   color: #000000;
   font-weight: 700;
   text-align: right;
@@ -600,7 +600,7 @@
 }
 
 .partners__format-title {
-  font-size: 0.8vw;
+  font-size: min(0.8vw, 13px);
   color: #000000;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -613,7 +613,7 @@
   color: #ffffff;
   border: 0.2vh solid #000000;
   font-family: $font-primary;
-  font-size: 1vw;
+  font-size: min(1vw, 16px);
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -659,7 +659,7 @@
   &__title {
     color: #ffffff;
     font-family: $font-display;
-    font-size: 1.7vw;
+    font-size: min(1.7vw, 26px);
     margin-bottom: 3.7vh;
     letter-spacing: 0.05em;
     font-weight: 700;
@@ -668,20 +668,20 @@
 
   &__buttons {
     display: flex;
-    gap: 1.3vw;
+    gap: min(1.3vw, 20px);
     justify-content: center;
   }
 
   &__btn {
-    padding: 1.9vh 3.5vw;
+    padding: 1.9vh min(3.5vw, 48px);
     font-family: $font-primary;
-    font-size: 1.1vw;
+    font-size: min(1.1vw, 16px);
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     border: 0.1vh solid #ffffff;
     transition: all 0.3s ease;
-    min-width: 14vw;
+    min-width: min(14vw, 200px);
     border-radius: 0;
 
     &--primary {
@@ -899,7 +899,7 @@
 
   &__title {
     font-family: $font-display;
-    font-size: 2.2vw;
+    font-size: min(2.2vw, 36px);
     font-weight: 800;
     color: #000000;
     letter-spacing: 0.05em;
@@ -918,7 +918,7 @@
 
   &__label {
     display: block;
-    font-size: 0.7vw;
+    font-size: min(0.7vw, 12px);
     color: #666666;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -927,13 +927,13 @@
   }
 
   &__value {
-    font-size: 1.9vh;
+    font-size: clamp(14px, 1.9vh, 22px);
     color: #000000;
     font-weight: 700;
   }
 
   &__description p {
-    font-size: 1.6vh;
+    font-size: clamp(13px, 1.6vh, 18px);
     color: #333333;
     line-height: 1.7;
   }
@@ -944,9 +944,9 @@
   }
 
   &__btn {
-    padding: 1.9vh 3.5vw;
+    padding: 1.9vh min(3.5vw, 48px);
     font-family: $font-primary;
-    font-size: 0.8vw;
+    font-size: min(0.8vw, 13px);
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;

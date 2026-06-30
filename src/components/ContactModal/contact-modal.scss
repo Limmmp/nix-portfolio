@@ -19,9 +19,11 @@
 .contact-modal {
   position: relative;
   width: 90%;
-  max-width: 42vw;
+  max-width: min(42vw, 680px);
   max-height: 80vh;
-  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
   background-color: #0a0a0a;
   border: 0.1vh solid #333333;
   padding: 3vh 3.5vw;
@@ -59,7 +61,7 @@
   &__title {
     color: #ffffff;
     font-family: $font-display;
-    font-size: 1.7vw;
+    font-size: clamp(18px, 1.7vw, 26px);
     margin-bottom: 0.7vh;
     letter-spacing: 0.1em;
     font-weight: 700;
@@ -68,7 +70,7 @@
 
   &__subtitle {
     color: #888888;
-    font-size: 0.9vw;
+    font-size: clamp(13px, 0.9vw, 15px);
   }
 
   &__form {
@@ -83,7 +85,7 @@
     color: #000000;
     border: 0.1vh solid #ffffff;
     font-family: $font-primary;
-    font-size: 0.9vw;
+    font-size: clamp(12px, 0.9vw, 14px);
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -104,7 +106,7 @@
 
   &__note {
     color: #888888;
-    font-size: 0.7vw;
+    font-size: clamp(11px, 0.7vw, 12px);
     text-align: center;
     margin-top: 1.2vh;
   }
@@ -130,13 +132,13 @@
     h3 {
       color: #ffffff;
       font-family: $font-display;
-      font-size: 1.7vw;
+      font-size: clamp(18px, 1.7vw, 26px);
       margin-bottom: 0.7vh;
     }
 
     p {
       color: #888888;
-      font-size: 0.9vw;
+      font-size: clamp(13px, 0.9vw, 15px);
     }
   }
 }
@@ -158,7 +160,7 @@
 
   label {
     color: #ffffff;
-    font-size: 0.7vw;
+    font-size: clamp(11px, 0.7vw, 12px);
     font-weight: 500;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -167,12 +169,12 @@
   input,
   select,
   textarea {
-    padding: 1.3vh 1.2vw;
+    padding: 1.3vh clamp(12px, 1.2vw, 18px);
     background-color: #1a1a1a;
     border: 0.1vh solid #333333;
     color: #ffffff;
     font-family: $font-primary;
-    font-size: 0.9vw;
+    font-size: clamp(14px, 0.9vw, 15px);
     transition: border-color 0.3s ease;
     // ← НЕТ cursor (работает через .interactive)
 
@@ -209,37 +211,124 @@
   }
 }
 
+// === АНИМАЦИЯ BOTTOM SHEET ===
+@keyframes slideFromBottom {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
 // === АДАПТИВНОСТЬ ===
 @media (max-width: $breakpoint-tablet) {
   .contact-modal {
-    max-width: 85vw;
+    max-width: min(85vw, 600px);
     padding: 3vh 5vw;
     max-height: 85vh;
-
-    &__title {
-      font-size: 2.5vw;
-    }
-
-    &__submit {
-      font-size: 1.1vw;
-      padding: 1.7vh 4vw;
-    }
   }
 }
 
 @media (max-width: $breakpoint-mobile) {
+  .contact-modal-overlay {
+    align-items: flex-end;
+  }
+
   .contact-modal {
-    max-width: 95vw;
-    padding: 2.8vh 4vw;
-    max-height: 90vh;
+    width: 100%;
+    max-width: 100%;
+    max-height: 92dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px 20px calc(24px + env(safe-area-inset-bottom));
+    border-radius: 24px 24px 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    animation: slideFromBottom 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+
+    &::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      margin: 0 auto 16px;
+    }
+
+    &__close {
+      width: 44px;
+      height: 44px;
+      top: 10px;
+      right: 16px;
+    }
+
+    &__header {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+    }
 
     &__title {
-      font-size: 3.5vw;
+      font-size: 22px;
+    }
+
+    &__subtitle {
+      font-size: 14px;
+    }
+
+    &__form {
+      gap: 14px;
     }
 
     &__submit {
-      font-size: 1.4vw;
-      padding: 1.7vh 4vw;
+      font-size: 15px;
+      padding: 15px 24px;
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    &__note {
+      font-size: 12px;
+    }
+
+    &__success {
+      padding: 24px 0;
+
+      .success-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 28px;
+      }
+
+      h3 {
+        font-size: 22px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .form-group {
+    gap: 6px;
+
+    label {
+      font-size: 12px;
+    }
+
+    input,
+    select,
+    textarea {
+      font-size: 16px; // предотвращает авто-зум на iOS
+      padding: 14px;
+    }
+
+    textarea {
+      min-height: 120px;
     }
   }
 }
