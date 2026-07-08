@@ -1,0 +1,120 @@
+@use '../../styles/variables' as *;
+
+// Шапка в mix-blend-mode: difference — белый текст читается
+// и на тёмных, и на светлых секциях без смены темы.
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.2vh min(3vw, 48px);
+  z-index: 9000;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+
+  &--visible {
+    opacity: 1;
+    transform: translateY(0);
+
+    .site-header__logo,
+    .site-header__link,
+    .site-header__cta {
+      pointer-events: auto;
+    }
+  }
+
+  &__logo {
+    font-family: $font-display;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: $color-white;
+    padding: 4px 0;
+  }
+
+  &__nav {
+    display: flex;
+    gap: min(2.5vw, 40px);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &__link {
+    font-family: $font-primary;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: $color-white;
+    opacity: 0.75;
+    padding: 8px 2px;
+    position: relative;
+    transition: opacity $transition-medium;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 2px;
+      width: 100%;
+      height: 1px;
+      background: $color-white;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.35s ease;
+    }
+
+    &:hover {
+      opacity: 1;
+
+      &::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+    }
+  }
+
+  &__cta {
+    font-family: $font-primary;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: $color-white;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 10px 22px;
+    transition: all $transition-medium;
+
+    &:hover {
+      background: $color-white;
+      color: $color-black;
+      border-color: $color-white;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .site-header__nav {
+    display: none;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .site-header {
+    padding: 1.8vh 4vw;
+
+    &__logo {
+      font-size: 18px;
+    }
+
+    &__cta {
+      font-size: 11px;
+      padding: 8px 16px;
+    }
+  }
+}

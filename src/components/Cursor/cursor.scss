@@ -28,8 +28,8 @@
   transition: border-color $transition-medium;
 }
 
-// Скрываем на мобильных
-@media (max-width: $breakpoint-mobile) {
+// Скрываем на устройствах без мыши (тач-экраны любой ширины) и на мобильных
+@media (hover: none), (pointer: coarse), (max-width: $breakpoint-mobile) {
   .cursor-dot,
   .cursor-follower {
     display: none;

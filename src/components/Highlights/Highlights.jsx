@@ -1,5 +1,5 @@
 // src/components/Highlights/Highlights.jsx
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './highlights.scss';
@@ -9,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 const Highlights = () => {
   const containerRef = useRef(null);
   const videosRef = useRef([]);
-  const [activeVideo, setActiveVideo] = useState(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -24,7 +23,7 @@ const Highlights = () => {
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 80%',
-            toggleActions: 'play none none reverse'
+            toggleActions: 'play none none none'
           }
         }
       );
@@ -45,7 +44,7 @@ const Highlights = () => {
             scrollTrigger: {
               trigger: video,
               start: 'top 85%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none'
             }
           }
         );
@@ -62,7 +61,7 @@ const Highlights = () => {
           scrollTrigger: {
             trigger: '.highlights__awards',
             start: 'top 80%',
-            toggleActions: 'play none none reverse'
+            toggleActions: 'play none none none'
           }
         }
       );
@@ -182,8 +181,6 @@ const Highlights = () => {
           <div
             key={highlight.id}
             className="highlights__featured"
-            onMouseEnter={() => setActiveVideo(highlight.id)}
-            onMouseLeave={() => setActiveVideo(null)}
           >
             <div className="highlights__featured-video">
               <img 
@@ -214,8 +211,6 @@ const Highlights = () => {
               key={highlight.id}
               ref={(el) => (videosRef.current[index] = el)}
               className="highlights__video-card"
-              onMouseEnter={() => setActiveVideo(highlight.id)}
-              onMouseLeave={() => setActiveVideo(null)}
             >
               <div className="highlights__video-thumbnail">
                 <img 

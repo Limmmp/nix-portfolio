@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { scrollToPosition } from '../../lib/scroll';
 import './about.scss';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -22,9 +23,11 @@ useEffect(() => {
       x: () => `-=${(totalSections - 1) * 100}vw`, // ← VW
       ease: 'none',
       scrollTrigger: {
+        id: 'about-pin',
         trigger: containerRef.current,
         start: 'top top',
-        end: () => `+=${(totalSections - 1) * 700}vh`, // ← VH
+        // Один экран скролла на переход между слайдами
+        end: () => `+=${(totalSections - 1) * window.innerHeight}`,
         pin: true,
         scrub: 1,
         anticipatePin: 1,
@@ -36,9 +39,9 @@ useEffect(() => {
             progressRef.current.style.width = `${progress}%`;
           }
           
-          // Обновляем индикатор "01 — 04"
+          // Обновляем индикатор "01 — 04" (round — переключение на середине слайда)
           const currentSlide = Math.min(
-            Math.floor(self.progress * totalSections) + 1,
+            Math.round(self.progress * (totalSections - 1)) + 1,
             totalSections
           );
           const indicator = document.querySelector('.about__slide-indicator');
@@ -121,7 +124,7 @@ useEffect(() => {
       id: 'now',
       title: 'NOW',
       subtitle: 'Streamer & Creator',
-      description: 'Forbes 30 до 30\n1M+ community\nЕжедневный контент на Twtich & Youtube',
+      description: 'Forbes 30 до 30\n1M+ community\nЕжедневный контент на Twitch & YouTube',
       image: '/images/about/about-now.jpg',
       align: 'right'
     },
@@ -169,24 +172,22 @@ useEffect(() => {
         ))}
       </div>
 
-      {/* Навигационные точки */}
-<div className="about__dots">
-  {slides.map((slide, index) => (
-    <button
-      key={slide.id}
-      className="about__dot"
-      onClick={() => {
-        const targetProgress = index / (slides.length - 1);
-        
-        gsap.to(wrapperRef.current, {
-          x: `-=${targetProgress * 100}vw`, // ← VW
-          duration: 1,
-          ease: 'power2.inOut'
-        });
-      }}
-    />
-  ))}
-</div>
+      {/* Навигационные точки: скроллим страницу к позиции слайда внутри пина */}
+      <div className="about__dots">
+        {slides.map((slide, index) => (
+          <button
+            key={slide.id}
+            className="about__dot interactive"
+            aria-label={`Слайд ${index + 1}`}
+            onClick={() => {
+              const st = ScrollTrigger.getById('about-pin');
+              if (!st) return;
+              const targetProgress = index / (slides.length - 1);
+              scrollToPosition(st.start + (st.end - st.start) * targetProgress);
+            }}
+          />
+        ))}
+      </div>
     </section>
   );
 };
