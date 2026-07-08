@@ -27,11 +27,6 @@ export const useSmoothScroll = () => {
 
     requestAnimationFrame(raf);
 
-    // Интеграция с GSAP
-    lenis.on('scroll', (e) => {
-      // GSAP ScrollTrigger будет слушать это событие
-    });
-
     return () => {
       lenis.destroy();
     };

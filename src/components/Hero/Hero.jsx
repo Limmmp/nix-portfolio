@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import ContactModal from '../ContactModal/ContactModal';
 import './hero.scss';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -45,18 +44,13 @@ const animateCountUp = (element, endValue, duration = 1.5) => {
 
 // Запуск анимаций Hero
 const runHeroAnimations = () => {
-  if (hasAnimated) {
-    console.log('Already animated, skipping');
-    return;
-  }
+  if (hasAnimated) return;
 
   if (!contentGroupRef.current || !statsRef.current.length || statsRef.current.some(el => !el)) {
-    console.log('Hero refs not ready, retrying...');
     setTimeout(runHeroAnimations, 100);
     return;
   }
 
-  console.log('🎬 Hero animations starting!');
   setHasAnimated(true);
 
   const tl = gsap.timeline({ delay: 1 });
@@ -110,14 +104,12 @@ const runHeroAnimations = () => {
 // ← useEffect зависит от isActive
 useEffect(() => {
   if (isActive && !hasAnimated) {
-    console.log('✅ Intro complete, triggering Hero animations');
     const timer = setTimeout(runHeroAnimations, 100);
     return () => clearTimeout(timer);
   }
 }, [isActive, hasAnimated]);
 
-  // Анимация перехода Hero → About (контент уходит "вглубь")
-// Анимация перехода Hero → About (тонкий эффект как на icomat)
+  // Анимация перехода Hero → About (тонкий эффект как на icomat)
 useEffect(() => {
   if (!isActive) return;
 
@@ -131,7 +123,7 @@ useEffect(() => {
         markers: false
       }
     });
-// gbgbcb
+
     // Тонкий эффект "отъезжания" для контента (без сильного blur)
     tl.to('.hero__content-inner', {
       scale: 0.92,           // ← Меньше масштабирование

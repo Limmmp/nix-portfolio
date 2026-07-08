@@ -34,9 +34,8 @@ const VideoIntro = ({ onComplete }) => {
       const playVideo = async () => {
         try {
           await video.play();
-          console.log('✅ Video started playing with sound');
         } catch (err) {
-          console.error('❌ Video play error:', err);
+          console.error('Video play error:', err);
         }
       };
       playVideo();
