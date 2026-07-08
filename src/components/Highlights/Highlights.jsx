@@ -23,7 +23,7 @@ const Highlights = () => {
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 80%',
-            toggleActions: 'play none none reverse'
+            toggleActions: 'play none none none'
           }
         }
       );
@@ -44,7 +44,7 @@ const Highlights = () => {
             scrollTrigger: {
               trigger: video,
               start: 'top 85%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none'
             }
           }
         );
@@ -61,7 +61,7 @@ const Highlights = () => {
           scrollTrigger: {
             trigger: '.highlights__awards',
             start: 'top 80%',
-            toggleActions: 'play none none reverse'
+            toggleActions: 'play none none none'
           }
         }
       );

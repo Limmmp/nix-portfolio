@@ -2,9 +2,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { scrollToSection } from '../../lib/scroll';
 import './hero.scss';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Единый источник цифр hero-статистики (значения дублируются в count-up)
+const HERO_STATS = [
+  { value: '1.5M+', label: 'FOLLOWERS', sublabel: 'ALL PLATFORMS' },
+  { value: '100M+', label: 'VIEWS', sublabel: 'PER YEAR' },
+  { value: '35K+', label: 'AVG VIEWERS', sublabel: 'TWITCH' },
+  { value: '7+', label: 'YEARS', sublabel: 'ACTIVE' }
+];
 
 const Hero = ({ onOpenContact, isActive }) => {
   const containerRef = useRef(null);
@@ -33,10 +42,10 @@ const animateCountUp = (element, endValue, duration = 1.5) => {
     ease: 'power2.out',
     onUpdate: () => {
       let displayValue = obj.value;
-      if (isMillion) displayValue = (displayValue / 1000000).toFixed(1) + 'M+';
+      if (isMillion) displayValue = (displayValue / 1000000).toFixed(1).replace(/\.0$/, '') + 'M+';
       else if (isThousand) displayValue = Math.round(displayValue / 1000) + 'K+';
       else displayValue = Math.round(displayValue) + '+';
-      
+
       element.textContent = displayValue;
     }
   });
@@ -79,9 +88,8 @@ const runHeroAnimations = () => {
       onComplete: () => {
         statsRef.current.forEach((stat, index) => {
           const valueEl = stat?.querySelector('.hero-stat__value');
-          const values = ['1.5M+', '100M+', '30K+', '7+'];
-          if (valueEl && values[index]) {
-            animateCountUp(valueEl, values[index]);
+          if (valueEl && HERO_STATS[index]) {
+            animateCountUp(valueEl, HERO_STATS[index].value);
           }
         });
       }
@@ -155,31 +163,6 @@ useEffect(() => {
   return () => ctx.revert();
 }, [isActive]);
 
-// Плавный скролл к якорям
-const handleSmoothScroll = (e, targetId) => {
-  e.preventDefault();
-  
-  const target = document.querySelector(targetId);
-  if (target) {
-    // ← Учёт фиксированной шапки (если есть)
-    const headerOffset = 80;
-    const elementPosition = target.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    });
-  }
-};
-
-  const stats = [
-    { value: '1.5M+', label: 'FOLLOWERS', sublabel: 'ALL PLATFORMS' },
-    { value: '100M+', label: 'VIEWS', sublabel: 'PER YEAR' },
-    { value: '30K+', label: 'AVG VIEWERS', sublabel: 'COMMUNITY CAST' },
-    { value: '7+', label: 'YEARS', sublabel: 'ACTIVE' }
-  ];
-
   return (
     <section ref={containerRef} className="hero" id="hero">
       {/* Фоновое изображение */}
@@ -199,38 +182,35 @@ const handleSmoothScroll = (e, targetId) => {
             АЛЕКСАНДР ЛЕВИН • DOTA 2 STREAMER • CONTENT CREATOR
           </p>
           
-<div ref={buttonsRef} className="hero__cta">
-  {/* ← CHANNELS & STATS → PLATFORMS  */}
-  <a 
-    href="#platforms" 
-    className="hero__btn hero__btn--secondary interactive"
-    onClick={(e) => handleSmoothScroll(e, '#platforms')}
-  >
-    CHANNELS & STATS
-  </a>
-  
-  {/* ← PARTNERSHIP → МОДАЛКА */}
-  <button 
-    className="hero__btn hero__btn--primary interactive"
-    onClick={() => onOpenContact()}
-  >
-    PARTNERSHIP
-  </button>
-  
-  {/* ← LEARN MORE → ABOUT */}
-  <a 
-    href="#about" 
-    className="hero__btn hero__btn--secondary interactive"
-    onClick={(e) => handleSmoothScroll(e, '#about')}
-  >
-    LEARN MORE
-  </a>
-</div>
+          {/* Одно главное действие + два текстовых перехода */}
+          <div ref={buttonsRef} className="hero__cta">
+            <button
+              className="hero__btn hero__btn--primary interactive"
+              onClick={() => onOpenContact()}
+            >
+              PARTNERSHIP
+            </button>
+
+            <div className="hero__links">
+              <button
+                className="hero__link interactive"
+                onClick={() => scrollToSection('platforms')}
+              >
+                CHANNELS &amp; STATS <span className="hero__link-arrow">→</span>
+              </button>
+              <button
+                className="hero__link interactive"
+                onClick={() => scrollToSection('about')}
+              >
+                ABOUT ME <span className="hero__link-arrow">→</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Статистика внизу в ряд */}
         <div className="hero__stats-row">
-          {stats.map((stat, index) => (
+          {HERO_STATS.map((stat, index) => (
             <div
               key={index}
               ref={(el) => (statsRef.current[index] = el)}

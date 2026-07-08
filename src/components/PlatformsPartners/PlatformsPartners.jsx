@@ -10,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger);
 const PlatformsPartners = () => {
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
-  const brandsRef = useRef([]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
@@ -38,7 +37,7 @@ const PlatformsPartners = () => {
       ease: 'power2.out',
       onUpdate: () => {
         let displayValue = obj.value;
-        if (isMillion) displayValue = (displayValue / 1000000).toFixed(1) + 'M+';
+        if (isMillion) displayValue = (displayValue / 1000000).toFixed(1).replace(/\.0$/, '') + 'M+';
         else if (isThousand) displayValue = Math.round(displayValue / 1000) + 'K+';
         else displayValue = Math.round(displayValue) + '+';
         element.textContent = displayValue;
@@ -102,9 +101,10 @@ const PlatformsPartners = () => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
+          id: 'platforms-pin',
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=5500vh',
+          end: () => `+=${window.innerHeight * 5}`,
           scrub: 1,
           pin: true,
           anticipatePin: 1,
@@ -136,7 +136,8 @@ const PlatformsPartners = () => {
       });
 
       tl.to('.platform-card', { boxShadow: '0 2.5vh 6vh rgba(0, 0, 0, 0.5)', duration: 0.5 }, '+=0.3');
-      tl.to({}, { duration: 1 }, '+=1');
+      tl.addLabel('platformsShown');
+      tl.to({}, { duration: 0.5 }, '+=0.5');
 
       tl.to('.platform-card', { opacity: 0, scale: 0.92, duration: 1.4, ease: 'power2.inOut' });
       tl.set('.platforms-section', { pointerEvents: 'none' }, '<');
@@ -152,9 +153,9 @@ const PlatformsPartners = () => {
 
       tl.fromTo('.partners__header-top', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
 
-      tl.fromTo(brandsRef.current,
-        { opacity: 0, y: 20, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.03, ease: 'power3.out' },
+      tl.fromTo('.partners__marquee',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' },
         '-=0.4'
       );
 
@@ -170,7 +171,8 @@ const PlatformsPartners = () => {
         '-=0.3'
       );
 
-      tl.to({}, { duration: 1.5 }, '+=1');
+      tl.addLabel('partnersShown');
+      tl.to({}, { duration: 1 }, '+=0.5');
     }, containerRef);
 
     return () => ctx.revert();
@@ -195,10 +197,10 @@ const PlatformsPartners = () => {
     {
       id: 'youtube', name: 'YouTube', url: 'https://www.youtube.com/@Nixtwitch', color: '#FF0000',
       gradient: 'linear-gradient(180deg, rgba(255,0,0,0.15) 0%, rgba(0,0,0,0) 100%)',
-      stats: ['60M+', '8.5M', '20k', '250k'],
+      stats: ['60M+', '8.5M', '20K', '250K'],
       metrics: [
         { label: 'Total Views', value: '60M+' }, { label: 'Watch Hours', value: '8.5M' },
-        { label: 'New Subs in month', value: '20K+' }, { label: 'Followers', value: '250k+' }
+        { label: 'New Subs in month', value: '20K+' }, { label: 'Followers', value: '250K+' }
       ],
       description: 'Highlights, клипы и эксклюзивный контент. Быстрорастущий канал.',
       logo: (
@@ -353,36 +355,34 @@ const PlatformsPartners = () => {
         <div className="partners-section" id="partners">
           <div className="partners__header-top">
             <h3 className="partners__title">PARTNERS</h3>
-            <p className="partners__subtitle">Бренды, которые доверяют нам</p>
+            <p className="partners__subtitle">Бренды, которые мне доверяют</p>
           </div>
 
           <div className="partners__content-stack">
-            <div className="partners__brands-container">
-              <div className="partners__brands-row">
-                {brandsData.slice(0, 7).map((brand, index) => (
-                  <button
-                    key={`r1-${index}`}
-                    ref={(el) => (brandsRef.current[index] = el)}
-                    className="partners__brand-chip interactive"
-                    onClick={() => handleBrandClick(brand)}
-                  >
-                    {brand.name}
-                  </button>
-                ))}
-              </div>
-
-              <div className="partners__brands-row">
-                {brandsData.slice(7).map((brand, index) => (
-                  <button
-                    key={`r2-${index}`}
-                    ref={(el) => (brandsRef.current[index + 7] = el)}
-                    className="partners__brand-chip interactive"
-                    onClick={() => handleBrandClick(brand)}
-                  >
-                    {brand.name}
-                  </button>
-                ))}
-              </div>
+            {/* Бегущие строки брендов: клик по имени открывает карточку кейса */}
+            <div className="partners__marquee-container">
+              {[brandsData.slice(0, 7), brandsData.slice(7)].map((row, rowIndex) => (
+                <div
+                  key={rowIndex}
+                  className={`partners__marquee partners__marquee--${rowIndex === 0 ? 'left' : 'right'}`}
+                >
+                  <div className="partners__marquee-track">
+                    {/* Дублируем ряд для бесшовного цикла */}
+                    {[...row, ...row].map((brand, i) => (
+                      <button
+                        key={`${brand.id}-${i}`}
+                        className="partners__marquee-item interactive"
+                        onClick={() => handleBrandClick(brand)}
+                        tabIndex={i >= row.length ? -1 : 0}
+                        aria-hidden={i >= row.length}
+                      >
+                        <span className="partners__marquee-name">{brand.name}</span>
+                        <span className="partners__marquee-year">{brand.year}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
 
             <div className="partners__info-row">

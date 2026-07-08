@@ -6,63 +6,32 @@ import './video-intro.scss';
 const VideoIntro = ({ onComplete }) => {
   const videoRef = useRef(null);
   const containerRef = useRef(null);
-  const [showSkip, setShowSkip] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [canPlay, setCanPlay] = useState(false);
-  const [userInteracted, setUserInteracted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
+  // Автоплей без клика: браузеры разрешают autoplay только со звуком muted
   useEffect(() => {
     const video = videoRef.current;
+    if (!video) return;
 
-    // Проверяем, готово ли видео к воспроизведению
-    const handleCanPlay = () => {
-      setCanPlay(true);
+    video.muted = true;
+
+    const tryPlay = () => {
+      video.play().catch(() => {
+        // Если даже muted-автоплей запрещён — просто ждём взаимодействия,
+        // пользователь всё равно может нажать SKIP
+      });
     };
 
-    video.addEventListener('canplay', handleCanPlay);
+    if (video.readyState >= 3) {
+      tryPlay();
+    } else {
+      video.addEventListener('canplay', tryPlay, { once: true });
+    }
 
     return () => {
-      video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('canplay', tryPlay);
     };
   }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-
-    // Запуск видео ПОСЛЕ клика пользователя
-    if (userInteracted && canPlay && video) {
-      const playVideo = async () => {
-        try {
-          await video.play();
-        } catch (err) {
-          console.error('Video play error:', err);
-        }
-      };
-      playVideo();
-    }
-  }, [userInteracted, canPlay]);
-
-  // Обработка клика для запуска
-  const handleEnter = async () => {
-    setUserInteracted(true);
-    
-    // Анимация исчезновения overlay
-    gsap.to('.enter-overlay', {
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power3.inOut',
-      pointerEvents: 'none'
-    });
-
-    // Показываем кнопку Skip через 2 секунды
-    setTimeout(() => {
-      setShowSkip(true);
-      gsap.fromTo('.skip-button', 
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
-      );
-    }, 2000);
-  };
 
   const handleSkip = () => {
     gsap.to(containerRef.current, {
@@ -91,7 +60,8 @@ const VideoIntro = ({ onComplete }) => {
       <video
         ref={videoRef}
         className="video-intro__video"
-        muted={isMuted}
+        muted
+        autoPlay
         playsInline
         loop={false}
         preload="auto"
@@ -106,29 +76,18 @@ const VideoIntro = ({ onComplete }) => {
         <p className="video-intro__subtitle">STREAMER • CREATOR • PERFORMER</p>
       </div>
 
-      {/* ✅ CLICK TO ENTER OVERLAY */}
-      {!userInteracted && (
-        <div className="enter-overlay interactive" onClick={handleEnter}>
-          <div className="enter-overlay__content">
-            <button className="enter-button">
-              <span>ENTER</span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </button>
-            <p className="enter-overlay__hint">Click to experience with sound</p>
-          </div>
-        </div>
-      )}
-
-      <button 
-        className={`skip-button interactive ${showSkip ? 'visible' : ''}`}
+      <button
+        className="skip-button interactive visible"
         onClick={handleSkip}
       >
         SKIP INTRO
       </button>
 
-      <button className="mute-button interactive" onClick={toggleMute}>
+      <button
+        className="mute-button interactive"
+        onClick={toggleMute}
+        aria-label={isMuted ? 'Включить звук' : 'Выключить звук'}
+      >
         {isMuted ? (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -141,6 +100,7 @@ const VideoIntro = ({ onComplete }) => {
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           </svg>
         )}
+        <span className="mute-button__hint">{isMuted ? 'SOUND ON' : 'SOUND OFF'}</span>
       </button>
 
       <div className="scroll-indicator">

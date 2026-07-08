@@ -27,7 +27,8 @@
 
   &__slide-indicator {
     position: fixed;
-    top: 1.2vh;
+    // Ниже фиксированной шапки
+    top: 9vh;
     right: 3vw;
     font-family: $font-display;
     font-size: min(0.7vw, 12px);
@@ -346,7 +347,7 @@
 
     &__slide-indicator {
       font-size: 2.8vw; // ИСПРАВЛЕНО (было 0.6vw)
-      top: 1.5vh;
+      top: 8.5vh;
       right: 4vw;
     }
 

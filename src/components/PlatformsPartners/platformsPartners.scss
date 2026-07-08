@@ -96,7 +96,8 @@
 
 .platforms__live-indicator {
   position: fixed;
-  top: 2.5vh;
+  // Ниже фиксированной шапки
+  top: 9vh;
   right: 2.5vw;
   display: flex;
   align-items: center;
@@ -426,7 +427,8 @@
   left: 0;
   width: 100%;
   min-height: 100vh;
-  padding: 0;
+  // Отступ под фиксированную шапку
+  padding: 10vh 0 0;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -469,47 +471,105 @@
   padding: 0 1vw;
 }
 
-.partners__brands-container {
+// === МАРКИЗ БРЕНДОВ ===
+// Две бегущие строки гигантских контурных названий, встречные направления.
+// Ховер останавливает ряд и заливает имя чёрным, клик открывает кейс.
+.partners__marquee-container {
   display: flex;
   flex-direction: column;
-  gap: 2vh;
-  width: 100%;
-  margin: 0;
+  gap: 1vh;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
 }
 
-.partners__brands-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 2vw;
-}
-
-.partners__brand-chip {
-  padding: 2vh 2vw;
-  background: transparent;
-  border: 0.3vh solid rgba(0, 0, 0, 0.25);
-  color: #000000;
-  font-family: $font-display;
-  font-size: min(1.5vw, 22px);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.partners__marquee {
+  overflow: hidden;
   white-space: nowrap;
-  min-width: 10vw;
-  text-align: center;
 
-  &:hover {
-    border-color: #000000;
-    background: rgba(0, 0, 0, 0.06);
-    transform: translateY(-0.2vh);
+  &--left .partners__marquee-track {
+    animation: marqueeLeft 45s linear infinite;
   }
 
-  @media (max-width: $breakpoint-tablet) {
-    font-size: 2.2vw;
-    padding: 1.2vh 2.5vw;
+  &--right .partners__marquee-track {
+    animation: marqueeRight 45s linear infinite;
+  }
+
+  &:hover .partners__marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+.partners__marquee-track {
+  display: inline-flex;
+  align-items: baseline;
+  width: max-content;
+  will-change: transform;
+}
+
+.partners__marquee-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6vw;
+  padding: 0.5vh 2.2vw;
+  cursor: pointer;
+  position: relative;
+
+  // Разделитель между брендами
+  &::after {
+    content: '✦';
+    position: absolute;
+    right: -0.55vw;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: min(1.2vw, 18px);
+    color: rgba(0, 0, 0, 0.35);
+  }
+}
+
+.partners__marquee-name {
+  font-family: $font-display;
+  font-size: min(5.5vw, 92px);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.85);
+  transition: color 0.35s ease, -webkit-text-stroke-color 0.35s ease;
+
+  .partners__marquee-item:hover & {
+    color: #000000;
+    -webkit-text-stroke-color: #000000;
+  }
+}
+
+.partners__marquee-year {
+  font-family: $font-primary;
+  font-size: min(1vw, 15px);
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.45);
+  letter-spacing: 0.1em;
+  transition: color 0.35s ease;
+
+  .partners__marquee-item:hover & {
+    color: #000000;
+  }
+}
+
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partners__marquee-track {
+    animation: none !important;
   }
 }
 
@@ -536,7 +596,7 @@
 
 .partners__info-title {
   font-family: $font-display;
-  font-size: min(0.9vw, 14px);
+  font-size: 14px;
   font-weight: 700;
   color: #000000;
   margin-bottom: 1.5vh;
@@ -566,7 +626,7 @@
 }
 
 .partners__info-label {
-  font-size: min(0.7vw, 12px);
+  font-size: 12px;
   color: #444444;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -574,7 +634,7 @@
 }
 
 .partners__info-value {
-  font-size: min(0.85vw, 14px);
+  font-size: 15px;
   color: #000000;
   font-weight: 700;
   text-align: right;
@@ -600,7 +660,7 @@
 }
 
 .partners__format-title {
-  font-size: min(0.8vw, 13px);
+  font-size: 14px;
   color: #000000;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -1022,7 +1082,7 @@
 
   // === LIVE ===
   .platforms__live-indicator {
-    top: 2.5vh;
+    top: 8.5vh;
     right: 4vw;
     padding: 1vh 3vw;
     gap: 1.5vw;
@@ -1176,7 +1236,7 @@
   // === PARTNERS SECTION (GRID LAYOUT - NO CLIPPING) ===
   // =========================================================================
   .partners-section {
-    padding: 2vh 0 1vh; // Минимальный нижний отступ
+    padding: 9vh 0 1vh;
   }
 
   .partners__header-top {
@@ -1208,46 +1268,32 @@
     padding-bottom: 0;
   }
 
-  .partners__brands-container {
-    gap: 1.5vh;
+  // === МАРКИЗ БРЕНДОВ (МОБИЛЬНЫЙ) ===
+  .partners__marquee-container {
+    gap: 0.5vh;
   }
 
-  // === СЕТКА БРЕНДОВ 3 КОЛОНКИ (ГАРАНТИРОВАННО ПОКАЗЫВАЕТ ВСЁ) ===
-  .partners__brands-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); // Ровно 3 колонки
-    gap: 2vw; // Компактный зазор между чипами
-    width: 100%;
-    padding: 0;
-    margin: 0;
-  }
+  .partners__marquee-item {
+    padding: 0.5vh 5vw;
 
-  .partners__brand-chip {
-    width: 100%;
-    min-width: 0; // Позволяет элементу сжиматься внутри grid
-    font-size: 2.8vw !important; // Оптимальный размер для 3 колонок
-    padding: 2.5vw 1.5vw !important; // Компактные боковые отступы
-    border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    background: rgba(255, 255, 255, 0.6) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: #000000 !important;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    transition: all 0.2s ease;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1.2;
-    white-space: normal; // РАЗРЕШАЕМ перенос текста на 2 строки для длинных названий
-
-    &:active {
-      transform: scale(0.95);
-      background: rgba(0, 0, 0, 0.08) !important;
+    &::after {
+      right: -1.5vw;
+      font-size: 3vw;
     }
+
+    &:active .partners__marquee-name {
+      color: #000000;
+      -webkit-text-stroke-color: #000000;
+    }
+  }
+
+  .partners__marquee-name {
+    font-size: 11vw;
+    -webkit-text-stroke-width: 1.5px;
+  }
+
+  .partners__marquee-year {
+    font-size: 2.8vw;
   }
 
   .partners__info-row {

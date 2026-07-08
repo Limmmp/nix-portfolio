@@ -34,11 +34,30 @@
     );
   }
 
+  &__overlay {
+    flex-direction: column;
+    gap: 16px;
+  }
+
   &__title {
     color: $color-white;
     text-shadow: 0 0 40px rgba(255,255,255,0.3);
     animation: titleReveal 1.5s ease-out forwards;
   }
+
+  &__subtitle {
+    color: $color-light-gray;
+    font-size: $font-size-xs;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: subtitleReveal 1.2s ease-out 0.8s forwards;
+  }
+}
+
+@keyframes subtitleReveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes titleReveal {
@@ -86,12 +105,22 @@
   position: absolute;
   top: $spacing-lg;
   right: $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   background: transparent;
   border: none;
   color: $color-white;
   font-size: 24px;
   opacity: 0.7;
   transition: opacity $transition-fast;
+
+  &__hint {
+    font-family: $font-primary;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+  }
 
   &:hover {
     opacity: 1;
@@ -130,75 +159,5 @@
   50% {
     opacity: 1;
     transform: scaleY(1);
-  }
-}
-// ✅ CLICK TO ENTER OVERLAY
-.enter-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1001;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-
-  &__content {
-    text-align: center;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  .enter-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 48px;
-    background: transparent;
-    border: 2px solid $color-white;
-    color: $color-white;
-    font-family: $font-display;
-    font-size: $font-size-md;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all $transition-medium;
-
-    &:hover {
-      background: $color-white;
-      color: $color-black;
-      transform: scale(1.05);
-    }
-
-    svg {
-      transition: transform $transition-medium;
-    }
-
-    &:hover svg {
-      transform: translateX(5px);
-    }
-  }
-
-  &__hint {
-    margin-top: $spacing-md;
-    color: $color-light-gray;
-    font-size: $font-size-xs;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.02);
   }
 }
