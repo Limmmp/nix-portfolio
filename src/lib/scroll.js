@@ -19,10 +19,9 @@ export const scrollToPosition = (top) => {
 
 // Секции внутри пинов: скроллим к точке таймлайна, где контент уже виден.
 // label — метка в таймлайне пина, fallback — доля прогресса, если метки нет.
+// Обычные секции (platforms, partners, highlights) резолвятся по id элемента.
 const PIN_TARGETS = {
   about: { id: 'about-pin', fallback: 0 },
-  platforms: { id: 'platforms-pin', label: 'platformsShown', fallback: 0.2 },
-  partners: { id: 'platforms-pin', label: 'partnersShown', fallback: 0.85 },
 };
 
 export const scrollToSection = (name) => {

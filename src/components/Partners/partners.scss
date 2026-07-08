@@ -1,0 +1,504 @@
+@use '../../styles/variables' as *;
+
+.partners {
+  position: relative;
+  padding: 14vh 0 12vh;
+  background: linear-gradient(180deg, #c2c2c2 0%, #b7b7b7 55%, #ababab 100%);
+  overflow: hidden;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 7vh;
+  }
+
+  &__title {
+    color: #000000;
+    font-family: $font-display;
+    font-size: min(4.5vw, 76px);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5vh;
+  }
+
+  &__subtitle {
+    color: #444444;
+    font-size: min(1.1vw, 17px);
+    font-weight: 500;
+  }
+}
+
+// === МАРКИЗ БРЕНДОВ ===
+// Две бегущие строки гигантских контурных названий, встречные направления.
+// Ховер останавливает ряд и заливает имя чёрным, клик открывает кейс.
+.partners__marquee-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 8vh;
+}
+
+.partners__marquee {
+  overflow: hidden;
+  white-space: nowrap;
+
+  &--left .partners__marquee-track {
+    animation: marqueeLeft 45s linear infinite;
+  }
+
+  &--right .partners__marquee-track {
+    animation: marqueeRight 45s linear infinite;
+  }
+
+  &:hover .partners__marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+.partners__marquee-track {
+  display: inline-flex;
+  align-items: baseline;
+  width: max-content;
+  will-change: transform;
+}
+
+.partners__marquee-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6vw;
+  padding: 0.5vh 2.2vw;
+  cursor: pointer;
+  position: relative;
+
+  // Разделитель между брендами
+  &::after {
+    content: '✦';
+    position: absolute;
+    right: -0.55vw;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: min(1.2vw, 18px);
+    color: rgba(0, 0, 0, 0.35);
+  }
+}
+
+.partners__marquee-name {
+  font-family: $font-display;
+  font-size: min(5.5vw, 92px);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.85);
+  transition: color 0.35s ease, -webkit-text-stroke-color 0.35s ease;
+
+  .partners__marquee-item:hover & {
+    color: #000000;
+    -webkit-text-stroke-color: #000000;
+  }
+}
+
+.partners__marquee-year {
+  font-family: $font-primary;
+  font-size: min(1vw, 15px);
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.45);
+  letter-spacing: 0.1em;
+  transition: color 0.35s ease;
+
+  .partners__marquee-item:hover & {
+    color: #000000;
+  }
+}
+
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partners__marquee-track {
+    animation: none !important;
+  }
+}
+
+// === ИНФОБЛОКИ ===
+.partners__info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5vw;
+  width: 100%;
+  margin-bottom: 5vh;
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: 1fr;
+    gap: 3vh;
+  }
+}
+
+.partners__info-block {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 4vh 3vw;
+  width: 100%;
+}
+
+.partners__info-title {
+  font-family: $font-display;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 2vh;
+  padding-bottom: 1.2vh;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.partners__info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4vh;
+}
+
+.partners__info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1.4vh;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.partners__info-label {
+  font-size: 12px;
+  color: #444444;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.partners__info-value {
+  font-size: 15px;
+  color: #000000;
+  font-weight: 700;
+  text-align: right;
+}
+
+.partners__formats-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8vw;
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.partners__format-item {
+  padding: 1.2vh 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.partners__format-title {
+  font-size: 14px;
+  color: #000000;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.partners__cta-btn-wide {
+  width: 100%;
+  padding: 3vh 0;
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+  font-family: $font-primary;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: transparent;
+    color: #000000;
+    transform: translateY(-3px);
+  }
+}
+
+// === МОДАЛКА КЕЙСА ===
+.partners-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(183, 183, 183, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease;
+}
+
+.partners-modal {
+  position: relative;
+  background: #ffffff;
+  padding: 4vh 3.5vw;
+  max-width: min(90vw, 540px);
+  width: 90%;
+  animation: slideUp 0.4s ease;
+
+  &__header {
+    margin-bottom: 3.5vh;
+    padding-bottom: 2.3vh;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: min(2.2vw, 36px);
+    font-weight: 800;
+    color: #000000;
+    letter-spacing: 0.05em;
+  }
+
+  &__content {
+    margin-bottom: 3.5vh;
+  }
+
+  &__year {
+    margin-bottom: 2.8vh;
+    padding: 1.9vh;
+    background: #f5f5f5;
+    border-radius: 6px;
+  }
+
+  &__label {
+    display: block;
+    font-size: 12px;
+    color: #666666;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.9vh;
+    font-weight: 600;
+  }
+
+  &__value {
+    font-size: clamp(14px, 1.9vh, 22px);
+    color: #000000;
+    font-weight: 700;
+  }
+
+  &__description p {
+    font-size: clamp(13px, 1.6vh, 18px);
+    color: #333333;
+    line-height: 1.7;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__btn {
+    padding: 1.9vh min(3.5vw, 48px);
+    font-family: $font-primary;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid #000000;
+    background: #000000;
+    color: #ffffff;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: transparent;
+      color: #000000;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(3.5vh); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideFromBottom {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+// === MOBILE ===
+@media (max-width: $breakpoint-mobile) {
+  .partners {
+    padding: 10vh 0 8vh;
+
+    &__header {
+      margin-bottom: 4vh;
+      padding: 0 4vw;
+    }
+
+    &__title {
+      font-size: 10vw;
+      letter-spacing: 0.03em;
+      line-height: 1;
+    }
+
+    &__subtitle {
+      font-size: 3vw;
+      color: #555555;
+    }
+  }
+
+  .partners__marquee-container {
+    gap: 0.5vh;
+    margin-bottom: 5vh;
+  }
+
+  .partners__marquee-item {
+    padding: 0.5vh 5vw;
+
+    &::after {
+      right: -1.5vw;
+      font-size: 3vw;
+    }
+
+    &:active .partners__marquee-name {
+      color: #000000;
+      -webkit-text-stroke-color: #000000;
+    }
+  }
+
+  .partners__marquee-name {
+    font-size: 11vw;
+    -webkit-text-stroke-width: 1.5px;
+  }
+
+  .partners__marquee-year {
+    font-size: 2.8vw;
+  }
+
+  .partners__info-block {
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    padding: 3vh 4vw;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  }
+
+  .partners__info-title {
+    font-size: 3.4vw;
+  }
+
+  .partners__info-label {
+    font-size: 2.8vw;
+  }
+
+  .partners__info-value {
+    font-size: 3.2vw;
+  }
+
+  .partners__formats-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5vw;
+  }
+
+  .partners__format-item {
+    border-bottom: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    padding: 1.8vw 2.5vw;
+  }
+
+  .partners__format-title {
+    font-size: 2.9vw;
+    white-space: nowrap;
+  }
+
+  .partners__cta-btn-wide {
+    padding: 3.5vw 0;
+    font-size: 3.8vw;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      background: #000000;
+      color: #ffffff;
+      transform: none;
+    }
+
+    &:active {
+      transform: scale(0.97);
+      background: #222222;
+    }
+  }
+
+  // Модалка кейса как bottom-sheet
+  .partners-modal-overlay {
+    align-items: flex-end;
+    background-color: rgba(183, 183, 183, 0.85);
+  }
+
+  .partners-modal {
+    width: 100%;
+    max-width: 100%;
+    padding: 28px 20px calc(24px + env(safe-area-inset-bottom));
+    border-radius: 24px 24px 0 0;
+    animation: slideFromBottom 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    max-height: 85vh;
+    overflow-y: auto;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+
+    &__title {
+      font-size: 5.5vw;
+    }
+
+    &__btn {
+      width: 100%;
+      padding: 3.5vw 0;
+      font-size: 3.8vw;
+      border: none;
+      border-radius: 14px;
+    }
+  }
+}
