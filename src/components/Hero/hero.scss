@@ -70,8 +70,8 @@
     flex-direction: column;
     align-items: center;
     // Заголовок опущен ниже лица на фото
-    margin-top: 34vh;
-    margin-bottom: 6vh;
+    margin-top: 42vh;
+    margin-bottom: 4vh;
     transform: translateY(0);
     transform-style: preserve-3d; // ← ДЛЯ 3D ЭФФЕКТА
     will-change: transform, opacity, filter;
@@ -193,10 +193,10 @@
   &__stats-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    // ← ФИКС: ограничиваем общую ширину и отступы
-    width: min(50vw, 1100px);
-    gap: min(3vw, 40px);
-    margin: 0 auto 3vh auto; // ← Гарантированное центрирование
+    // Шире и заметнее: главный оффер сайта
+    width: min(76vw, 1500px);
+    gap: min(2.5vw, 40px);
+    margin: 0 auto 5vh auto;
     padding-bottom: 0;
     justify-content: center;
     justify-items: center;
@@ -209,9 +209,8 @@
     position: relative;
     padding: 0;
     width: 100%;
-    // ← ФИКС: ограничиваем ширину карточки
-    max-width: min(20vw, 260px);
-    aspect-ratio: 4/1;
+    max-width: min(24vw, 360px);
+    aspect-ratio: 3.2/1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -243,8 +242,7 @@
 
     &__value {
       font-family: $font-display;
-      // ← ФИКС: ограничиваем размер цифры
-      font-size: min(3.5vw, 48px);
+      font-size: min(3vw, 56px);
       font-weight: 700;
       color: $color-white;
       line-height: 1;
@@ -253,8 +251,7 @@
     }
 
     &__label {
-      // ← ФИКС: ограничиваем размер + запрет переноса
-      font-size: min(0.9vw, 14px);
+      font-size: min(1vw, 16px);
       font-weight: 600;
       color: $color-white;
       letter-spacing: 0.15em;

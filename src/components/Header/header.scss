@@ -1,7 +1,7 @@
 @use '../../styles/variables' as *;
 
-// Шапка в mix-blend-mode: difference — белый текст читается
-// и на тёмных, и на светлых секциях без смены темы.
+// Белый текст поверх тёмного скрима — читается на любой секции,
+// включая светлый hero и Partners.
 .site-header {
   position: fixed;
   top: 0;
@@ -10,9 +10,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2.2vh min(3vw, 48px);
+  padding: 2.2vh min(3vw, 48px) 3.5vh;
   z-index: 9000;
-  mix-blend-mode: difference;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.25) 55%, transparent 100%);
   pointer-events: none;
   opacity: 0;
   transform: translateY(-16px);

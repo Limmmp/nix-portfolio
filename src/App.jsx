@@ -10,9 +10,10 @@ import About from './components/About/About';
 import Highlights from './components/Highlights/Highlights';
 import ContactModal from './components/ContactModal/ContactModal';
 import Footer from './components/Footer/Footer';
+import Platforms from './components/Platforms/Platforms';
+import Partners from './components/Partners/Partners';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import './styles/global.scss';
-import PlatformsPartners from './components/PlatformsPartners/PlatformsPartners';
 gsap.registerPlugin(ScrollTrigger);
 
 const INTRO_SEEN_KEY = 'nix_intro_seen';
@@ -84,7 +85,8 @@ function App() {
       <main className={`main-content ${introComplete ? 'visible' : ''}`}>
         <Hero onOpenContact={() => setIsContactOpen(true)} isActive={introComplete} />
         <About />
-        <PlatformsPartners />
+        <Platforms />
+        <Partners onOpenContact={() => setIsContactOpen(true)} />
         <Highlights />
         <Footer onOpenContact={() => setIsContactOpen(true)} />
       </main>
