@@ -47,7 +47,7 @@ export default function PartnersEditor() {
     <div className="adm-panel">
       <h2 className="adm-panel__title">Partners — бренды ({brands.length})</h2>
       <p className="adm-hint">
-        Год: «2024» или «now» для действующих партнёрств. У брендов с «now» имя в ленте
+        Год: «now» для действующих партнёрств. У брендов с «now» имя в ленте
         заливается градиентом в корпоративных цветах — задай два цвета ниже.
       </p>
 
