@@ -9,9 +9,11 @@ import HighlightsEditor from './HighlightsEditor';
 import LeadsPanel from './LeadsPanel';
 import HistoryPanel from './HistoryPanel';
 import SettingsPanel from './SettingsPanel';
+import StatsPanel from './StatsPanel';
 import './admin.scss';
 
 const TABS = [
+  { id: 'stats', label: 'Статистика', component: StatsPanel },
   { id: 'hero', label: 'Hero', component: HeroEditor },
   { id: 'about', label: 'About', component: AboutEditor },
   { id: 'platforms', label: 'Platforms', component: PlatformsEditor },
@@ -70,7 +72,7 @@ function Login() {
 
 export default function AdminApp() {
   const [session, setSession] = useState(undefined); // undefined = ещё не знаем
-  const [tab, setTab] = useState('hero');
+  const [tab, setTab] = useState('stats');
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
