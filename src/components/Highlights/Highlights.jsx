@@ -164,14 +164,12 @@ const Highlights = () => {
     <section ref={containerRef} className="highlights" id="highlights">
       <div className="container">
         {/* Заголовок */}
-        <div className="highlights__header">
-          <div className="highlights__header-top">
-            <h3 className="highlights__title">HIGHLIGHTS</h3>
-            <span className="highlights__counter">
-              01 — {String(highlights.length).padStart(2, '0')}
-            </span>
+        <div className="highlights__header section-head">
+          <div className="section-head__main">
+            <span className="section-head__index">CONTENT</span>
+            <h3 className="section-head__title">Highlights</h3>
           </div>
-          <p className="highlights__subtitle">
+          <p className="section-head__sub">
             Топ моменты со стримов и лучшие клипы
           </p>
         </div>

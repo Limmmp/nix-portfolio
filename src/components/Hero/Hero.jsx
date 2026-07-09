@@ -87,7 +87,7 @@ const runHeroAnimations = () => {
       ease: 'power3.out',
       onComplete: () => {
         statsRef.current.forEach((stat, index) => {
-          const valueEl = stat?.querySelector('.hero-stat__value');
+          const valueEl = stat?.querySelector('.hero-stat__value-live');
           if (valueEl && HERO_STATS[index]) {
             animateCountUp(valueEl, HERO_STATS[index].value);
           }
@@ -176,7 +176,7 @@ useEffect(() => {
         {/* ← ОБЁРТКА ДЛЯ 3D ЭФФЕКТА */}
         <div ref={contentGroupRef} className="hero__content-inner">
           <h2 ref={titleRef} className="hero__title text-display">
-            NIX
+            NIX<span className="hero__title-dot" aria-hidden="true" />
           </h2>
           <p ref={subtitleRef} className="hero__subtitle text-medium">
             АЛЕКСАНДР ЛЕВИН • DOTA 2 STREAMER • CONTENT CREATOR
@@ -208,7 +208,7 @@ useEffect(() => {
           </div>
         </div>
 
-        {/* Статистика внизу в ряд */}
+        {/* Статистика внизу: плоская editorial-полоса */}
         <div className="hero__stats-row">
           {HERO_STATS.map((stat, index) => (
             <div
@@ -216,12 +216,13 @@ useEffect(() => {
               ref={(el) => (statsRef.current[index] = el)}
               className="hero-stat"
             >
-              <div className="hero-stat__border" />
-              <div className="hero-stat__content">
-                <span className="hero-stat__value">0</span>
-                <span className="hero-stat__label">{stat.label}</span>
-                <span className="hero-stat__sublabel">{stat.sublabel}</span>
-              </div>
+              {/* Призрак с финальным значением резервирует ширину — контейнер не дрожит во время count-up */}
+              <span className="hero-stat__value">
+                <span className="hero-stat__value-live">0</span>
+                <span className="hero-stat__value-ghost" aria-hidden="true">{stat.value}</span>
+              </span>
+              <span className="hero-stat__label">{stat.label}</span>
+              <span className="hero-stat__sublabel">{stat.sublabel}</span>
             </div>
           ))}
         </div>

@@ -1,9 +1,12 @@
-// 🎨 COLOR PALETTE (MONOCHROME)
+// 🎨 COLOR PALETTE (MONOCHROME + ONE ACCENT)
 $color-black: #000000;
 $color-dark-gray: #0A0A0A;
 $color-medium-gray: #1A1A1A;
 $color-light-gray: #888888;
 $color-white: #FFFFFF;
+// Единственный цвет сайта — «эфирный» красный (LIVE/REC).
+// Используем точечно: LIVE-бейдж, точка в hero, ховеры ключевых CTA.
+$color-accent: #FF0000;
 
 // 📐 SPACING
 $spacing-xs: 8px;
@@ -31,3 +34,14 @@ $transition-slow: 0.6s ease;
 $breakpoint-mobile: 767px;
 $breakpoint-tablet: 1023px;
 $breakpoint-laptop: 1439px;
+
+// 📏 UNIFIED SCALE (единая система секций)
+// Вертикальный ритм секций — clamp вместо vh, чтобы не раздувало низкие экраны
+$section-pad-y: clamp(72px, 11vh, 140px);
+// Заголовок секции — один размер на весь сайт
+$section-title-size: clamp(40px, 4.5vw, 68px);
+// Подзаголовок секции
+$section-sub-size: clamp(13px, 1.05vw, 16px);
+// Тонкие линии
+$line-dark: #222222;
+$line-light: rgba(0, 0, 0, 0.2);

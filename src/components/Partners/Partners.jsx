@@ -64,25 +64,13 @@ const Partners = ({ onOpenContact }) => {
         }
       );
 
-      gsap.fromTo('.partners__info-block',
+      gsap.fromTo('.partners__details > *',
         { opacity: 0, y: 40 },
         {
           opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.partners__info-row',
+            trigger: '.partners__details',
             start: 'top 88%',
-            toggleActions: 'play none none none'
-          }
-        }
-      );
-
-      gsap.fromTo('.partners__cta-btn-wide',
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.partners__cta-btn-wide',
-            start: 'top 92%',
             toggleActions: 'play none none none'
           }
         }
@@ -95,9 +83,12 @@ const Partners = ({ onOpenContact }) => {
   return (
     <section ref={containerRef} className="partners" id="partners">
       <div className="container">
-        <div className="partners__header">
-          <h3 className="partners__title">PARTNERS</h3>
-          <p className="partners__subtitle">Бренды, которые мне доверяют</p>
+        <div className="partners__header section-head section-head--light">
+          <div className="section-head__main">
+            <span className="section-head__index">COLLABS</span>
+            <h3 className="section-head__title">Partners</h3>
+          </div>
+          <p className="section-head__sub">Бренды, которые мне доверяют — клик по имени откроет кейс</p>
         </div>
       </div>
 
@@ -128,34 +119,37 @@ const Partners = ({ onOpenContact }) => {
       </div>
 
       <div className="container">
-        <div className="partners__info-row">
-          <div className="partners__info-block">
-            <h4 className="partners__info-title">Целевая аудитория</h4>
-            <div className="partners__info-list">
+        <div className="partners__details">
+          {/* Аудитория: три факта в один ряд */}
+          <div className="partners__details-block">
+            <h4 className="partners__details-title">Целевая аудитория</h4>
+            <div className="partners__facts">
               {targetAudience.map((item, i) => (
-                <div key={i} className="partners__info-item">
-                  <span className="partners__info-label">{item.label}</span>
-                  <span className="partners__info-value">{item.value}</span>
+                <div key={i} className="partners__fact">
+                  <span className="partners__fact-label">{item.label}</span>
+                  <span className="partners__fact-value">{item.value}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="partners__info-block">
-            <h4 className="partners__info-title">Формы сотрудничества</h4>
-            <div className="partners__formats-list">
+          {/* Форматы: нумерованная строка в две-три линии */}
+          <div className="partners__details-block">
+            <h4 className="partners__details-title">Формы сотрудничества</h4>
+            <div className="partners__formats">
               {formats.map((format, i) => (
-                <div key={i} className="partners__format-item">
-                  <span className="partners__format-title">{format}</span>
+                <div key={i} className="partners__format">
+                  <span className="partners__format-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="partners__format-name">{format}</span>
                 </div>
               ))}
             </div>
           </div>
-        </div>
 
-        <button className="partners__cta-btn-wide interactive" onClick={onOpenContact}>
-          PARTNERSHIP
-        </button>
+          <button className="partners__cta-btn-wide interactive" onClick={onOpenContact}>
+            PARTNERSHIP
+          </button>
+        </div>
       </div>
 
       {/* Модалка кейса бренда */}

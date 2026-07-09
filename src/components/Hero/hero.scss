@@ -88,6 +88,17 @@
     transform: translateZ(0); // ← ДЛЯ 3D ЭФФЕКТА
   }
 
+  // «Эфирная» точка — единственный цвет hero, пульсирует как REC
+  &__title-dot {
+    display: inline-block;
+    width: 0.11em;
+    height: 0.11em;
+    margin-left: 0.1em;
+    border-radius: 50%;
+    background: $color-accent;
+    animation: heroDotPulse 2.4s ease-in-out infinite;
+  }
+
   &__subtitle {
     color: rgba(255, 255, 255, 0.75);
     letter-spacing: 0.18em;
@@ -189,94 +200,86 @@
     transform: translateX(4px);
   }
 
-  // Статистика
+  // Статистика: центрированная группа с разделителями — зеркалит
+  // центральную композицию hero, краёв не касается.
   &__stats-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    // Шире и заметнее: главный оффер сайта
-    width: min(76vw, 1500px);
-    gap: min(2.5vw, 40px);
-    margin: 0 auto 5vh auto;
-    padding-bottom: 0;
+    display: flex;
     justify-content: center;
-    justify-items: center;
+    align-items: stretch;
+    margin: 0 auto 5vh;
     transform: translateZ(0); // ← ДЛЯ 3D ЭФФЕКТА
     will-change: transform, opacity, filter;
   }
 
-  // Карточка статистики
   &-stat {
-    position: relative;
-    padding: 0;
-    width: 100%;
-    max-width: min(24vw, 360px);
-    aspect-ratio: 3.2/1;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 6px;
+    padding: 6px clamp(24px, 3.2vw, 64px);
     text-align: center;
-    flex-shrink: 0;
+    min-width: 0;
 
-    &__border {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      background: transparent;
-      backdrop-filter: blur(10px);
-      transition: all $transition-medium;
-    }
-
-    &__content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5vh;
-      align-items: center;
-      // ← ФИКС: ограничиваем внутренний отступ
-      padding: 2vh min(2vw, 20px);
+    & + & {
+      border-left: 1px solid rgba(255, 255, 255, 0.25);
     }
 
     &__value {
+      // Grid-стек: живое значение и невидимый «призрак» финала в одной ячейке,
+      // ширина зафиксирована с первого кадра count-up
+      display: inline-grid;
       font-family: $font-display;
-      font-size: min(3vw, 56px);
+      font-size: clamp(26px, 2.6vw, 46px);
       font-weight: 700;
+      font-variant-numeric: tabular-nums;
       color: $color-white;
       line-height: 1;
       letter-spacing: -0.02em;
-      flex-shrink: 0;
+      text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    &__value-live,
+    &__value-ghost {
+      grid-area: 1 / 1;
+      justify-self: center;
+    }
+
+    &__value-ghost {
+      visibility: hidden;
     }
 
     &__label {
-      font-size: min(1vw, 16px);
+      font-size: clamp(10px, 0.8vw, 13px);
       font-weight: 600;
-      color: $color-white;
+      color: rgba(255, 255, 255, 0.9);
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      white-space: nowrap;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
     }
 
     &__sublabel {
-      // ← ФИКС: ограничиваем размер + запрет переноса
-      font-size: min(0.8vw, 12px);
-      color: $color-white;
-      letter-spacing: 0.1em;
+      font-size: clamp(9px, 0.7vw, 11px);
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    &:hover &__border {
-      border-color: $color-white;
-      background: rgba(0, 0, 0, 0.7);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
     }
   }
 
   // Ховер эффект на фото
   &:hover &__bg-image {
     filter: grayscale(80%) contrast(1.15);
+  }
+}
+
+@keyframes heroDotPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__title-dot {
+    animation: none;
   }
 }
 
@@ -308,24 +311,31 @@
     }
 
     &__stats-row {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3vw;
-      width: 80vw;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 2.5vh;
+      width: min(80vw, 560px);
     }
 
     &-stat {
-      max-width: 38vw;
+      & + & {
+        border-left: none;
+      }
+
+      &:nth-child(even) {
+        border-left: 1px solid rgba(255, 255, 255, 0.25);
+      }
 
       &__value {
         font-size: 4.5vw;
       }
 
       &__label {
-        font-size: 1.4vw;
+        font-size: 1.6vw;
       }
 
       &__sublabel {
-        font-size: 1.2vw;
+        font-size: 1.3vw;
       }
     }
   }
@@ -392,22 +402,24 @@
       font-size: 3vw;
     }
 
-    // Возвращаем статистику компактной сеткой 2×2 — это главный оффер
+    // Статистика компактной сеткой 2×2 — это главный оффер
     &__stats-row {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2.5vw;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 2vh;
       width: 92vw;
       margin-bottom: 2.5vh;
     }
 
     &-stat {
-      max-width: none;
-      aspect-ratio: auto;
+      padding: 0 3vw;
 
-      &__content {
-        padding: 1.6vh 2vw;
-        gap: 0.3vh;
+      & + & {
+        border-left: none;
+      }
+
+      &:nth-child(even) {
+        border-left: 1px solid rgba(255, 255, 255, 0.25);
       }
 
       &__value {

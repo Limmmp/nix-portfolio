@@ -173,6 +173,36 @@ const Platforms = () => {
             }
           }
         );
+
+        // Название въезжает слева чуть позже строки
+        gsap.fromTo(card.querySelector('.platform-row__name'),
+          { x: -40, opacity: 0 },
+          {
+            x: 0, opacity: 1, duration: 0.9, delay: index * 0.12 + 0.15, ease: 'power3.out',
+            // Иначе инлайновый transform перебьёт CSS-ховер (translateX у названия)
+            clearProps: 'transform',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 85%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+
+        // Цифры едут медленнее скролла — лёгкий параллакс, пока строка в вьюпорте
+        gsap.fromTo(card.querySelectorAll('.platform-stat'),
+          { y: 14 },
+          {
+            y: -14,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 0.6
+            }
+          }
+        );
       });
     }, containerRef);
 
@@ -193,60 +223,50 @@ const Platforms = () => {
 
   return (
     <section ref={containerRef} className="platforms" id="platforms">
-      <div className="platforms__bg-pattern">
-        {Array.from({ length: 126 }).map((_, i) => (
-          <span key={i} className="pattern-nix">NIX</span>
-        ))}
-      </div>
-      <div className="platforms__bg-overlay" />
-
-      <div className="container platforms__container">
-        <div className="platforms__header">
-          <a
-            href={`https://twitch.tv/${TWITCH_CHANNEL}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="platforms__live-badge interactive"
-          >
-            <span className={`live-dot ${twitchData.isLive ? 'live-dot--active' : ''}`} />
-            <span className="live-text">
-              {twitchData.loading ? '...' : twitchData.isLive ? 'LIVE' : 'OFFLINE'}
-            </span>
-            {twitchData.isLive && (
-              <span className="live-viewers">
-                {twitchData.viewers.toLocaleString('ru-RU')} viewers
-              </span>
-            )}
-          </a>
-          <h3 className="platforms__title">PLATFORMS</h3>
-          <p className="platforms__subtitle">Ключевые цифры по каждому каналу — детали по клику</p>
+      <div className="container">
+        <div className="platforms__header section-head">
+          <div className="section-head__main">
+            <span className="section-head__index">CHANNELS</span>
+            <h3 className="section-head__title">Platforms</h3>
+          </div>
+          <p className="section-head__sub">Ключевые цифры по каждому каналу — детали по клику</p>
         </div>
+      </div>
 
-        <div className="platforms__grid">
+      {/* Список шире контейнера: почти во весь экран */}
+      <div className="platforms__list">
           {platformsData.map((platform, index) => (
             <a
               key={platform.id}
               href={platform.url}
               ref={(el) => (cardsRef.current[index] = el)}
-              className="platform-card interactive"
+              className="platform-row interactive"
               onClick={(e) => handleCardClick(e, platform)}
               style={{ '--platform-color': platform.color }}
             >
-              <div className="platform-card__top">
-                <div className="platform-card__logo">{platform.logo}</div>
-                <h4 className="platform-card__name">{platform.name}</h4>
+              <div className="platform-row__id">
+                <span className="platform-row__num">{String(index + 1).padStart(2, '0')}</span>
+                <div className="platform-row__logo">{platform.logo}</div>
+                <h4 className="platform-row__name">{platform.name}</h4>
+                {platform.id === 'twitch' && twitchData.isLive && (
+                  <span className="platform-row__live">
+                    <span className="live-dot live-dot--active" />
+                    {twitchData.viewers.toLocaleString('ru-RU')}
+                  </span>
+                )}
               </div>
 
-              <div className="platform-card__stats">
+              <div className="platform-row__stats">
                 {platform.featured.map((metric, i) => (
                   <div key={i} className="platform-stat">
-                    <span className="platform-stat__value">{metric.value}</span>
+                    {/* Стартуем с нуля: финальное значение подставляет count-up при входе в вьюпорт */}
+                    <span className="platform-stat__value">0</span>
                     <span className="platform-stat__label">{metric.label}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="platform-card__more">
+              <div className="platform-row__more">
                 <span>ALL STATS</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
@@ -254,7 +274,6 @@ const Platforms = () => {
               </div>
             </a>
           ))}
-        </div>
       </div>
 
       {/* Детальная модалка платформы (все вьюпорты) */}

@@ -75,6 +75,7 @@ function App() {
   return (
     <div ref={appRef} className="app">
       <Cursor />
+      <div className="grain" aria-hidden="true" />
 
       <Header visible={introComplete} onOpenContact={() => setIsContactOpen(true)} />
 
