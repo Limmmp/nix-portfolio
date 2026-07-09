@@ -34,8 +34,7 @@ export default function StatsPanel() {
     <div className="adm-panel">
       <h2 className="adm-panel__title">Статистика</h2>
       <p className="adm-hint">
-        Собственный счётчик посещений сайта. Детальная аналитика (гео, устройства,
-        источники) — в дашборде Vercel → вкладка Analytics.
+        Собственный счётчик посещений сайта. Детальная аналитика - чуть позже.
       </p>
 
       <div className="adm-stat-grid">
