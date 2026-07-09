@@ -53,6 +53,17 @@ const Footer = ({ onOpenContact }) => {
 
         <p className="footer__copy">
           © 2026 Александр «NIX» Левин. All rights reserved.
+          <span className="footer__credit">
+            Сайт —{' '}
+            <a
+              href="https://t.me/Whoathatslimp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer__credit-link interactive"
+            >
+              @Whoathatslimp
+            </a>
+          </span>
         </p>
       </div>
     </footer>
