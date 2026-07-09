@@ -3,19 +3,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { scrollToSection } from '../../lib/scroll';
+import { useContent } from '../../content/ContentContext';
 import './hero.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Единый источник цифр hero-статистики (значения дублируются в count-up)
-const HERO_STATS = [
-  { value: '1.5M+', label: 'FOLLOWERS', sublabel: 'ALL PLATFORMS' },
-  { value: '100M+', label: 'VIEWS', sublabel: 'PER YEAR' },
-  { value: '35K+', label: 'AVG VIEWERS', sublabel: 'TWITCH' },
-  { value: '7+', label: 'YEARS', sublabel: 'ACTIVE' }
-];
-
 const Hero = ({ onOpenContact, isActive }) => {
+  const { content } = useContent();
+  const HERO_STATS = content.heroStats;
+  const heroSubtitle = content.hero.subtitle;
   const containerRef = useRef(null);
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
@@ -179,7 +175,7 @@ useEffect(() => {
             NIX<span className="hero__title-dot" aria-hidden="true" />
           </h2>
           <p ref={subtitleRef} className="hero__subtitle text-medium">
-            АЛЕКСАНДР ЛЕВИН • DOTA 2 STREAMER • CONTENT CREATOR
+            {heroSubtitle}
           </p>
           
           {/* Одно главное действие + два текстовых перехода */}

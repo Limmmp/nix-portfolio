@@ -231,6 +231,41 @@
     letter-spacing: 0.1em;
   }
 
+  // Лайтбокс для видео из Storage
+  &__lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: min(4vw, 48px);
+
+    video {
+      max-width: min(90vw, 1200px);
+      max-height: 85vh;
+      border: 1px solid $line-dark;
+      background: #000;
+    }
+  }
+
+  &__lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-size: 24px;
+    color: #ffffff;
+    padding: 8px;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.15);
+    }
+  }
+
   // Достижения
   &__awards {
     padding-top: clamp(40px, 6vh, 72px);

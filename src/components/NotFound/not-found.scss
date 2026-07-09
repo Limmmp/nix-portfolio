@@ -1,0 +1,92 @@
+@use '../../styles/variables' as *;
+
+.notfound {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-black;
+  overflow: hidden;
+  // На этой странице обычный курсор, без кастомного
+  cursor: auto;
+
+  &__inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  &__eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: $color-light-gray;
+    text-transform: uppercase;
+    margin-bottom: clamp(16px, 3vh, 28px);
+  }
+
+  &__code {
+    font-family: $font-display;
+    font-size: clamp(96px, 22vw, 280px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: $color-white;
+    text-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  // «Эфирная» красная точка — тот же акцент, что в hero
+  &__dot {
+    display: inline-block;
+    width: 0.09em;
+    height: 0.09em;
+    margin-left: 0.06em;
+    border-radius: 50%;
+    background: $color-accent;
+    animation: nfDotPulse 2.4s ease-in-out infinite;
+  }
+
+  &__text {
+    font-family: $font-primary;
+    font-size: clamp(14px, 1.4vw, 18px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin: clamp(20px, 4vh, 36px) 0 clamp(28px, 5vh, 48px);
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: clamp(16px, 2.4vh, 22px) clamp(32px, 4vw, 56px);
+    border: 1px solid $color-white;
+    background: $color-white;
+    color: $color-black;
+    font-family: $font-primary;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all $transition-medium;
+
+    &:hover {
+      background: transparent;
+      color: $color-white;
+    }
+  }
+}
+
+@keyframes nfDotPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notfound__dot { animation: none; }
+}

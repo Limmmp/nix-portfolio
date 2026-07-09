@@ -1,6 +1,7 @@
 // src/components/ContactModal/ContactModal.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { supabase } from '../../lib/supabase';
 import './contact-modal.scss';
 
 const ContactModal = ({ isOpen, onClose }) => {
@@ -63,25 +64,34 @@ const ContactModal = ({ isOpen, onClose }) => {
     });
   };
 
+  const [submitError, setSubmitError] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    const subject = encodeURIComponent(`Partnership Inquiry: ${formData.company}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\n` +
-      `Company: ${formData.company}\n` +
-      `Email: ${formData.email}\n` +
-      `Type: ${formData.type}\n\n` +
-      `Message:\n${formData.message}`
-    );
+    setSubmitError('');
 
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    const { error } = await supabase.from('leads').insert({
+      name: formData.name,
+      company: formData.company,
+      email: formData.email,
+      type: formData.type,
+      message: formData.message
+    });
 
-    window.location.href = `mailto:nixoffers@gmail.com?subject=${subject}&body=${body}`;
+    if (error) {
+      setIsSubmitting(false);
+      setSubmitError('Не получилось отправить. Попробуйте ещё раз или напишите на почту.');
+      return;
+    }
+
+    // Уведомление в Telegram (работает, когда в проекте заданы TG-секреты);
+    // ошибки не показываем — заявка уже сохранена
+    supabase.functions.invoke('notify-lead', { body: { record: formData } }).catch(() => {});
 
     setIsSubmitting(false);
     setIsSubmitted(true);
+    setFormData({ name: '', company: '', email: '', type: 'partnership', message: '' });
 
     setTimeout(() => {
       onClose();
@@ -201,8 +211,13 @@ const ContactModal = ({ isOpen, onClose }) => {
               )}
             </button>
 
+            {submitError && (
+              <p className="contact-modal__note" style={{ color: '#ff4444' }}>
+                {submitError}
+              </p>
+            )}
             <p className="contact-modal__note">
-              Письмо будет отправлено на nixoffers@gmail.com
+              Заявка уходит команде NIX напрямую
             </p>
           </form>
         ) : (
