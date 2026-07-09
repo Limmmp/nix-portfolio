@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
+import { Analytics } from '@vercel/analytics/react'
 import App from './App.jsx'
 import NotFound from './components/NotFound/NotFound.jsx'
 import './styles/global.scss'
@@ -28,5 +29,7 @@ function Root() {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Root />
+    {/* Vercel Web Analytics — данные в дашборде Vercel */}
+    <Analytics />
   </React.StrictMode>,
 )

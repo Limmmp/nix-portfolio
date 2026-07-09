@@ -14,8 +14,20 @@ import Platforms from './components/Platforms/Platforms';
 import Partners from './components/Partners/Partners';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { ContentProvider, useContent } from './content/ContentContext';
+import { supabase } from './lib/supabase';
 import './styles/global.scss';
 gsap.registerPlugin(ScrollTrigger);
+
+// Собственный счётчик визитов для админки — один раз за загрузку страницы.
+// Флаг на window защищает от двойного вызова в React StrictMode (dev).
+const logVisit = () => {
+  if (window.__nixVisitLogged) return;
+  window.__nixVisitLogged = true;
+  supabase
+    .from('visits')
+    .insert({ path: window.location.pathname, referrer: document.referrer || '' })
+    .then(() => {}, () => {}); // ошибки счётчика не должны влиять на сайт
+};
 
 const INTRO_SEEN_KEY = 'nix_intro_seen';
 
@@ -51,6 +63,9 @@ function Site() {
   const [introSkipped, setIntroSkipped] = useState(introComplete);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const appRef = useRef(null);
+
+  // Засчитываем визит при первом показе сайта
+  useEffect(() => { logVisit(); }, []);
 
   const handleIntroComplete = () => {
     setIntroComplete(true);
