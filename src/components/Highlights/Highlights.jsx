@@ -1,14 +1,32 @@
 // src/components/Highlights/Highlights.jsx
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useContent } from '../../content/ContentContext';
 import './highlights.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Файл из Storage играем в лайтбоксе, внешние ссылки открываем в новой вкладке
+const isDirectVideoFile = (url) => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(url || '');
+
 const Highlights = () => {
+  const { content } = useContent();
+  const highlights = content.highlights;
+  const awards = content.awards;
+
   const containerRef = useRef(null);
   const videosRef = useRef([]);
+  const [lightboxUrl, setLightboxUrl] = useState(null);
+
+  const openVideo = (video) => {
+    if (!video.videoUrl) return;
+    if (isDirectVideoFile(video.videoUrl)) {
+      setLightboxUrl(video.videoUrl);
+    } else {
+      window.open(video.videoUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -71,95 +89,6 @@ const Highlights = () => {
     return () => ctx.revert();
   }, []);
 
-  // Видео хайлайты
-  const highlights = [
-    {
-      id: 1,
-      title: 'The International 2024 Moment',
-      views: '2.5M',
-      platform: 'Twitch',
-      thumbnail: '/images/highlights/highlight-1.jpg',
-      videoUrl: 'https://www.twitch.tv/videos/...',
-      featured: true
-    },
-    {
-      id: 2,
-      title: 'Epic Comeback Game',
-      views: '1.8M',
-      platform: 'YouTube',
-      thumbnail: '/images/highlights/highlight-2.jpg',
-      videoUrl: 'https://www.youtube.com/watch?v=...'
-    },
-    {
-      id: 3,
-      title: 'Funny Rage Moment',
-      views: '900K',
-      platform: 'TikTok',
-      thumbnail: '/images/highlights/highlight-3.jpg',
-      videoUrl: 'https://www.tiktok.com/@nix/...'
-    },
-    {
-      id: 4,
-      title: 'Best Plays Compilation',
-      views: '750K',
-      platform: 'YouTube',
-      thumbnail: '/images/highlights/highlight-4.jpg',
-      videoUrl: 'https://www.youtube.com/watch?v=...'
-    },
-    {
-      id: 5,
-      title: 'Stream Highlights #47',
-      views: '620K',
-      platform: 'Twitch',
-      thumbnail: '/images/highlights/highlight-5.jpg',
-      videoUrl: 'https://www.twitch.tv/videos/...'
-    },
-    {
-      id: 6,
-      title: 'Insane Outplay',
-      views: '580K',
-      platform: 'TikTok',
-      thumbnail: '/images/highlights/highlight-6.jpg',
-      videoUrl: 'https://www.tiktok.com/@nix/...'
-    }
-  ];
-
-  // Достижения и регалии
-  const awards = [
-    {
-      id: 1,
-      icon: '/images/icons/streamers.jpg',
-      title: 'Streamers Awards 2025',
-      subtitle: 'Best MOBA Streamer',
-      description: 'Nominee in international category',
-      year: '2025'
-    },
-    {
-      id: 2,
-      icon: '/images/icons/forbes.png',
-      title: 'Forbes 30 under 30',
-      subtitle: 'Winner',
-      description: 'Media & Entertainment category',
-      year: '2024'
-    },
-    {
-      id: 3,
-      icon: '/images/icons/aegis.png',
-      title: 'The International',
-      subtitle: 'Participant',
-      description: 'Dota 2 World Championship',
-      year: '2019'
-    },
-    {
-      id: 4,
-      icon: '/images/icons/twitch.png',
-      title: '1M+ Subscribers',
-      subtitle: 'Twitch Partner',
-      description: 'Biggest Dota 2 streamer in CIS',
-      year: '2024'
-    }
-  ];
-
   return (
     <section ref={containerRef} className="highlights" id="highlights">
       <div className="container">
@@ -180,7 +109,10 @@ const Highlights = () => {
             key={highlight.id}
             className="highlights__featured"
           >
-            <div className="highlights__featured-video">
+            <div
+              className="highlights__featured-video interactive"
+              onClick={() => openVideo(highlight)}
+            >
               <img 
                 src={highlight.thumbnail} 
                 alt={highlight.title}
@@ -208,7 +140,8 @@ const Highlights = () => {
             <div
               key={highlight.id}
               ref={(el) => (videosRef.current[index] = el)}
-              className="highlights__video-card"
+              className="highlights__video-card interactive"
+              onClick={() => openVideo(highlight)}
             >
               <div className="highlights__video-thumbnail">
                 <img 
@@ -262,6 +195,26 @@ const Highlights = () => {
 </div>
         </div>
       </div>
+
+      {/* Лайтбокс для видео, загруженных напрямую в Storage */}
+      {lightboxUrl && (
+        <div className="highlights__lightbox" onClick={() => setLightboxUrl(null)}>
+          <button
+            className="highlights__lightbox-close interactive"
+            onClick={() => setLightboxUrl(null)}
+            aria-label="Закрыть"
+          >
+            ✕
+          </button>
+          <video
+            src={lightboxUrl}
+            controls
+            autoPlay
+            playsInline
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </section>
   );
 };

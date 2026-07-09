@@ -3,11 +3,15 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { scrollToPosition } from '../../lib/scroll';
+import { useContent } from '../../content/ContentContext';
 import './about.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
+  const { content } = useContent();
+  const slides = content.aboutSlides;
+
   const containerRef = useRef(null);
   const wrapperRef = useRef(null);
   const sectionsRef = useRef([]);
@@ -93,42 +97,7 @@ useEffect(() => {
   }, containerRef);
   
   return () => ctx.revert();
-}, []);
-
-  const slides = [
-    {
-      id: 'intro',
-      title: 'NIX',
-      subtitle: 'Alexander Levin',
-      description: 'Профессиональный киберспортсмен,\nстример и контент-мейкер.\n"Создаю контент, который вдохновляет."',
-      image: '/images/about/about-main.jpg',
-      align: 'left'
-    },
-    {
-      id: 'pro-career',
-      title: 'PRO CAREER',
-      subtitle: 'Ex-pro Dota 2 player',
-      description: 'HellRaisers | 2016-2021\nУчастник The International\nПризер и победитель множества турниров',
-      image: '/images/about/about-pro.jpg',
-      align: 'right'
-    },
-    {
-      id: 'expertise',
-      title: 'EXPERT',
-      subtitle: 'In MOBA games',
-      description: 'Агрессивный playstyle\nЗнаток carry позиции\nХороший стратег',
-      image: '/images/about/about-expertise.jpg',
-      align: 'left'
-    },
-    {
-      id: 'now',
-      title: 'NOW',
-      subtitle: 'Streamer & Creator',
-      description: 'Forbes 30 до 30\n1M+ community\nЕжедневный контент на Twitch & YouTube',
-      image: '/images/about/about-now.jpg',
-      align: 'right'
-    },
-  ];
+}, [slides.length]);
 
   return (
     <section ref={containerRef} className="about" id="about">

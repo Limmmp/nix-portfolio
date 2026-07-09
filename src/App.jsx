@@ -13,6 +13,7 @@ import Footer from './components/Footer/Footer';
 import Platforms from './components/Platforms/Platforms';
 import Partners from './components/Partners/Partners';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
+import { ContentProvider, useContent } from './content/ContentContext';
 import './styles/global.scss';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,7 +33,19 @@ const shouldSkipIntro = () => {
 };
 
 function App() {
+  return (
+    <ContentProvider>
+      <Site />
+    </ContentProvider>
+  );
+}
+
+function Site() {
   useSmoothScroll();
+
+  // Секции рендерим только когда контент загружен (или отвалился в fallback):
+  // GSAP-пины замеряют высоту при маунте и не должны видеть полупустой DOM
+  const { ready } = useContent();
 
   const [introComplete, setIntroComplete] = useState(shouldSkipIntro);
   const [introSkipped, setIntroSkipped] = useState(introComplete);
@@ -83,13 +96,17 @@ function App() {
         <VideoIntro onComplete={handleIntroComplete} />
       )}
 
-      <main className={`main-content ${introComplete ? 'visible' : ''}`}>
-        <Hero onOpenContact={() => setIsContactOpen(true)} isActive={introComplete} />
-        <About />
-        <Platforms />
-        <Partners onOpenContact={() => setIsContactOpen(true)} />
-        <Highlights />
-        <Footer onOpenContact={() => setIsContactOpen(true)} />
+      <main className={`main-content ${introComplete && ready ? 'visible' : ''}`}>
+        {ready && (
+          <>
+            <Hero onOpenContact={() => setIsContactOpen(true)} isActive={introComplete} />
+            <About />
+            <Platforms />
+            <Partners onOpenContact={() => setIsContactOpen(true)} />
+            <Highlights />
+            <Footer onOpenContact={() => setIsContactOpen(true)} />
+          </>
+        )}
       </main>
 
       <ContactModal

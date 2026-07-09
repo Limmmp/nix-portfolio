@@ -2,38 +2,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useContent } from '../../content/ContentContext';
 import './partners.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const brandsData = [
-  { id: 1, name: 'HAVAL', year: '2024', description: 'Нативная интеграция автомобиля во время стрима. Тест-драйв, обзор функций.' },
-  { id: 2, name: 'YANDEX', year: '2024', description: 'Брендирование канала в стиле Yandex Plus. Интеграция в оверлеи.' },
-  { id: 3, name: 'KITFORT', year: '2023', description: 'Серия видео с использованием техники. Приготовление еды во время стрима.' },
-  { id: 4, name: 'MTS', year: '2024', description: 'Долгосрочное партнёрство. Спонсорство турниров, эксклюзивные тарифы.' },
-  { id: 5, name: 'YOTA', year: '2024', description: 'Посты в Telegram и VK о безлимитном интернете для геймеров.' },
-  { id: 6, name: 'NUW STORE', year: '2024', description: 'Использование образа в рекламной кампании магазина электроники.' },
-  { id: 7, name: 'ТОЧКА БАНК', year: '2023', description: 'Обзор бизнес-карты для стримеров. Интеграция в контент о монетизации.' },
-  { id: 8, name: 'САМОКАТ', year: '2024', description: 'Стримы с доставкой еды. Промокоды для зрителей, спонсорские челленджи.' },
-  { id: 9, name: 'MAJESTIC', year: '2024', description: 'Амбассадорство сервера в GTA 5 RP. Эксклюзивный контент, турниры.' },
-  { id: 10, name: 'GENSHIN', year: '2024', description: 'Стримы по новому обновлению. Ранний доступ, промокоды для зрителей.' },
-  { id: 11, name: 'MLBB', year: '2023', description: 'Организация турнира по Mobile Legends. Призовой фонд, трансляция.' },
-  { id: 12, name: 'PLAYEROK', year: '2026', description: 'Партнерство с игровым маркетплейсом. Промокод на пополнение Steam без комиссии.' },
-  { id: 13, name: 'BETBOOM', year: '2024', description: 'Спонсорство турниров и эксклюзивные бонусы для зрителей.' }
-];
+// Актуальные партнёрства (year = 'now') подсвечиваются градиентом
+// в корпоративных цветах бренда
+const isNow = (brand) => String(brand.year).trim().toLowerCase() === 'now';
 
-const targetAudience = [
-  { label: 'Тематика', value: 'Киберспорт, игры' },
-  { label: 'Аудитория', value: 'Мужчины 18-34' },
-  { label: 'Регионы', value: 'RU / CIS / EU' }
-];
-
-const formats = [
-  'Нативные интеграции', 'Брендирование канала', 'Авторские интеграции',
-  'Посты в соцсетях', 'Права на медиа', 'Амбассадорство'
-];
+const brandNameStyle = (brand) => {
+  if (!isNow(brand) || !brand.colorFrom) return undefined;
+  const to = brand.colorTo || brand.colorFrom;
+  return { backgroundImage: `linear-gradient(120deg, ${brand.colorFrom} 0%, ${to} 100%)` };
+};
 
 const Partners = ({ onOpenContact }) => {
+  const { content } = useContent();
+  const brandsData = content.brands;
+  const targetAudience = content.partnersAudience;
+  const formats = content.partnersFormats;
+
   const containerRef = useRef(null);
   const [selectedBrand, setSelectedBrand] = useState(null);
 
@@ -94,7 +83,10 @@ const Partners = ({ onOpenContact }) => {
 
       {/* Бегущие строки брендов: клик по имени открывает карточку кейса */}
       <div className="partners__marquee-container">
-        {[brandsData.slice(0, 7), brandsData.slice(7)].map((row, rowIndex) => (
+        {[
+          brandsData.slice(0, Math.ceil(brandsData.length / 2)),
+          brandsData.slice(Math.ceil(brandsData.length / 2))
+        ].filter((row) => row.length > 0).map((row, rowIndex) => (
           <div
             key={rowIndex}
             className={`partners__marquee partners__marquee--${rowIndex === 0 ? 'left' : 'right'}`}
@@ -109,8 +101,15 @@ const Partners = ({ onOpenContact }) => {
                   tabIndex={i >= row.length ? -1 : 0}
                   aria-hidden={i >= row.length}
                 >
-                  <span className="partners__marquee-name">{brand.name}</span>
-                  <span className="partners__marquee-year">{brand.year}</span>
+                  <span
+                    className={`partners__marquee-name ${isNow(brand) && brand.colorFrom ? 'partners__marquee-name--now' : ''}`}
+                    style={brandNameStyle(brand)}
+                  >
+                    {brand.name}
+                  </span>
+                  <span className="partners__marquee-year">
+                    {isNow(brand) ? 'NOW' : brand.year}
+                  </span>
                 </button>
               ))}
             </div>
@@ -162,7 +161,9 @@ const Partners = ({ onOpenContact }) => {
             <div className="partners-modal__content">
               <div className="partners-modal__year">
                 <span className="partners-modal__label">Год сотрудничества:</span>
-                <span className="partners-modal__value">{selectedBrand.year}</span>
+                <span className="partners-modal__value">
+                  {isNow(selectedBrand) ? 'Сейчас' : selectedBrand.year}
+                </span>
               </div>
               <div className="partners-modal__description">
                 <p>{selectedBrand.description}</p>

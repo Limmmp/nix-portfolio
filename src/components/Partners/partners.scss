@@ -84,6 +84,20 @@
     color: #000000;
     -webkit-text-stroke-color: #000000;
   }
+
+  // Актуальное партнёрство (year = now): заливка градиентом
+  // в корпоративных цветах бренда вместо контура
+  &--now {
+    -webkit-text-stroke: 0;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    .partners__marquee-item:hover & {
+      color: transparent;
+      -webkit-text-stroke: 0;
+    }
+  }
 }
 
 .partners__marquee-year {
@@ -357,6 +371,10 @@
   .partners__marquee-name {
     font-size: 11vw;
     -webkit-text-stroke-width: 1.5px;
+
+    &--now {
+      -webkit-text-stroke: 0;
+    }
   }
 
   .partners__marquee-year {
