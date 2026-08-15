@@ -85,9 +85,8 @@ const ContactModal = ({ isOpen, onClose }) => {
       return;
     }
 
-    // Уведомление в Telegram (работает, когда в проекте заданы TG-секреты);
-    // ошибки не показываем — заявка уже сохранена
-    supabase.functions.invoke('notify-lead', { body: { record: formData } }).catch(() => {});
+    // Уведомление в Telegram шлёт сама база (триггер на вставку в leads),
+    // поэтому клиенту здесь ничего делать не нужно
 
     setIsSubmitting(false);
     setIsSubmitted(true);
