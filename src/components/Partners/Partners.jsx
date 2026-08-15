@@ -7,9 +7,24 @@ import './partners.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Актуальные партнёрства (year = 'now') подсвечиваются градиентом
-// в корпоративных цветах бренда
-const isNow = (brand) => String(brand.year).trim().toLowerCase() === 'now';
+// Действующие партнёрства подсвечиваются градиентом в корпоративных
+// цветах бренда. Период можно писать по-человечески: «now», «с 2021»,
+// «2026–настоящее время» — распознаётся любой из вариантов.
+const isNow = (brand) => {
+  const y = String(brand.year || '').trim().toLowerCase();
+  return y === 'now'
+    || y.includes('настоящее время')
+    || y.includes('сейчас')
+    || /^с\s*\d{4}/.test(y);
+};
+
+// В ленте у имени стоит компактная подпись: длинный период туда не влезает,
+// поэтому действующие помечаем коротким NOW, а полный текст живёт в карточке
+const marqueeYear = (brand) => {
+  const y = String(brand.year || '').trim();
+  if (isNow(brand)) return y.length <= 9 ? y.toUpperCase() : 'NOW';
+  return y;
+};
 
 const brandNameStyle = (brand) => {
   if (!isNow(brand) || !brand.colorFrom) return undefined;
@@ -112,7 +127,7 @@ const Partners = ({ onOpenContact }) => {
                     {brand.name}
                   </span>
                   <span className="partners__marquee-year">
-                    {isNow(brand) ? 'NOW' : brand.year}
+                    {marqueeYear(brand)}
                   </span>
                 </button>
               ))}
@@ -164,10 +179,8 @@ const Partners = ({ onOpenContact }) => {
             </div>
             <div className="partners-modal__content">
               <div className="partners-modal__year">
-                <span className="partners-modal__label">Год сотрудничества:</span>
-                <span className="partners-modal__value">
-                  {isNow(selectedBrand) ? 'Сейчас' : selectedBrand.year}
-                </span>
+                <span className="partners-modal__label">Период сотрудничества:</span>
+                <span className="partners-modal__value">{selectedBrand.year}</span>
               </div>
               <div className="partners-modal__description">
                 <p>{selectedBrand.description}</p>
