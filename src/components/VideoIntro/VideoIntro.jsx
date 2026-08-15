@@ -68,7 +68,6 @@ const VideoIntro = ({ onComplete }) => {
         onEnded={handleVideoEnd}
       >
         <source src="/video/intro.mp4" type="video/mp4" />
-        <source src="/video/intro.webm" type="video/webm" />
       </video>
 
       <div className="video-intro__overlay">

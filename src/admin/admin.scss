@@ -194,6 +194,13 @@ select.adm-input {
   appearance: auto;
 }
 
+.adm-range {
+  flex: 1;
+  min-width: 120px;
+  accent-color: #FF0000;
+  background: transparent;
+}
+
 .adm-color {
   width: 36px;
   height: 36px;

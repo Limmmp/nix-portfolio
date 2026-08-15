@@ -163,7 +163,7 @@ useEffect(() => {
     <section ref={containerRef} className="hero" id="hero">
       {/* Фоновое изображение */}
       <div ref={bgRef} className="hero__bg">
-        <img src="/images/hero.png" alt="NIX" className="hero__bg-image" />
+        <img src="/images/hero.jpg" alt="NIX" className="hero__bg-image" />
         <div className="hero__overlay" />
       </div>
 
