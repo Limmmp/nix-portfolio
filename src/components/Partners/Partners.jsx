@@ -14,7 +14,11 @@ const isNow = (brand) => String(brand.year).trim().toLowerCase() === 'now';
 const brandNameStyle = (brand) => {
   if (!isNow(brand) || !brand.colorFrom) return undefined;
   const to = brand.colorTo || brand.colorFrom;
-  return { backgroundImage: `linear-gradient(120deg, ${brand.colorFrom} 0%, ${to} 100%)` };
+  return {
+    backgroundImage: `linear-gradient(120deg, ${brand.colorFrom} 0%, ${to} 100%)`,
+    // Цвет свечения на ховере — берём первый цвет бренда
+    '--brand-glow': brand.colorFrom
+  };
 };
 
 const Partners = ({ onOpenContact }) => {
