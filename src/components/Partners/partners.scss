@@ -92,10 +92,17 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    transition: filter 0.35s ease;
 
+    // Ховер: цвета становятся ярче и появляется свечение фирменным цветом
+    // (обычные бренды на ховере заливаются чёрным — у действующих
+    // подсветка своя, чтобы не терять градиент)
     .partners__marquee-item:hover & {
       color: transparent;
       -webkit-text-stroke: 0;
+      filter:
+        saturate(1.35) brightness(1.12)
+        drop-shadow(0 0 clamp(10px, 1.2vw, 22px) var(--brand-glow, rgba(0, 0, 0, 0.35)));
     }
   }
 }
