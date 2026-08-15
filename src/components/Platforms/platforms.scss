@@ -13,6 +13,9 @@
   flex-direction: column;
   border-bottom: 1px solid $line-dark;
   padding: 0 clamp(20px, 3vw, 56px);
+  // Не даём списку растягиваться на всю ширину 4K — центрируем в полосе
+  max-width: 1728px;
+  margin: 0 auto;
 }
 
 .platform-row {

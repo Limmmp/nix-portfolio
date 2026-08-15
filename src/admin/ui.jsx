@@ -1,6 +1,7 @@
 // src/admin/ui.jsx — мелкие строительные блоки форм админки
 import React, { useRef, useState } from 'react';
 import { uploadMedia } from '../lib/supabase';
+import { compressForUpload, formatSize } from './compress';
 
 export function Field({ label, children }) {
   return (
@@ -67,10 +68,21 @@ export function UploadButton({ folder, accept, onUploaded, children = 'Загр�
     e.target.value = '';
     if (!file) return;
     setBusy(true);
-    setProgressNote(file.size > 8 * 1024 * 1024 ? 'Файл большой, может занять минуту…' : '');
     try {
-      const url = await uploadMedia(file, folder);
-      onUploaded(url, file);
+      // Сжимаем до загрузки, иначе в прод уезжают исходники на десятки МБ
+      const isBigVideo = file.type.startsWith('video/') && file.size > 12 * 1024 * 1024;
+      setProgressNote(isBigVideo ? 'Сжимаю видео (идёт в реальном времени)…' : 'Сжимаю…');
+      const ready = await compressForUpload(file, folder, (p) => {
+        if (isBigVideo) setProgressNote(`Сжимаю видео… ${Math.round(p * 100)}%`);
+      });
+
+      const saved = file.size - ready.size;
+      setProgressNote(saved > 0
+        ? `Загружаю ${formatSize(ready.size)} (было ${formatSize(file.size)})…`
+        : `Загружаю ${formatSize(ready.size)}…`);
+
+      const url = await uploadMedia(ready, folder);
+      onUploaded(url, ready);
     } catch (err) {
       console.error(err);
       alert('Не удалось загрузить файл: ' + (err.message || err));
