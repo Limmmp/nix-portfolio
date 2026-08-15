@@ -10,6 +10,11 @@
 -- админов. В public.site_settings его класть нельзя: те настройки
 -- читаются анонимно (это контент сайта).
 --
+-- Получателей может быть несколько: value.recipients = [{chat_id, name,
+-- enabled}]. Каждому шлётся отдельный запрос, поэтому недоступный адресат
+-- (человек не нажал боту /start) не мешает остальным получить заявку.
+-- Старый одиночный value.chat_id продолжает работать как запасной вариант.
+--
 -- Настраивается из админки: Настройки → Уведомления в Telegram.
 -- ============================================================
 
@@ -32,6 +37,24 @@ returns text language sql immutable as $$
   select replace(replace(replace(coalesce(t, ''), '&', '&amp;'), '<', '&lt;'), '>', '&gt;');
 $$;
 
+-- Список получателей: новый формат recipients, с откатом на старый chat_id
+create or replace function public.tg_recipients(cfg jsonb)
+returns text[]
+language sql
+stable
+as $$
+  select coalesce(
+    nullif(
+      (select array_agg(r->>'chat_id')
+       from jsonb_array_elements(coalesce(cfg->'recipients', '[]'::jsonb)) r
+       where coalesce((r->>'enabled')::boolean, true)
+         and coalesce(r->>'chat_id', '') <> ''),
+      array[]::text[]
+    ),
+    case when coalesce(cfg->>'chat_id', '') <> '' then array[cfg->>'chat_id'] else array[]::text[] end
+  );
+$$;
+
 create or replace function public.notify_lead_telegram()
 returns trigger
 language plpgsql
@@ -41,6 +64,7 @@ as $$
 declare
   cfg jsonb;
   token text;
+  chats text[];
   chat text;
   msg text;
   type_label text;
@@ -51,8 +75,8 @@ begin
   end if;
 
   token := cfg->>'bot_token';
-  chat := cfg->>'chat_id';
-  if coalesce(token, '') = '' or coalesce(chat, '') = '' then
+  chats := public.tg_recipients(cfg);
+  if coalesce(token, '') = '' or coalesce(array_length(chats, 1), 0) = 0 then
     return new;
   end if;
 
@@ -72,11 +96,14 @@ begin
       || '<b>Тип:</b> ' || public.tg_escape(type_label) || E'\n\n'
       || public.tg_escape(new.message);
 
-  perform net.http_post(
-    url := 'https://api.telegram.org/bot' || token || '/sendMessage',
-    body := jsonb_build_object('chat_id', chat, 'text', msg, 'parse_mode', 'HTML'),
-    headers := '{"Content-Type": "application/json"}'::jsonb
-  );
+  -- Каждому получателю отдельно: недоступный адресат не мешает остальным
+  foreach chat in array chats loop
+    perform net.http_post(
+      url := 'https://api.telegram.org/bot' || token || '/sendMessage',
+      body := jsonb_build_object('chat_id', chat, 'text', msg, 'parse_mode', 'HTML'),
+      headers := '{"Content-Type": "application/json"}'::jsonb
+    );
+  end loop;
 
   return new;
 exception when others then
@@ -90,8 +117,9 @@ create trigger leads_notify_telegram
 after insert on public.leads
 for each row execute function public.notify_lead_telegram();
 
--- Кнопка «Отправить тест» в админке: шлёт сообщение, не создавая заявку
-create or replace function public.tg_send_test()
+-- Кнопка теста в админке: шлёт сообщение, не создавая заявку.
+-- target пустой — отправить всем получателям, иначе только указанному.
+create or replace function public.tg_send_test(target text default null)
 returns jsonb
 language plpgsql
 security definer
@@ -100,6 +128,7 @@ as $$
 declare
   cfg jsonb;
   token text;
+  chats text[];
   chat text;
 begin
   if not public.is_admin() then
@@ -108,28 +137,33 @@ begin
 
   select value into cfg from public.integrations where key = 'telegram';
   token := cfg->>'bot_token';
-  chat := cfg->>'chat_id';
+  chats := case when coalesce(target, '') <> '' then array[target] else public.tg_recipients(cfg) end;
 
-  if coalesce(token, '') = '' or coalesce(chat, '') = '' then
-    return jsonb_build_object('ok', false, 'reason', 'не заполнены токен или chat_id');
+  if coalesce(token, '') = '' then
+    return jsonb_build_object('ok', false, 'reason', 'не заполнен токен бота');
+  end if;
+  if coalesce(array_length(chats, 1), 0) = 0 then
+    return jsonb_build_object('ok', false, 'reason', 'не добавлен ни один получатель');
   end if;
 
-  perform net.http_post(
-    url := 'https://api.telegram.org/bot' || token || '/sendMessage',
-    body := jsonb_build_object(
-      'chat_id', chat,
-      'text', '✅ <b>Проверка связи</b>' || E'\n' || 'Уведомления о заявках с сайта NIX подключены.',
-      'parse_mode', 'HTML'
-    ),
-    headers := '{"Content-Type": "application/json"}'::jsonb
-  );
+  foreach chat in array chats loop
+    perform net.http_post(
+      url := 'https://api.telegram.org/bot' || token || '/sendMessage',
+      body := jsonb_build_object(
+        'chat_id', chat,
+        'text', '✅ <b>Проверка связи</b>' || E'\n' || 'Уведомления о заявках с сайта NIX подключены.',
+        'parse_mode', 'HTML'
+      ),
+      headers := '{"Content-Type": "application/json"}'::jsonb
+    );
+  end loop;
 
-  return jsonb_build_object('ok', true);
+  return jsonb_build_object('ok', true, 'sent_to', array_length(chats, 1));
 end;
 $$;
 
-revoke all on function public.tg_send_test() from public, anon;
-grant execute on function public.tg_send_test() to authenticated;
+revoke all on function public.tg_send_test(text) from public, anon;
+grant execute on function public.tg_send_test(text) to authenticated;
 
 -- Проверка доставки: net._http_response хранит ответы Telegram
 -- select status_code, content::jsonb->>'ok' from net._http_response order by created desc limit 5;
