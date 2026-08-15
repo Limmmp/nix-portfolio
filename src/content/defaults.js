@@ -17,22 +17,22 @@ export const DEFAULT_CONTENT = {
     {
       id: 'intro', title: 'NIX', subtitle: 'Alexander Levin',
       description: 'Профессиональный киберспортсмен,\nстример и контент-мейкер.\n"Создаю контент, который вдохновляет."',
-      image: '/images/about/about-main.jpg', align: 'left'
+      image: '/images/about/about-main.jpg', align: 'left', textScale: 1, photoScale: 1
     },
     {
       id: 'pro-career', title: 'PRO CAREER', subtitle: 'Ex-pro Dota 2 player',
       description: 'HellRaisers | 2016-2021\nУчастник The International\nПризер и победитель множества турниров',
-      image: '/images/about/about-pro.jpg', align: 'right'
+      image: '/images/about/about-pro.jpg', align: 'right', textScale: 1, photoScale: 1
     },
     {
       id: 'expertise', title: 'EXPERT', subtitle: 'In MOBA games',
       description: 'Агрессивный playstyle\nЗнаток carry позиции\nХороший стратег',
-      image: '/images/about/about-expertise.jpg', align: 'left'
+      image: '/images/about/about-expertise.jpg', align: 'left', textScale: 1, photoScale: 1
     },
     {
       id: 'now', title: 'NOW', subtitle: 'Streamer & Creator',
       description: 'Forbes 30 до 30\n1M+ community\nЕжедневный контент на Twitch & YouTube',
-      image: '/images/about/about-now.jpg', align: 'right'
+      image: '/images/about/about-now.jpg', align: 'right', textScale: 1, photoScale: 1
     }
   ],
   platforms: [

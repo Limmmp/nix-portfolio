@@ -61,12 +61,17 @@
     // залезть под шапку/индикатор сверху и под точки навигации снизу
     padding: 13vh 0 9vh;
 
+    // Масштабы приходят из админки (инлайном на слайде), 1 = базовый размер
+    --text-scale: 1;
+    --photo-scale: 1;
+    --photo-w: calc(min(52vw, 900px) * var(--photo-scale));
+
     // ← ФОТО
     &-image {
       position: absolute;
       // Фото уже, чем раньше: рядом должна помещаться колонка текста,
       // иначе текст ложится поверх фотографии
-      width: min(52vw, 900px);
+      width: var(--photo-w);
       height: 75vh;
       // Центрируем по вертикали независимо от полей слайда
       top: 50%;
@@ -120,7 +125,16 @@
       // Паддинг и ширина капятся: иначе на больших экранах 5vw-паддинг
       // разрастался и сжимал текст-бокс так, что заголовок (EXPERT) обрезался
       padding: 0 clamp(16px, 2vw, 32px);
-      max-width: min(34vw, 470px);
+      // Колонка растёт вместе с кеглем, но никогда не залезает на фото:
+      // последний аргумент — это буквально «сколько места осталось рядом»
+      max-width: max(
+        260px,
+        min(
+          calc(34vw * var(--text-scale)),
+          calc(470px * var(--text-scale)),
+          calc(100vw - var(--photo-w) - 190px)
+        )
+      );
     }
 
     &-number {
@@ -137,7 +151,7 @@
       font-family: $font-display;
       // Размеры уменьшены: со списками достижений прежний кегль
       // раздувал блок так, что он уезжал под шапку
-      font-size: min(3.6vw, 56px);
+      font-size: calc(min(3.6vw, 56px) * var(--text-scale));
       font-weight: 900;
       color: #ffffff;
       letter-spacing: 0.18em;
@@ -148,7 +162,7 @@
 
     &-subtitle {
       font-family: $font-display;
-      font-size: min(1.7vw, 26px);
+      font-size: calc(min(1.7vw, 26px) * var(--text-scale));
       font-weight: 700;
       color: #ffffff;
       letter-spacing: 0.08em;
@@ -157,7 +171,7 @@
     }
 
     &-description {
-      font-size: min(1.15vw, 17px);
+      font-size: calc(min(1.15vw, 17px) * var(--text-scale));
       color: #999999;
       line-height: 1.55;
       margin-bottom: 3.7vh;

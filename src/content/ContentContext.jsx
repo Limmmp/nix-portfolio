@@ -39,7 +39,8 @@ async function fetchContent() {
     aboutSlides: aboutSlides.data.length
       ? aboutSlides.data.map((r) => ({
           id: r.id, title: r.title, subtitle: r.subtitle,
-          description: r.description, image: r.image_url, align: r.align
+          description: r.description, image: r.image_url, align: r.align,
+          textScale: Number(r.text_scale ?? 1), photoScale: Number(r.photo_scale ?? 1)
         }))
       : DEFAULT_CONTENT.aboutSlides,
     platforms: platforms.data.length

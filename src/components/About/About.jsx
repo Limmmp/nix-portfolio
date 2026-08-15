@@ -114,6 +114,11 @@ useEffect(() => {
             key={slide.id}
             ref={(el) => (sectionsRef.current[index] = el)}
             className={`about__slide about__slide--${slide.align}`}
+            // Масштабы задаются из админки на каждый слайд отдельно
+            style={{
+              '--text-scale': slide.textScale ?? 1,
+              '--photo-scale': slide.photoScale ?? 1
+            }}
           >
             {/* Фото (60-70% экрана) */}
               <div className="about__slide-image">
