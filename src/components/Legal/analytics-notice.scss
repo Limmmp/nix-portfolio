@@ -1,0 +1,60 @@
+@use '../../styles/variables' as *;
+
+.analytics-notice {
+  position: fixed;
+  left: clamp(16px, 3vw, 32px);
+  bottom: clamp(16px, 3vh, 28px);
+  z-index: 900; // ниже модалок (10000) и шапки (9000)
+  max-width: min(92vw, 420px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 20px;
+  background: rgba(12, 12, 12, 0.96);
+  border: 1px solid $line-dark;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: noticeIn 0.4s ease;
+
+  &__text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #999999;
+
+    a {
+      color: $color-white;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+
+      &:hover { color: $color-accent; }
+    }
+  }
+
+  &__btn {
+    align-self: flex-start;
+    padding: 8px 20px;
+    background: $color-white;
+    color: $color-black;
+    border: 1px solid $color-white;
+    font-family: $font-primary;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all $transition-medium;
+
+    &:hover {
+      background: transparent;
+      color: $color-white;
+    }
+  }
+}
+
+@keyframes noticeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .analytics-notice { animation: none; }
+}

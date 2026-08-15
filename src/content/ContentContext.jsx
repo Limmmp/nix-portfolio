@@ -55,6 +55,7 @@ async function fetchContent() {
           colorFrom: r.color_from, colorTo: r.color_to
         }))
       : DEFAULT_CONTENT.brands,
+    legal: s.legal ?? DEFAULT_CONTENT.legal,
     partnersAudience: s.partners_audience ?? DEFAULT_CONTENT.partnersAudience,
     partnersFormats: s.partners_formats ?? DEFAULT_CONTENT.partnersFormats,
     highlights: videos.data.length

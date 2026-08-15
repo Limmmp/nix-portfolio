@@ -332,3 +332,37 @@
     }
   }
 }
+// Согласие на обработку персональных данных (152-ФЗ)
+.contact-modal__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #999999;
+  cursor: pointer;
+
+  input[type='checkbox'] {
+    margin-top: 2px;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    accent-color: #FF0000;
+    cursor: pointer;
+  }
+
+  a {
+    color: #ffffff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover { color: #FF0000; }
+  }
+}
+
+// Кнопка неактивна, пока не отмечено согласие
+.contact-modal__submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

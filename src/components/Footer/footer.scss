@@ -225,3 +225,43 @@
     }
   }
 }
+
+// === ЮРИДИЧЕСКИЙ БЛОК ===
+.footer__legal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer__legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+}
+
+.footer__legal-link {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #888888;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    color: #ffffff;
+    border-bottom-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.footer__requisites {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #555555;
+  max-width: 640px;
+}
