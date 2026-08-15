@@ -29,6 +29,28 @@ export default function SettingsPanel() {
       });
   }, []);
 
+  // Юридические реквизиты
+  const [legal, setLegal] = useState({
+    operator_name: '', operator_type: '', inn: '', ogrn: '',
+    address: '', email: '', policy_version: ''
+  });
+  const [legalLoaded, setLegalLoaded] = useState(false);
+
+  useEffect(() => {
+    supabase.from('site_settings').select('value').eq('key', 'legal').maybeSingle()
+      .then(({ data }) => {
+        if (data?.value) setLegal((p) => ({ ...p, ...data.value }));
+        setLegalLoaded(true);
+      });
+  }, []);
+
+  const saveLegal = async () => {
+    const { error } = await supabase.from('site_settings').upsert({
+      key: 'legal', value: legal, updated_at: new Date().toISOString()
+    });
+    if (error) throw error;
+  };
+
   const setRecipient = (i, patch) =>
     setTg((p) => ({ ...p, recipients: p.recipients.map((r, idx) => idx === i ? { ...r, ...patch } : r) }));
 
@@ -224,6 +246,56 @@ export default function SettingsPanel() {
             </button>
           </div>
           {tgStatus && <p className="adm-hint" style={{ marginTop: 10 }}>{tgStatus}</p>}
+        </div>
+      )}
+
+      <h3 className="adm-panel__subtitle">Юридические данные</h3>
+      <p className="adm-hint">
+        Подставляются в политику конфиденциальности (/privacy) и в подвал сайта.
+        Пока поля пустые, в политике на их месте видно красное «— не указано —».
+      </p>
+
+      {!legalLoaded ? <p className="adm-loading">Загрузка…</p> : (
+        <div style={{ maxWidth: 520 }}>
+          <div className="adm-list-row">
+            <Field label="Форма (ИП / ООО / пусто для физлица)">
+              <Input
+                value={legal.operator_type}
+                placeholder="ИП"
+                style={{ width: 120 }}
+                onChange={(e) => setLegal((p) => ({ ...p, operator_type: e.target.value }))}
+              />
+            </Field>
+            <Field label="Наименование / ФИО">
+              <Input
+                value={legal.operator_name}
+                placeholder="Левин Александр ..."
+                onChange={(e) => setLegal((p) => ({ ...p, operator_name: e.target.value }))}
+              />
+            </Field>
+          </div>
+          <div className="adm-list-row">
+            <Field label="ИНН">
+              <Input value={legal.inn} onChange={(e) => setLegal((p) => ({ ...p, inn: e.target.value }))} />
+            </Field>
+            <Field label="ОГРН / ОГРНИП">
+              <Input value={legal.ogrn} onChange={(e) => setLegal((p) => ({ ...p, ogrn: e.target.value }))} />
+            </Field>
+          </div>
+          <Field label="Адрес для корреспонденции">
+            <Input value={legal.address} onChange={(e) => setLegal((p) => ({ ...p, address: e.target.value }))} />
+          </Field>
+          <Field label="Email для запросов по персональным данным">
+            <Input value={legal.email} onChange={(e) => setLegal((p) => ({ ...p, email: e.target.value }))} />
+          </Field>
+          <Field label="Дата редакции политики">
+            <Input
+              value={legal.policy_version}
+              placeholder="2026-08-15"
+              onChange={(e) => setLegal((p) => ({ ...p, policy_version: e.target.value }))}
+            />
+          </Field>
+          <SaveButton onSave={saveLegal} />
         </div>
       )}
 

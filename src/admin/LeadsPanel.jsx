@@ -56,6 +56,9 @@ export default function LeadsPanel() {
           </div>
           <div className="adm-lead__meta">
             <a href={`mailto:${lead.email}`}>{lead.email}</a> · {TYPE_LABELS[lead.type] || lead.type}
+            {lead.consent_at && (
+              <> · согласие на обработку ПД получено{lead.policy_version ? ` (ред. ${lead.policy_version})` : ''}</>
+            )}
           </div>
           <p className="adm-lead__message">{lead.message}</p>
           <div className="adm-lead__actions">

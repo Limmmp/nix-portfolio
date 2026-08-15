@@ -4,6 +4,10 @@ import gsap from 'gsap';
 import { supabase } from '../../lib/supabase';
 import './contact-modal.scss';
 
+// Версия политики, действующая на момент сборки — сохраняем вместе с заявкой,
+// чтобы было видно, с какой редакцией согласился человек
+const POLICY_VERSION = '2026-08-15';
+
 const ContactModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -13,6 +17,7 @@ const ContactModal = ({ isOpen, onClose }) => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consent, setConsent] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const modalRef = useRef(null);
 
@@ -76,7 +81,10 @@ const ContactModal = ({ isOpen, onClose }) => {
       company: formData.company,
       email: formData.email,
       type: formData.type,
-      message: formData.message
+      message: formData.message,
+      // Фиксируем факт согласия: по 152-ФЗ его нужно уметь подтвердить
+      consent_at: new Date().toISOString(),
+      policy_version: POLICY_VERSION
     });
 
     if (error) {
@@ -91,6 +99,7 @@ const ContactModal = ({ isOpen, onClose }) => {
     setIsSubmitting(false);
     setIsSubmitted(true);
     setFormData({ name: '', company: '', email: '', type: 'partnership', message: '' });
+    setConsent(false);
 
     setTimeout(() => {
       onClose();
@@ -198,10 +207,26 @@ const ContactModal = ({ isOpen, onClose }) => {
               />
             </div>
 
+            <label className="contact-modal__consent">
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+                required
+                className="interactive"
+              />
+              <span>
+                Я согласен на обработку персональных данных и принимаю{' '}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="interactive">
+                  политику конфиденциальности
+                </a>
+              </span>
+            </label>
+
             <button
               type="submit"
               className="contact-modal__submit interactive"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !consent}
             >
               {isSubmitting ? (
                 <span className="loading">Отправка...</span>

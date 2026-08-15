@@ -1,6 +1,7 @@
 // src/components/Footer/Footer.jsx
 import React from 'react';
 import { scrollToPosition } from '../../lib/scroll';
+import { useContent } from '../../content/ContentContext';
 import './footer.scss';
 
 const socials = [
@@ -11,6 +12,15 @@ const socials = [
 ];
 
 const Footer = ({ onOpenContact }) => {
+  const { content } = useContent();
+  const legal = content.legal || {};
+  // Реквизиты оператора: показываем только заполненные
+  const requisites = [
+    [legal.operator_type, legal.operator_name].filter(Boolean).join(' '),
+    legal.inn && `ИНН ${legal.inn}`,
+    legal.ogrn && `ОГРН${legal.operator_type === 'ИП' ? 'ИП' : ''} ${legal.ogrn}`
+  ].filter(Boolean);
+
   return (
     <footer className="footer">
       <div className="container">
@@ -49,6 +59,24 @@ const Footer = ({ onOpenContact }) => {
           >
             НАВЕРХ ↑
           </button>
+        </div>
+
+        {/* Юридический блок: политика, реквизиты оператора, контакт */}
+        <div className="footer__legal">
+          <nav className="footer__legal-links">
+            <a href="/privacy" className="footer__legal-link interactive">
+              Политика конфиденциальности
+            </a>
+            <a href={`mailto:${legal.email || 'nixoffers@gmail.com'}`} className="footer__legal-link interactive">
+              {legal.email || 'nixoffers@gmail.com'}
+            </a>
+          </nav>
+          {requisites.length > 0 && (
+            <p className="footer__requisites">{requisites.join(' · ')}</p>
+          )}
+          <p className="footer__requisites">
+            Сайт носит информационный характер и не является публичной офертой.
+          </p>
         </div>
 
         <p className="footer__copy">

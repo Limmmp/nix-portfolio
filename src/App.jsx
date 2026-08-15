@@ -12,6 +12,7 @@ import ContactModal from './components/ContactModal/ContactModal';
 import Footer from './components/Footer/Footer';
 import Platforms from './components/Platforms/Platforms';
 import Partners from './components/Partners/Partners';
+import AnalyticsNotice from './components/Legal/AnalyticsNotice';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { ContentProvider, useContent } from './content/ContentContext';
 import { supabase } from './lib/supabase';
@@ -128,6 +129,9 @@ function Site() {
         isOpen={isContactOpen}
         onClose={() => setIsContactOpen(false)}
       />
+
+      {/* Показываем только после интро, чтобы не перебивать первый экран */}
+      {introComplete && ready && <AnalyticsNotice />}
     </div>
   );
 }

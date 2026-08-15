@@ -1,0 +1,82 @@
+@use '../../styles/variables' as *;
+
+.legal {
+  min-height: 100vh;
+  background: $color-black;
+  color: #bbbbbb;
+  // Юридическая страница — обычный курсор и обычная прокрутка
+  cursor: auto;
+  padding: clamp(40px, 8vh, 90px) clamp(20px, 5vw, 40px) 120px;
+
+  &__inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  &__back {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: $color-light-gray;
+    text-decoration: none;
+    margin-bottom: clamp(24px, 5vh, 48px);
+    transition: color $transition-medium;
+
+    &:hover { color: $color-white; }
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp(24px, 3.2vw, 40px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: $color-white;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+  }
+
+  &__meta {
+    font-size: 13px;
+    color: #666666;
+    margin-bottom: clamp(28px, 5vh, 48px);
+  }
+
+  // Незаполненный реквизит должен бросаться в глаза
+  &__todo {
+    color: #ff4444;
+    border-bottom: 1px dashed rgba(255, 68, 68, 0.5);
+  }
+
+  h2 {
+    font-family: $font-display;
+    font-size: clamp(16px, 1.5vw, 20px);
+    font-weight: 700;
+    color: $color-white;
+    letter-spacing: 0.04em;
+    margin: clamp(28px, 4.5vh, 44px) 0 12px;
+  }
+
+  p, li {
+    font-size: clamp(14px, 1.05vw, 16px);
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+
+  ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+
+    li { margin-bottom: 6px; }
+  }
+
+  b { color: #e5e5e5; }
+
+  a {
+    color: $color-white;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover { color: $color-accent; }
+  }
+}

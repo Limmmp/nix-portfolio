@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { Analytics } from '@vercel/analytics/react'
 import App from './App.jsx'
 import NotFound from './components/NotFound/NotFound.jsx'
+import PrivacyPolicy from './components/Legal/PrivacyPolicy.jsx'
 import './styles/global.scss'
 
 // Админка живёт на /admin и грузится лениво — в основной бандл сайта не попадает
@@ -23,6 +24,7 @@ function Root() {
     )
   }
   if (isHomeRoute) return <App />
+  if (path === '/privacy' || path === '/privacy/') return <PrivacyPolicy />
   return <NotFound />
 }
 

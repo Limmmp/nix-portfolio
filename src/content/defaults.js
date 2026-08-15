@@ -7,6 +7,11 @@ export const DEFAULT_CONTENT = {
   hero: {
     subtitle: 'АЛЕКСАНДР ЛЕВИН • DOTA 2 STREAMER • CONTENT CREATOR'
   },
+  // Реквизиты оператора персональных данных (заполняются в админке)
+  legal: {
+    operator_name: '', operator_type: '', inn: '', ogrn: '',
+    address: '', email: 'nixoffers@gmail.com', policy_version: ''
+  },
   heroStats: [
     { value: '1.5M+', label: 'FOLLOWERS', sublabel: 'ALL PLATFORMS' },
     { value: '100M+', label: 'VIEWS', sublabel: 'PER YEAR' },
