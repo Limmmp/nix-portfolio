@@ -4,6 +4,26 @@ import { supabase, uploadMedia } from '../lib/supabase';
 import { replaceTable, moveItem, youtubeId, captureVideoFrame, backupBefore } from './lib';
 import { Field, Input, TextArea, Select, RowTools, SaveButton, UploadButton, Thumb } from './ui';
 
+// Тайминги вводим по-человечески (45:22 или 1:11:58), храним в секундах
+const toSeconds = (str) => {
+  const s = String(str || '').trim();
+  if (!s) return null;
+  const parts = s.split(':').map((p) => parseInt(p, 10));
+  if (parts.some(Number.isNaN)) return null;
+  return parts.reduce((acc, p) => acc * 60 + p, 0);
+};
+
+const toTime = (sec) => {
+  if (sec === null || sec === undefined || sec === '') return '';
+  const n = Number(sec);
+  if (Number.isNaN(n)) return '';
+  const h = Math.floor(n / 3600);
+  const m = Math.floor((n % 3600) / 60);
+  const s = n % 60;
+  const pad = (x) => String(x).padStart(2, '0');
+  return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+};
+
 export default function HighlightsEditor() {
   const [videos, setVideos] = useState([]);
   const [videoIds, setVideoIds] = useState([]);
@@ -20,7 +40,8 @@ export default function HighlightsEditor() {
       ]);
       const vRows = (v.data || []).map((r) => ({
         _id: r.id, title: r.title, views: r.views, platform: r.platform,
-        video_url: r.video_url, thumb_url: r.thumb_url, featured: r.featured
+        video_url: r.video_url, thumb_url: r.thumb_url, featured: r.featured,
+        start_sec: r.start_sec, end_sec: r.end_sec
       }));
       const aRows = (a.data || []).map((r) => ({
         _id: r.id, icon_url: r.icon_url, title: r.title, subtitle: r.subtitle,
@@ -76,7 +97,8 @@ export default function HighlightsEditor() {
     await backupBefore('Highlights');
     await replaceTable('highlight_videos', videos, videoIds, (v) => ({
       title: v.title, views: v.views, platform: v.platform,
-      video_url: v.video_url, thumb_url: v.thumb_url, featured: !!v.featured
+      video_url: v.video_url, thumb_url: v.thumb_url, featured: !!v.featured,
+      start_sec: v.start_sec ?? null, end_sec: v.end_sec ?? null
     }));
     setVideoIds(videos.filter((v) => v._id).map((v) => v._id));
     await replaceTable('awards', awards, awardIds, (a) => ({
@@ -133,6 +155,28 @@ export default function HighlightsEditor() {
               <Field label="Ссылка на видео">
                 <Input value={v.video_url} placeholder="https://youtube.com/watch?v=…" onChange={(e) => updateVideo(i, 'video_url', e.target.value)} />
               </Field>
+              <div className="adm-list-row adm-list-row--tight">
+                <Field label="Начало фрагмента">
+                  <Input
+                    value={toTime(v.start_sec)}
+                    placeholder="45:22"
+                    style={{ width: 100 }}
+                    onChange={(e) => updateVideo(i, 'start_sec', toSeconds(e.target.value))}
+                  />
+                </Field>
+                <Field label="Конец фрагмента">
+                  <Input
+                    value={toTime(v.end_sec)}
+                    placeholder="46:02"
+                    style={{ width: 100 }}
+                    onChange={(e) => updateVideo(i, 'end_sec', toSeconds(e.target.value))}
+                  />
+                </Field>
+              </div>
+              <p className="adm-hint" style={{ marginBottom: 10 }}>
+                Для ссылки на YouTube ролик откроется сразу на этом фрагменте.
+                Оставьте пусто, чтобы играть с начала.
+              </p>
               <div className="adm-inline">
                 <UploadButton folder="videos" accept="video/*" onUploaded={(url) => updateVideo(i, 'video_url', url)}>
                   …или загрузить файл

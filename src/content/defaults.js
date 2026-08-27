@@ -115,12 +115,13 @@ export const DEFAULT_CONTENT = {
     'Посты в соцсетях', 'Права на медиа', 'Амбассадорство'
   ],
   highlights: [
-    { id: 1, title: 'The International 2024 Moment', views: '2.5M', platform: 'Twitch', thumbnail: '/images/highlights/highlight-1.jpg', videoUrl: '', featured: true },
-    { id: 2, title: 'Epic Comeback Game', views: '1.8M', platform: 'YouTube', thumbnail: '/images/highlights/highlight-2.jpg', videoUrl: '' },
-    { id: 3, title: 'Funny Rage Moment', views: '900K', platform: 'TikTok', thumbnail: '/images/highlights/highlight-3.jpg', videoUrl: '' },
-    { id: 4, title: 'Best Plays Compilation', views: '750K', platform: 'YouTube', thumbnail: '/images/highlights/highlight-4.jpg', videoUrl: '' },
-    { id: 5, title: 'Stream Highlights #47', views: '620K', platform: 'Twitch', thumbnail: '/images/highlights/highlight-5.jpg', videoUrl: '' },
-    { id: 6, title: 'Insane Outplay', views: '580K', platform: 'TikTok', thumbnail: '/images/highlights/highlight-6.jpg', videoUrl: '' }
+    { id: 1, title: 'Саске vs Наруто, Сатаник vs Киритыч', views: '', platform: 'YouTube', thumbnail: 'https://i.ytimg.com/vi/0HDSgEdY4no/maxresdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=0HDSgEdY4no', featured: true, startSec: 2722, endSec: 2762 },
+    { id: 2, title: 'Nix 2025 · 1:11:58', views: '', platform: 'YouTube', thumbnail: 'https://i.ytimg.com/vi/zT1F2A8QSCc/maxresdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=zT1F2A8QSCc', startSec: 4318, endSec: 4351 },
+    { id: 3, title: 'Nix 2025 · 26:59', views: '', platform: 'YouTube', thumbnail: 'https://i.ytimg.com/vi/zT1F2A8QSCc/maxresdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=zT1F2A8QSCc', startSec: 1619, endSec: 1655 },
+    { id: 4, title: 'Nix 2024 · 4:31', views: '', platform: 'YouTube', thumbnail: 'https://i.ytimg.com/vi/uSCjMo18FN4/maxresdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=uSCjMo18FN4', startSec: 271, endSec: 313 },
+    { id: 5, title: 'Nix 2023 · 28:36', views: '', platform: 'YouTube', thumbnail: 'https://i.ytimg.com/vi/DM0hfX87ybA/maxresdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=DM0hfX87ybA', startSec: 1716, endSec: 1762 },
+    { id: 6, title: 'Nix 2024 · 55:16', views: '', platform: 'YouTube', thumbnail: 'https://i.ytimg.com/vi/uSCjMo18FN4/maxresdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=uSCjMo18FN4', startSec: 3316, endSec: 3339 },
+    { id: 7, title: 'Nix 2023 · 19:53', views: '', platform: 'YouTube', thumbnail: 'https://i.ytimg.com/vi/DM0hfX87ybA/maxresdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=DM0hfX87ybA', startSec: 1193, endSec: 1236 }
   ],
   awards: [
     { id: 1, icon: '/images/icons/streamers.jpg', title: 'Streamers Awards 2025', subtitle: 'Best MOBA Streamer', description: 'Nominee in international category', year: '2025' },
