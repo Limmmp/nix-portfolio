@@ -250,6 +250,15 @@
       border: 1px solid $line-dark;
       background: #000;
     }
+
+    // YouTube-фрагмент: та же рамка, но пропорции 16:9
+    &-frame {
+      width: min(90vw, 1200px);
+      aspect-ratio: 16 / 9;
+      max-height: 85vh;
+      border: 1px solid $line-dark;
+      background: #000;
+    }
   }
 
   &__lightbox-close {

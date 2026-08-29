@@ -91,19 +91,19 @@ export const DEFAULT_CONTENT = {
     }
   ],
   brands: [
-    { id: 1, name: 'HAVAL', year: '2024', description: 'Нативная интеграция автомобиля во время стрима. Тест-драйв, обзор функций.' },
-    { id: 2, name: 'YANDEX', year: '2024', description: 'Брендирование канала в стиле Yandex Plus. Интеграция в оверлеи.' },
-    { id: 3, name: 'KITFORT', year: '2023', description: 'Серия видео с использованием техники. Приготовление еды во время стрима.' },
-    { id: 4, name: 'MTS', year: '2024', description: 'Долгосрочное партнёрство. Спонсорство турниров, эксклюзивные тарифы.' },
-    { id: 5, name: 'YOTA', year: '2024', description: 'Посты в Telegram и VK о безлимитном интернете для геймеров.' },
-    { id: 6, name: 'NUW STORE', year: '2024', description: 'Использование образа в рекламной кампании магазина электроники.' },
-    { id: 7, name: 'ТОЧКА БАНК', year: '2023', description: 'Обзор бизнес-карты для стримеров. Интеграция в контент о монетизации.' },
-    { id: 8, name: 'САМОКАТ', year: '2024', description: 'Стримы с доставкой еды. Промокоды для зрителей, спонсорские челленджи.' },
-    { id: 9, name: 'MAJESTIC', year: '2024', description: 'Амбассадорство сервера в GTA 5 RP. Эксклюзивный контент, турниры.' },
-    { id: 10, name: 'GENSHIN', year: '2024', description: 'Стримы по новому обновлению. Ранний доступ, промокоды для зрителей.' },
-    { id: 11, name: 'MLBB', year: '2023', description: 'Организация турнира по Mobile Legends. Призовой фонд, трансляция.' },
-    { id: 12, name: 'PLAYEROK', year: '2026', description: 'Партнерство с игровым маркетплейсом. Промокод на пополнение Steam без комиссии.' },
-    { id: 13, name: 'BETBOOM', year: '2024', description: 'Спонсорство турниров и эксклюзивные бонусы для зрителей.' }
+    { id: 1, name: 'HAVAL', year: '2024', description: 'Интеграции с автомобильным брендом и обзор актуальных моделей HAVAL. Формат сочетал знакомство аудитории с продуктом и нативную интеграцию в контент Александра.' },
+    { id: 2, name: 'Яндекс', year: '2022–2026', description: 'Долгосрочное партнёрство по разным продуктам экосистемы Яндекса: Такси, Лавка, Маркет, AI-сервисы и другие. Интеграции строятся вокруг сервисов, которыми Александр регулярно пользуется сам.' },
+    { id: 3, name: 'Kitfort', year: '2023–2024', description: 'Нативные интеграции бытовой техники, которой Александр пользуется в повседневной жизни. Продукт органично вписывался в контент и показывался аудитории в реальном сценарии использования. Высокая конверсия интеграций и значительный объём продаж.' },
+    { id: 4, name: 'МТС', year: '2025', description: 'Интеграции сервиса MTS Pay — удобного способа пополнения Steam. В рамках кампании акцент сделали на выгодных предложениях для аудитории и удобстве использования сервиса.' },
+    { id: 5, name: 'Yota', year: '2024', description: 'Интеграции услуг мобильного оператора с акцентом на выгодные условия тарифа и практическую ценность предложения для аудитории.' },
+    { id: 6, name: 'Nuw', year: '2023–2025', description: 'Долгосрочное сотрудничество в формате амбассадорства бренда одежды. Александр регулярно носит продукцию Nuw в повседневной жизни и на стримах, что сформировало устойчивый интерес аудитории к бренду и продукту.' },
+    { id: 7, name: 'Точка Банк', year: '2026', description: 'Нативная интеграция сервиса для открытия ИП. Александр поделился собственным опытом работы с легальным оформлением деятельности и показал процесс на практике, выступив в роли инфлюенсера с релевантным опытом.' },
+    { id: 8, name: 'Самокат', year: '2024', description: 'Нативные интеграции сервиса доставки продуктов с акцентом на удобство заказа и быструю доставку. Продукт органично интегрировался в повседневный контент стримера.' },
+    { id: 9, name: 'Majestic', year: '2023–2025', description: 'Долгосрочное сотрудничество с одним из крупнейших GTA RP-проектов в русскоязычном сегменте. Несколько крупных кампаний во время турниров, нативные интеграции и размещения в социальных сетях.' },
+    { id: 10, name: 'Genshin Impact', year: '2023', description: 'Сотрудничество с издателем Genshin Impact — одной из крупнейших action/RPG с открытым миром. Интеграции получили высокий интерес и вовлечённость аудитории благодаря релевантности продукта аудитории Александра.' },
+    { id: 11, name: 'MLBB', year: '2024–2025', description: 'Сотрудничество с популярной мобильной MOBA. Игровые интеграции, совместные активности в студии освещения и продвижение киберспортивного турнира.' },
+    { id: 12, name: 'Playerok', year: '2026–настоящее время', description: 'Долгосрочное партнёрство с маркетплейсом цифровых товаров и услуг. Регулярные нативные интеграции в стримах и публикации на социальных платформах Nix.', colorFrom: '#0721e9' },
+    { id: 13, name: 'BetBoom', year: 'с 2021', description: 'Титульное партнёрство и амбассадорство. Долгосрочное сотрудничество включает постоянное присутствие бренда в контенте и комплексную работу с аудиторией.', colorFrom: '#972121', colorTo: '#d4bc1c' }
   ],
   partnersAudience: [
     { label: 'Тематика', value: 'Киберспорт, игры' },
@@ -115,12 +115,13 @@ export const DEFAULT_CONTENT = {
     'Посты в соцсетях', 'Права на медиа', 'Амбассадорство'
   ],
   highlights: [
-    { id: 1, title: 'The International 2024 Moment', views: '2.5M', platform: 'Twitch', thumbnail: '/images/highlights/highlight-1.jpg', videoUrl: '', featured: true },
-    { id: 2, title: 'Epic Comeback Game', views: '1.8M', platform: 'YouTube', thumbnail: '/images/highlights/highlight-2.jpg', videoUrl: '' },
-    { id: 3, title: 'Funny Rage Moment', views: '900K', platform: 'TikTok', thumbnail: '/images/highlights/highlight-3.jpg', videoUrl: '' },
-    { id: 4, title: 'Best Plays Compilation', views: '750K', platform: 'YouTube', thumbnail: '/images/highlights/highlight-4.jpg', videoUrl: '' },
-    { id: 5, title: 'Stream Highlights #47', views: '620K', platform: 'Twitch', thumbnail: '/images/highlights/highlight-5.jpg', videoUrl: '' },
-    { id: 6, title: 'Insane Outplay', views: '580K', platform: 'TikTok', thumbnail: '/images/highlights/highlight-6.jpg', videoUrl: '' }
+    { id: 1, title: 'TI 2026 Group', views: '', platform: '', thumbnail: '/images/highlights/ti-2026-group.jpg', videoUrl: '/video/highlights/ti-2026-group.mp4', featured: true },
+    { id: 2, title: 'BB Tundra 2023', views: '', platform: '', thumbnail: '/images/highlights/bb-tundra-2023.jpg', videoUrl: '/video/highlights/bb-tundra-2023.mp4' },
+    { id: 3, title: 'BetBoom Falcons', views: '', platform: '', thumbnail: '/images/highlights/betboom-falcons.jpg', videoUrl: '/video/highlights/betboom-falcons.mp4' },
+    { id: 4, title: 'Falcons BetBoom', views: '', platform: '', thumbnail: '/images/highlights/falcons-betboom.jpg', videoUrl: '/video/highlights/falcons-betboom.mp4' },
+    { id: 5, title: 'Pl Dota Highlight', views: '', platform: '', thumbnail: '/images/highlights/pl-dota-highlight.jpg', videoUrl: '/video/highlights/pl-dota-highlight.mp4' },
+    { id: 6, title: 'Комментирование на дорожке', views: '', platform: '', thumbnail: '/images/highlights/kommentirovanie-na-dorozhke.jpg', videoUrl: '/video/highlights/kommentirovanie-na-dorozhke.mp4' },
+    { id: 7, title: 'CS Highlight', views: '', platform: '', thumbnail: '/images/highlights/cs-highlight-4.jpg', videoUrl: '/video/highlights/cs-highlight-4.mp4' }
   ],
   awards: [
     { id: 1, icon: '/images/icons/streamers.jpg', title: 'Streamers Awards 2025', subtitle: 'Best MOBA Streamer', description: 'Nominee in international category', year: '2025' },

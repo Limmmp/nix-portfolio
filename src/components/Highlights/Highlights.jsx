@@ -10,6 +10,24 @@ gsap.registerPlugin(ScrollTrigger);
 // Файл из Storage играем в лайтбоксе, внешние ссылки открываем в новой вкладке
 const isDirectVideoFile = (url) => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(url || '');
 
+const youtubeId = (url) => {
+  const m = String(url || '').match(
+    /(?:youtube\.com\/(?:watch\?.*v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/
+  );
+  return m ? m[1] : null;
+};
+
+// Ролик открывается ровно на нужном фрагменте: start/end берём из записи,
+// поэтому зрителю не приходится самому искать момент в часовом видео
+const youtubeEmbedUrl = (video) => {
+  const id = youtubeId(video.videoUrl);
+  if (!id) return null;
+  const p = new URLSearchParams({ autoplay: '1', rel: '0', modestbranding: '1' });
+  if (video.startSec) p.set('start', String(video.startSec));
+  if (video.endSec) p.set('end', String(video.endSec));
+  return `https://www.youtube.com/embed/${id}?${p}`;
+};
+
 const Highlights = () => {
   const { content } = useContent();
   const highlights = content.highlights;
@@ -17,15 +35,21 @@ const Highlights = () => {
 
   const containerRef = useRef(null);
   const videosRef = useRef([]);
-  const [lightboxUrl, setLightboxUrl] = useState(null);
+  // { kind: 'file' | 'youtube', src }
+  const [lightbox, setLightbox] = useState(null);
 
   const openVideo = (video) => {
     if (!video.videoUrl) return;
     if (isDirectVideoFile(video.videoUrl)) {
-      setLightboxUrl(video.videoUrl);
-    } else {
-      window.open(video.videoUrl, '_blank', 'noopener,noreferrer');
+      setLightbox({ kind: 'file', src: video.videoUrl });
+      return;
     }
+    const embed = youtubeEmbedUrl(video);
+    if (embed) {
+      setLightbox({ kind: 'youtube', src: embed });
+      return;
+    }
+    window.open(video.videoUrl, '_blank', 'noopener,noreferrer');
   };
 
   useEffect(() => {
@@ -196,23 +220,34 @@ const Highlights = () => {
         </div>
       </div>
 
-      {/* Лайтбокс для видео, загруженных напрямую в Storage */}
-      {lightboxUrl && (
-        <div className="highlights__lightbox" onClick={() => setLightboxUrl(null)}>
+      {/* Лайтбокс: файл из Storage или фрагмент ролика с YouTube */}
+      {lightbox && (
+        <div className="highlights__lightbox" onClick={() => setLightbox(null)}>
           <button
             className="highlights__lightbox-close interactive"
-            onClick={() => setLightboxUrl(null)}
+            onClick={() => setLightbox(null)}
             aria-label="Закрыть"
           >
             ✕
           </button>
-          <video
-            src={lightboxUrl}
-            controls
-            autoPlay
-            playsInline
-            onClick={(e) => e.stopPropagation()}
-          />
+          {lightbox.kind === 'youtube' ? (
+            <iframe
+              className="highlights__lightbox-frame"
+              src={lightbox.src}
+              title="Видео"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <video
+              src={lightbox.src}
+              controls
+              autoPlay
+              playsInline
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
         </div>
       )}
     </section>

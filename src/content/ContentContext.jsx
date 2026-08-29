@@ -61,7 +61,8 @@ async function fetchContent() {
     highlights: videos.data.length
       ? videos.data.map((r) => ({
           id: r.id, title: r.title, views: r.views, platform: r.platform,
-          thumbnail: r.thumb_url, videoUrl: r.video_url, featured: r.featured
+          thumbnail: r.thumb_url, videoUrl: r.video_url, featured: r.featured,
+          startSec: r.start_sec, endSec: r.end_sec
         }))
       : DEFAULT_CONTENT.highlights,
     awards: awards.data.length
